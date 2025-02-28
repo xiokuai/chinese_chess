@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>chinese_chess</Name>
     <RootNamespace>chinese_chess</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
