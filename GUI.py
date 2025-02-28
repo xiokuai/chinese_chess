@@ -275,7 +275,7 @@ class Window:
                 auto_scale=eval(auto_scale.value),
                 level=int(level.get()),
                 peace=int(peace.get()),
-                algo=1 if ai.value == "极小极大搜索" else 2 if ai.value == "alpha-beta 剪枝" else 0)
+                algo=1 if ai.value == "极大极小搜索" else 2 if ai.value == "alpha-beta 剪枝" else 0)
             toplevel.destroy()
 
         def default() -> None:
