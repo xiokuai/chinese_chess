@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['chinese_chess\\chinese_chess.py'],
+    ['chinese_chess\\main.py'],
     pathex=[],
     binaries=[],
     datas=[],

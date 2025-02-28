@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>modulegraph cross reference for chinese_chess.py, pyi_rth_inspect.py</title>
+    <title>modulegraph cross reference for main.py, pyi_rth__tkinter.py, pyi_rth_inspect.py</title>
     <style>
       .node { padding: 0.5em 0 0.5em; border-top: thin grey dotted; }
       .moduletype { font: smaller italic }
@@ -11,18 +11,20 @@
     </style>
   </head>
   <body>
-    <h1>modulegraph cross reference for chinese_chess.py, pyi_rth_inspect.py</h1>
+    <h1>modulegraph cross reference for main.py, pyi_rth__tkinter.py, pyi_rth_inspect.py</h1>
 
 <div class="node">
-  <a name="chinese_chess.py"></a>
-  <a target="code" href="///D:/c/chinese_chess/chinese_chess/chinese_chess.py" type="text/plain"><tt>chinese_chess.py</tt></a>
+  <a name="main.py"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/main.py" type="text/plain"><tt>main.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
-    <a href="#_collections_abc">_collections_abc</a>
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_weakrefset">_weakrefset</a>
  &#8226;   <a href="#abc">abc</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#configure">configure</a>
  &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#encodings">encodings</a>
  &#8226;   <a href="#encodings.aliases">encodings.aliases</a>
@@ -158,6 +160,7 @@ imports:
  &#8226;   <a href="#operator">operator</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#posixpath">posixpath</a>
+ &#8226;   <a href="#pyi_rth__tkinter.py">pyi_rth__tkinter.py</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#re._casefix">re._casefix</a>
@@ -173,6 +176,24 @@ imports:
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
+ &#8226;   <a href="#winsound">winsound</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="pyi_rth__tkinter.py"></a>
+  <a target="code" href="///C:/Users/aba2222/AppData/Roaming/Python/Python313/site-packages/PyInstaller/hooks/rthooks/pyi_rth__tkinter.py" type="text/plain"><tt>pyi_rth__tkinter.py</tt></a>
+<span class="moduletype">Script</span>  <div class="import">
+imports:
+    <a href="#os">os</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#main.py">main.py</a>
 
   </div>
 
@@ -191,7 +212,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
 
   </div>
 
@@ -209,6 +230,91 @@ imported by:
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
  &#8226;   <a href="#typing">typing</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="AI"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/AI.py" type="text/plain"><tt>AI</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#alpha_beta_search">alpha_beta_search</a>
+ &#8226;   <a href="#configure">configure</a>
+ &#8226;   <a href="#constants">constants</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#min_max_search">min_max_search</a>
+ &#8226;   <a href="#random">random</a>
+ &#8226;   <a href="#rule">rule</a>
+ &#8226;   <a href="#tools">tools</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="GUI"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/GUI.py" type="text/plain"><tt>GUI</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#AI">AI</a>
+ &#8226;   <a href="#LAN">LAN</a>
+ &#8226;   <a href="#configure">configure</a>
+ &#8226;   <a href="#constants">constants</a>
+ &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#main">main</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#rule">rule</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
+ &#8226;   <a href="#tools">tools</a>
+ &#8226;   <a href="#winsound">winsound</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#LAN">LAN</a>
+ &#8226;   <a href="#main">main</a>
+ &#8226;   <a href="#main.py">main.py</a>
+ &#8226;   <a href="#rule">rule</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="LAN"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/LAN.py" type="text/plain"><tt>LAN</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#constants">constants</a>
+ &#8226;   <a href="#rule">rule</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
+ &#8226;   <a href="#winsound">winsound</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
 
   </div>
 
@@ -388,10 +494,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#collections">collections</a>
+    <a href="#collections">collections</a>
  &#8226;   <a href="#contextlib">contextlib</a>
  &#8226;   <a href="#locale">locale</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
  &#8226;   <a href="#random">random</a>
@@ -467,6 +573,16 @@ imported by:
   <tt>_csv</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
     <a href="#csv">csv</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="_ctypes"></a>
+  <tt>_ctypes</tt> <span class="moduletype"><tt>D:\Program Files\Python3\DLLs\_ctypes.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#ctypes">ctypes</a>
 
   </div>
 
@@ -970,6 +1086,16 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="_tkinter"></a>
+  <tt>_tkinter</tt> <span class="moduletype"><tt>D:\Program Files\Python3\DLLs\_tkinter.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#tkinter">tkinter</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="_tokenize"></a>
   <tt>_tokenize</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
@@ -1034,7 +1160,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#_py_abc">_py_abc</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -1067,7 +1193,6 @@ imports:
   <div class="import">
 imported by:
     <a href="#_collections_abc">_collections_abc</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#contextlib">contextlib</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#email._policybase">email._policybase</a>
@@ -1078,10 +1203,30 @@ imported by:
  &#8226;   <a href="#importlib.resources.abc">importlib.resources.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#numbers">numbers</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#selectors">selectors</a>
  &#8226;   <a href="#typing">typing</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="alpha_beta_search"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/alpha_beta_search.py" type="text/plain"><tt>alpha_beta_search</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#dataclasses">dataclasses</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#AI">AI</a>
 
   </div>
 
@@ -1307,7 +1452,6 @@ imports:
   <div class="import">
 imported by:
     <a href="#_pickle">_pickle</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#encodings">encodings</a>
  &#8226;   <a href="#encodings.ascii">encodings.ascii</a>
  &#8226;   <a href="#encodings.base64_codec">encodings.base64_codec</a>
@@ -1430,6 +1574,7 @@ imported by:
  &#8226;   <a href="#encodings.uu_codec">encodings.uu_codec</a>
  &#8226;   <a href="#encodings.zlib_codec">encodings.zlib_codec</a>
  &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#pickle">pickle</a>
  &#8226;   <a href="#tokenize">tokenize</a>
 
@@ -1458,7 +1603,6 @@ imports:
 imported by:
     <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#ast">ast</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#contextlib">contextlib</a>
  &#8226;   <a href="#dis">dis</a>
  &#8226;   <a href="#email.feedparser">email.feedparser</a>
@@ -1467,15 +1611,59 @@ imported by:
  &#8226;   <a href="#importlib.metadata._collections">importlib.metadata._collections</a>
  &#8226;   <a href="#importlib.resources.readers">importlib.resources.readers</a>
  &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#selectors">selectors</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#string">string</a>
  &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tokenize">tokenize</a>
  &#8226;   <a href="#typing">typing</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="configure"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/configure.py" type="text/plain"><tt>configure</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#json">json</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#AI">AI</a>
+ &#8226;   <a href="#GUI">GUI</a>
+ &#8226;   <a href="#constants">constants</a>
+ &#8226;   <a href="#main">main</a>
+ &#8226;   <a href="#main.py">main.py</a>
+ &#8226;   <a href="#rule">rule</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="constants"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/constants.py" type="text/plain"><tt>constants</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#configure">configure</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#AI">AI</a>
+ &#8226;   <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
 
   </div>
 
@@ -1566,8 +1754,8 @@ imports:
   <div class="import">
 imported by:
     <a href="#_pickle">_pickle</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#copy">copy</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#pickle">pickle</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#typing">typing</a>
@@ -1596,6 +1784,48 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="ctypes"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/ctypes/__init__.py" type="text/plain"><tt>ctypes</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#_ctypes">_ctypes</a>
+ &#8226;   <a href="#ctypes._endian">ctypes._endian</a>
+ &#8226;   <a href="#nt">nt</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#struct">struct</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#AI">AI</a>
+ &#8226;   <a href="#ctypes._endian">ctypes._endian</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="ctypes._endian"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/ctypes/_endian.py" type="text/plain"><tt>ctypes._endian</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#ctypes">ctypes</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="dataclasses"></a>
   <a target="code" href="///D:/Program%20Files/Python3/Lib/dataclasses.py" type="text/plain"><tt>dataclasses</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -1613,7 +1843,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#pprint">pprint</a>
+    <a href="#alpha_beta_search">alpha_beta_search</a>
+ &#8226;   <a href="#min_max_search">min_max_search</a>
+ &#8226;   <a href="#pprint">pprint</a>
 
   </div>
 
@@ -2282,8 +2514,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#codecs">codecs</a>
+    <a href="#codecs">codecs</a>
  &#8226;   <a href="#encodings">encodings</a>
  &#8226;   <a href="#encodings.aliases">encodings.aliases</a>
  &#8226;   <a href="#encodings.ascii">encodings.ascii</a>
@@ -2407,6 +2638,7 @@ imported by:
  &#8226;   <a href="#encodings.uu_codec">encodings.uu_codec</a>
  &#8226;   <a href="#encodings.zlib_codec">encodings.zlib_codec</a>
  &#8226;   <a href="#locale">locale</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2422,9 +2654,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
  &#8226;   <a href="#locale">locale</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2441,8 +2673,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2460,8 +2692,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2480,8 +2712,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2500,8 +2732,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2519,8 +2751,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2537,8 +2769,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2555,8 +2787,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2573,8 +2805,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2591,8 +2823,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2609,8 +2841,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2627,8 +2859,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2645,8 +2877,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2663,8 +2895,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2681,8 +2913,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2699,8 +2931,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2717,8 +2949,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2735,8 +2967,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2753,8 +2985,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2771,8 +3003,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2789,8 +3021,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2807,8 +3039,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2825,8 +3057,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2843,8 +3075,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2861,8 +3093,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2879,8 +3111,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2897,8 +3129,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2915,8 +3147,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2933,8 +3165,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2951,8 +3183,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2969,8 +3201,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -2987,8 +3219,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3005,8 +3237,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3023,8 +3255,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3041,8 +3273,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3059,8 +3291,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3077,8 +3309,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3095,8 +3327,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3113,8 +3345,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3131,8 +3363,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3149,8 +3381,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3167,8 +3399,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3185,8 +3417,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3203,8 +3435,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3223,8 +3455,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3243,8 +3475,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3263,8 +3495,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3283,8 +3515,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3303,8 +3535,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3323,8 +3555,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3343,8 +3575,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3363,8 +3595,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3383,8 +3615,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3403,8 +3635,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3422,8 +3654,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3440,8 +3672,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3460,8 +3692,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3481,8 +3713,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3501,8 +3733,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3521,8 +3753,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3541,8 +3773,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3561,8 +3793,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3581,8 +3813,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3601,8 +3833,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3621,8 +3853,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3639,8 +3871,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3657,8 +3889,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3675,8 +3907,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3693,8 +3925,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3711,8 +3943,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3729,8 +3961,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3747,8 +3979,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3765,8 +3997,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3783,8 +4015,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3801,8 +4033,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3819,8 +4051,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3837,8 +4069,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3855,8 +4087,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3873,8 +4105,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3891,8 +4123,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3911,8 +4143,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3929,8 +4161,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3947,8 +4179,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3965,8 +4197,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -3983,8 +4215,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4001,8 +4233,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4019,8 +4251,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4037,8 +4269,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4055,8 +4287,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4073,8 +4305,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4091,8 +4323,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4109,8 +4341,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4127,8 +4359,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4145,8 +4377,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4163,8 +4395,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4181,8 +4413,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4199,8 +4431,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4217,8 +4449,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4235,8 +4467,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4253,8 +4485,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4271,8 +4503,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4291,8 +4523,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4309,8 +4541,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4328,8 +4560,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4348,8 +4580,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4368,8 +4600,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4388,8 +4620,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4406,8 +4638,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4424,8 +4656,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4442,8 +4674,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4461,8 +4693,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4479,8 +4711,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4497,8 +4729,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4516,8 +4748,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4534,8 +4766,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4552,8 +4784,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4570,8 +4802,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4588,8 +4820,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4606,8 +4838,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4626,8 +4858,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4645,8 +4877,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#encodings">encodings</a>
+    <a href="#encodings">encodings</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -4668,12 +4900,13 @@ imports:
 imported by:
     <a href="#ast">ast</a>
  &#8226;   <a href="#calendar">calendar</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#py_compile">py_compile</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#signal">signal</a>
  &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
 
   </div>
 
@@ -4722,6 +4955,7 @@ imports:
 imported by:
     <a href="#glob">glob</a>
  &#8226;   <a href="#shutil">shutil</a>
+ &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
 
   </div>
@@ -4745,6 +4979,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#statistics">statistics</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
 
   </div>
 
@@ -4768,8 +5003,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#contextlib">contextlib</a>
+    <a href="#contextlib">contextlib</a>
  &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#email._encoded_words">email._encoded_words</a>
  &#8226;   <a href="#email.charset">email.charset</a>
@@ -4784,6 +5018,7 @@ imported by:
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#ipaddress">ipaddress</a>
  &#8226;   <a href="#locale">locale</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#operator">operator</a>
  &#8226;   <a href="#pathlib._abc">pathlib._abc</a>
  &#8226;   <a href="#pickle">pickle</a>
@@ -4828,7 +5063,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#posixpath">posixpath</a>
 
@@ -4979,8 +5214,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#collections">collections</a>
+    <a href="#collections">collections</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -5559,7 +5794,6 @@ imported by:
     <a href="#_colorize">_colorize</a>
  &#8226;   <a href="#_compression">_compression</a>
  &#8226;   <a href="#bz2">bz2</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#csv">csv</a>
  &#8226;   <a href="#dis">dis</a>
  &#8226;   <a href="#email.feedparser">email.feedparser</a>
@@ -5574,6 +5808,7 @@ imported by:
  &#8226;   <a href="#importlib.resources.abc">importlib.resources.abc</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#lzma">lzma</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
  &#8226;   <a href="#pickle">pickle</a>
@@ -5651,7 +5886,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#importlib.metadata">importlib.metadata</a>
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#configure">configure</a>
+ &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#json.decoder">json.decoder</a>
  &#8226;   <a href="#json.encoder">json.encoder</a>
  &#8226;   <a href="#json.scanner">json.scanner</a>
@@ -5722,10 +5959,10 @@ imported by:
   <a target="code" href="///D:/Program%20Files/Python3/Lib/keyword.py" type="text/plain"><tt>keyword</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#collections">collections</a>
+    <a href="#collections">collections</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -5743,8 +5980,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#inspect">inspect</a>
+    <a href="#inspect">inspect</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
  &#8226;   <a href="#warnings">warnings</a>
@@ -5775,9 +6012,10 @@ imported by:
     <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#calendar">calendar</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#gettext">gettext</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
 
   </div>
 
@@ -5835,6 +6073,24 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="main"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/main.py" type="text/plain"><tt>main</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#configure">configure</a>
+ &#8226;   <a href="#winsound">winsound</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="marshal"></a>
   <tt>marshal</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
@@ -5848,13 +6104,36 @@ imported by:
   <a name="math"></a>
   <tt>math</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#_pydatetime">_pydatetime</a>
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#_pydatetime">_pydatetime</a>
  &#8226;   <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#alpha_beta_search">alpha_beta_search</a>
  &#8226;   <a href="#fractions">fractions</a>
+ &#8226;   <a href="#min_max_search">min_max_search</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#selectors">selectors</a>
  &#8226;   <a href="#statistics">statistics</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="min_max_search"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/min_max_search.py" type="text/plain"><tt>min_max_search</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#dataclasses">dataclasses</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#random">random</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#AI">AI</a>
 
   </div>
 
@@ -5875,6 +6154,7 @@ imported by:
   <tt>nt</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
     <a href="#_colorize">_colorize</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#os">os</a>
@@ -5899,7 +6179,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#os.path">os.path</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
@@ -5956,7 +6236,6 @@ imports:
   <div class="import">
 imported by:
     <a href="#_pydatetime">_pydatetime</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#email._header_value_parser">email._header_value_parser</a>
@@ -5966,6 +6245,7 @@ imported by:
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.resources.readers">importlib.resources.readers</a>
  &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#statistics">statistics</a>
@@ -5996,12 +6276,13 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#_colorize">_colorize</a>
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#_colorize">_colorize</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#bz2">bz2</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#contextlib">contextlib</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#fnmatch">fnmatch</a>
  &#8226;   <a href="#genericpath">genericpath</a>
@@ -6018,11 +6299,13 @@ imported by:
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#lzma">lzma</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#os.path">os.path</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
  &#8226;   <a href="#posixpath">posixpath</a>
  &#8226;   <a href="#py_compile">py_compile</a>
+ &#8226;   <a href="#pyi_rth__tkinter.py">pyi_rth__tkinter.py</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#shutil">shutil</a>
@@ -6031,6 +6314,8 @@ imported by:
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
  &#8226;   <a href="#zipfile">zipfile</a>
  &#8226;   <a href="#zipfile._path.glob">zipfile._path.glob</a>
 
@@ -6195,9 +6480,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#fnmatch">fnmatch</a>
+    <a href="#fnmatch">fnmatch</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
  &#8226;   <a href="#zipfile._path">zipfile._path</a>
@@ -6309,8 +6594,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#email.generator">email.generator</a>
+    <a href="#AI">AI</a>
+ &#8226;   <a href="#email.generator">email.generator</a>
  &#8226;   <a href="#email.utils">email.utils</a>
+ &#8226;   <a href="#min_max_search">min_max_search</a>
  &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#tempfile">tempfile</a>
 
@@ -6342,7 +6629,6 @@ imported by:
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#ast">ast</a>
  &#8226;   <a href="#base64">base64</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#csv">csv</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#email._encoded_words">email._encoded_words</a>
@@ -6370,6 +6656,7 @@ imported by:
  &#8226;   <a href="#json.scanner">json.scanner</a>
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#pickle">pickle</a>
  &#8226;   <a href="#posixpath">posixpath</a>
  &#8226;   <a href="#pprint">pprint</a>
@@ -6384,6 +6671,7 @@ imported by:
  &#8226;   <a href="#string">string</a>
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#textwrap">textwrap</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tokenize">tokenize</a>
  &#8226;   <a href="#typing">typing</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
@@ -6405,7 +6693,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
  &#8226;   <a href="#re._compiler">re._compiler</a>
 
   </div>
@@ -6427,7 +6715,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
 
@@ -6446,7 +6734,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#re._compiler">re._compiler</a>
  &#8226;   <a href="#re._parser">re._parser</a>
@@ -6469,7 +6757,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#re._compiler">re._compiler</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
@@ -6490,10 +6778,10 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#collections">collections</a>
+    <a href="#collections">collections</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -6505,6 +6793,29 @@ imported by:
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
     <a href="#posix">posix</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="rule"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/rule.py" type="text/plain"><tt>rule</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#configure">configure</a>
+ &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+ &#8226;   <a href="#tools">tools</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#AI">AI</a>
+ &#8226;   <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
 
   </div>
 
@@ -6611,7 +6922,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#email.utils">email.utils</a>
+    <a href="#LAN">LAN</a>
+ &#8226;   <a href="#constants">constants</a>
+ &#8226;   <a href="#email.utils">email.utils</a>
 
   </div>
 
@@ -6629,7 +6942,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
 
   </div>
 
@@ -6647,7 +6960,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
 
   </div>
 
@@ -6665,7 +6978,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
+    <a href="#main.py">main.py</a>
 
   </div>
 
@@ -6681,9 +6994,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#genericpath">genericpath</a>
+    <a href="#genericpath">genericpath</a>
  &#8226;   <a href="#glob">glob</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#pathlib._abc">pathlib._abc</a>
  &#8226;   <a href="#posixpath">posixpath</a>
@@ -6772,6 +7085,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#base64">base64</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#gettext">gettext</a>
  &#8226;   <a href="#gzip">gzip</a>
  &#8226;   <a href="#pickle">pickle</a>
@@ -6821,7 +7135,8 @@ imported by:
   <a name="sys"></a>
   <tt>sys</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#_collections_abc">_collections_abc</a>
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_colorize">_colorize</a>
  &#8226;   <a href="#_compression">_compression</a>
  &#8226;   <a href="#_pydatetime">_pydatetime</a>
@@ -6833,6 +7148,8 @@ imported by:
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#contextlib">contextlib</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#ctypes._endian">ctypes._endian</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#decimal">decimal</a>
  &#8226;   <a href="#dis">dis</a>
@@ -6865,6 +7182,7 @@ imported by:
  &#8226;   <a href="#posixpath">posixpath</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#py_compile">py_compile</a>
+ &#8226;   <a href="#pyi_rth__tkinter.py">pyi_rth__tkinter.py</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
  &#8226;   <a href="#quopri">quopri</a>
  &#8226;   <a href="#re._compiler">re._compiler</a>
@@ -6876,6 +7194,8 @@ imported by:
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
  &#8226;   <a href="#tokenize">tokenize</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
@@ -6987,9 +7307,12 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#_threading_local">_threading_local</a>
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
+ &#8226;   <a href="#_threading_local">_threading_local</a>
  &#8226;   <a href="#importlib.util">importlib.util</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#rule">rule</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#zipfile">zipfile</a>
 
@@ -7006,9 +7329,11 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#_datetime">_datetime</a>
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#_datetime">_datetime</a>
  &#8226;   <a href="#_pydatetime">_pydatetime</a>
  &#8226;   <a href="#_strptime">_strptime</a>
+ &#8226;   <a href="#alpha_beta_search">alpha_beta_search</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#email._parseaddr">email._parseaddr</a>
  &#8226;   <a href="#email.generator">email.generator</a>
@@ -7021,6 +7346,197 @@ imported by:
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#zipfile">zipfile</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/__init__.py" type="text/plain"><tt>tkinter</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#_tkinter">_tkinter</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#tkinter.commondialog">tkinter.commondialog</a>
+ &#8226;   <a href="#tkinter.constants">tkinter.constants</a>
+ &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+ &#8226;   <a href="#traceback">traceback</a>
+ &#8226;   <a href="#types">types</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
+ &#8226;   <a href="#constants">constants</a>
+ &#8226;   <a href="#rule">rule</a>
+ &#8226;   <a href="#tkinter.commondialog">tkinter.commondialog</a>
+ &#8226;   <a href="#tkinter.constants">tkinter.constants</a>
+ &#8226;   <a href="#tkinter.dialog">tkinter.dialog</a>
+ &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+ &#8226;   <a href="#tkinter.simpledialog">tkinter.simpledialog</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter.commondialog"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/commondialog.py" type="text/plain"><tt>tkinter.commondialog</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#tkinter">tkinter</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter.constants"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/constants.py" type="text/plain"><tt>tkinter.constants</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#tkinter">tkinter</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#tkinter">tkinter</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter.dialog"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/dialog.py" type="text/plain"><tt>tkinter.dialog</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#tkinter">tkinter</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#tkinter.filedialog">tkinter.filedialog</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter.filedialog"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/filedialog.py" type="text/plain"><tt>tkinter.filedialog</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#fnmatch">fnmatch</a>
+ &#8226;   <a href="#locale">locale</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.commondialog">tkinter.commondialog</a>
+ &#8226;   <a href="#tkinter.dialog">tkinter.dialog</a>
+ &#8226;   <a href="#tkinter.simpledialog">tkinter.simpledialog</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter.messagebox"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/messagebox.py" type="text/plain"><tt>tkinter.messagebox</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.commondialog">tkinter.commondialog</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
+ &#8226;   <a href="#rule">rule</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.simpledialog">tkinter.simpledialog</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter.simpledialog"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/simpledialog.py" type="text/plain"><tt>tkinter.simpledialog</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#tkinter.filedialog">tkinter.filedialog</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkinter.ttk"></a>
+  <a target="code" href="///D:/Program%20Files/Python3/Lib/tkinter/ttk.py" type="text/plain"><tt>tkinter.ttk</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#tkinter">tkinter</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="tkintertools"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/tkintertools.py" type="text/plain"><tt>tkintertools</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#fractions">fractions</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
+ &#8226;   <a href="#constants">constants</a>
 
   </div>
 
@@ -7067,6 +7583,19 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="tools"></a>
+  <a target="code" href="///D:/c/chinese_chess/chinese_chess/tools.py" type="text/plain"><tt>tools</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imported by:
+    <a href="#AI">AI</a>
+ &#8226;   <a href="#GUI">GUI</a>
+ &#8226;   <a href="#rule">rule</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="traceback"></a>
   <a target="code" href="///D:/Program%20Files/Python3/Lib/traceback.py" type="text/plain"><tt>traceback</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -7086,10 +7615,11 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#chinese_chess.py">chinese_chess.py</a>
- &#8226;   <a href="#logging">logging</a>
+    <a href="#logging">logging</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#py_compile">py_compile</a>
  &#8226;   <a href="#threading">threading</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#warnings">warnings</a>
 
   </div>
@@ -7132,10 +7662,10 @@ imports:
   <div class="import">
 imported by:
     <a href="#_weakrefset">_weakrefset</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#contextlib">contextlib</a>
  &#8226;   <a href="#copy">copy</a>
  &#8226;   <a href="#csv">csv</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#dis">dis</a>
  &#8226;   <a href="#email.headerregistry">email.headerregistry</a>
@@ -7147,10 +7677,12 @@ imported by:
  &#8226;   <a href="#importlib.util">importlib.util</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#pickle">pickle</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#tempfile">tempfile</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#typing">typing</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#warnings">warnings</a>
@@ -7181,11 +7713,14 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#functools">functools</a>
+    <a href="#alpha_beta_search">alpha_beta_search</a>
+ &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.metadata._meta">importlib.metadata._meta</a>
  &#8226;   <a href="#importlib.resources._common">importlib.resources._common</a>
  &#8226;   <a href="#importlib.resources.abc">importlib.resources.abc</a>
+ &#8226;   <a href="#min_max_search">min_max_search</a>
+ &#8226;   <a href="#tkintertools">tkintertools</a>
 
   </div>
 
@@ -7267,7 +7802,7 @@ imported by:
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#ast">ast</a>
  &#8226;   <a href="#calendar">calendar</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#enum">enum</a>
  &#8226;   <a href="#functools">functools</a>
@@ -7282,6 +7817,7 @@ imported by:
  &#8226;   <a href="#importlib.resources.readers">importlib.resources.readers</a>
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#pathlib._local">pathlib._local</a>
  &#8226;   <a href="#random">random</a>
@@ -7321,11 +7857,11 @@ imports:
   <div class="import">
 imported by:
     <a href="#_threading_local">_threading_local</a>
- &#8226;   <a href="#chinese_chess.py">chinese_chess.py</a>
  &#8226;   <a href="#copy">copy</a>
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#tempfile">tempfile</a>
 
   </div>
@@ -7337,6 +7873,19 @@ imported by:
   <tt>winreg</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
     <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="winsound"></a>
+  <tt>winsound</tt> <span class="moduletype"><tt>D:\Program Files\Python3\DLLs\winsound.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#GUI">GUI</a>
+ &#8226;   <a href="#LAN">LAN</a>
+ &#8226;   <a href="#main">main</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 

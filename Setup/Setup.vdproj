@@ -15,7 +15,49 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_EE165699CF264A86BD7FDF577EB7737C"
+        "MsmKey" = "8:_098BE4D226FF961281DFF93E0830F553"
+        "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_34A2E94E882EDE00FEC70AC7F791F7FD"
+        "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_58513A66A79A4F1BAA80EEC81D77152C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7DE54F798D81DF598F14FFFA2E4F561B"
+        "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_93371ED1E51B801D8B4873BCFA21AC67"
+        "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9D08D728C7164141971F87ED559C4851"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A5BDB5D81FBD49428B44092CF240C821"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -82,6 +124,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -104,7 +154,127 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EE165699CF264A86BD7FDF577EB7737C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_098BE4D226FF961281DFF93E0830F553"
+            {
+            "SourcePath" = "8:VCRUNTIME140_1D.dll"
+            "TargetName" = "8:VCRUNTIME140_1D.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_34A2E94E882EDE00FEC70AC7F791F7FD"
+            {
+            "SourcePath" = "8:ucrtbased.dll"
+            "TargetName" = "8:ucrtbased.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_58513A66A79A4F1BAA80EEC81D77152C"
+            {
+            "SourcePath" = "8:..\\dist\\statistic.json"
+            "TargetName" = "8:statistic.json"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DE54F798D81DF598F14FFFA2E4F561B"
+            {
+            "SourcePath" = "8:VCRUNTIME140D.dll"
+            "TargetName" = "8:VCRUNTIME140D.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_93371ED1E51B801D8B4873BCFA21AC67"
+            {
+            "SourcePath" = "8:MSVCP140D.dll"
+            "TargetName" = "8:MSVCP140D.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9D08D728C7164141971F87ED559C4851"
+            {
+            "SourcePath" = "8:..\\dist\\config.json"
+            "TargetName" = "8:config.json"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A5BDB5D81FBD49428B44092CF240C821"
             {
             "SourcePath" = "8:..\\dist\\chinese_chess.exe"
             "TargetName" = "8:chinese_chess.exe"
@@ -130,7 +300,7 @@
             "TargetName" = "8:uninstall.exe"
             "Tag" = "8:"
             "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
-            "Condition" = "8:/X {706B47A5-AFEF-4C38-8CC9-ADF0799AC6DB}"
+            "Condition" = "8:/uninstall {706B47A5-AFEF-4C38-8CC9-ADF0799AC6DB}"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
@@ -163,7 +333,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_6C1B64C4DD4841869ECDB2826DB263B3"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -201,7 +371,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ChineseChess"
         "ProductCode" = "8:{706B47A5-AFEF-4C38-8CC9-ADF0799AC6DB}"
-        "PackageCode" = "8:{D80A36F9-3C4E-4FFD-8D63-0EB509AA1AAF}"
+        "PackageCode" = "8:{06A1B8BE-1068-4FA6-99AA-1A31D45560CD}"
         "UpgradeCode" = "8:{1A9EA146-57C4-4999-B6D2-32E91A4BD788}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -222,7 +392,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -321,7 +491,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4F75BB2FDE444AEC9FB6FC4271F1ACA7"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_01F41F17FF794256A013E727A4CDF96A"
             {
             "Name" = "8:ChineseChess"
             "Arguments" = "8:"
@@ -329,7 +499,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_EE165699CF264A86BD7FDF577EB7737C"
+            "Target" = "8:_A5BDB5D81FBD49428B44092CF240C821"
             "Folder" = "8:_10273277F6AC4533B0A237A71A54940F"
             "WorkingFolder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
             "Icon" = "8:"
@@ -734,6 +904,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_770A8E1FE0EA48A5A97D9104C2425A57"
+            {
+            "SourcePath" = "8:..\\x64\\Debug\\alpha_beta_search.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{A8E7856E-95B9-47E4-9534-4C0C147FD57F}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
         }
     }
 }

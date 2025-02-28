@@ -1,1 +1,1 @@
-pyinstaller -F chinese_chess/chinese_chess.py
+pyinstaller -F chinese_chess/main.py -n chinese_chess
