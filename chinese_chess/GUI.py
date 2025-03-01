@@ -282,7 +282,7 @@ class Window:
             """ 默认设定 """
             scale.set('1')
             scale.cursor_flash()
-            level.set('2')
+            level.set('4')
             level.cursor_flash()
             peace.set('60')
             peace.cursor_flash()

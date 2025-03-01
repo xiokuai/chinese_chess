@@ -15,19 +15,37 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_098BE4D226FF961281DFF93E0830F553"
+        "MsmKey" = "8:_050FC46981A442FE9A8B3C50B055AAAE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_10C691A389B247D3A17FEB63EC139D88"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_20DBA40E8A364BCEBA340426DB3D154D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_322A548C7D71905074AC12D735099F70"
         "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_34A2E94E882EDE00FEC70AC7F791F7FD"
+        "MsmKey" = "8:_4542E46AB77A94340BAEB2F459117FED"
         "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_58513A66A79A4F1BAA80EEC81D77152C"
+        "MsmKey" = "8:_55F0C578861C4295B599C48560BFDCCD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -39,31 +57,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7DE54F798D81DF598F14FFFA2E4F561B"
-        "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_8A556AEF549645E290717D6C76C3ED93"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_93371ED1E51B801D8B4873BCFA21AC67"
+        "MsmKey" = "8:_B8ADE2572B1B00E7743A070EDDA8561F"
         "OwnerKey" = "8:_770A8E1FE0EA48A5A97D9104C2425A57"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9D08D728C7164141971F87ED559C4851"
+        "MsmKey" = "8:_CCCCCC74C58F4A1E80B064AFDD41095A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A5BDB5D81FBD49428B44092CF240C821"
+        "MsmKey" = "8:_CF96D99AF52A4282AF78737552D1D852"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -160,12 +172,12 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_098BE4D226FF961281DFF93E0830F553"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_050FC46981A442FE9A8B3C50B055AAAE"
             {
-            "SourcePath" = "8:VCRUNTIME140_1D.dll"
-            "TargetName" = "8:VCRUNTIME140_1D.dll"
+            "SourcePath" = "8:..\\chinese_chess\\audio\\eat.wav"
+            "TargetName" = "8:eat.wav"
             "Tag" = "8:"
-            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Folder" = "8:_DFE7F64DA0EA4FC481918172ACAF040B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -177,33 +189,13 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_34A2E94E882EDE00FEC70AC7F791F7FD"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_10C691A389B247D3A17FEB63EC139D88"
             {
-            "SourcePath" = "8:ucrtbased.dll"
-            "TargetName" = "8:ucrtbased.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_58513A66A79A4F1BAA80EEC81D77152C"
-            {
-            "SourcePath" = "8:..\\dist\\statistic.json"
-            "TargetName" = "8:statistic.json"
+            "SourcePath" = "8:..\\dist\\chinese_chess.exe"
+            "TargetName" = "8:chinese_chess.exe"
             "Tag" = "8:"
             "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
             "Condition" = "8:"
@@ -220,10 +212,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DE54F798D81DF598F14FFFA2E4F561B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_20DBA40E8A364BCEBA340426DB3D154D"
             {
-            "SourcePath" = "8:VCRUNTIME140D.dll"
-            "TargetName" = "8:VCRUNTIME140D.dll"
+            "SourcePath" = "8:..\\chinese_chess\\audio\\warn.wav"
+            "TargetName" = "8:warn.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_DFE7F64DA0EA4FC481918172ACAF040B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_322A548C7D71905074AC12D735099F70"
+            {
+            "SourcePath" = "8:VCRUNTIME140_1.dll"
+            "TargetName" = "8:VCRUNTIME140_1.dll"
             "Tag" = "8:"
             "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
             "Condition" = "8:"
@@ -238,6 +250,46 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4542E46AB77A94340BAEB2F459117FED"
+            {
+            "SourcePath" = "8:VCRUNTIME140.dll"
+            "TargetName" = "8:VCRUNTIME140.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_55F0C578861C4295B599C48560BFDCCD"
+            {
+            "SourcePath" = "8:..\\chinese_chess\\audio\\choose.wav"
+            "TargetName" = "8:choose.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_DFE7F64DA0EA4FC481918172ACAF040B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A556AEF549645E290717D6C76C3ED93"
@@ -260,10 +312,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_93371ED1E51B801D8B4873BCFA21AC67"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B8ADE2572B1B00E7743A070EDDA8561F"
             {
-            "SourcePath" = "8:MSVCP140D.dll"
-            "TargetName" = "8:MSVCP140D.dll"
+            "SourcePath" = "8:MSVCP140.dll"
+            "TargetName" = "8:MSVCP140.dll"
             "Tag" = "8:"
             "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
             "Condition" = "8:"
@@ -280,12 +332,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9D08D728C7164141971F87ED559C4851"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCCCCC74C58F4A1E80B064AFDD41095A"
             {
-            "SourcePath" = "8:..\\dist\\config.json"
-            "TargetName" = "8:config.json"
+            "SourcePath" = "8:..\\chinese_chess\\audio\\button.wav"
+            "TargetName" = "8:button.wav"
             "Tag" = "8:"
-            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Folder" = "8:_DFE7F64DA0EA4FC481918172ACAF040B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -300,12 +352,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A5BDB5D81FBD49428B44092CF240C821"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CF96D99AF52A4282AF78737552D1D852"
             {
-            "SourcePath" = "8:..\\dist\\chinese_chess.exe"
-            "TargetName" = "8:chinese_chess.exe"
+            "SourcePath" = "8:..\\chinese_chess\\audio\\drop.wav"
+            "TargetName" = "8:drop.wav"
             "Tag" = "8:"
-            "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
+            "Folder" = "8:_DFE7F64DA0EA4FC481918172ACAF040B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -367,6 +419,28 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DD88B40ADA874619A7520902A50EC5AF"
+                    {
+                    "Name" = "8:data"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_7C5A658EFC0C4B099160DDC2BDCEBE9F"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DFE7F64DA0EA4FC481918172ACAF040B"
+                    {
+                    "Name" = "8:audio"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_AFCD2BAB2F4842B7A9CAD61AF55C6640"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_9AE8AEBEA4584F77A8DFA84CC337CF3D"
@@ -397,7 +471,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ChineseChess"
         "ProductCode" = "8:{706B47A5-AFEF-4C38-8CC9-ADF0799AC6DB}"
-        "PackageCode" = "8:{06A1B8BE-1068-4FA6-99AA-1A31D45560CD}"
+        "PackageCode" = "8:{AB78D41F-480A-455A-9844-6DE0EF10FE27}"
         "UpgradeCode" = "8:{1A9EA146-57C4-4999-B6D2-32E91A4BD788}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -517,7 +591,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_01F41F17FF794256A013E727A4CDF96A"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_43ACA4D0D0604070925A6F3AD94F12A2"
             {
             "Name" = "8:ChineseChess"
             "Arguments" = "8:"
@@ -525,7 +599,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_A5BDB5D81FBD49428B44092CF240C821"
+            "Target" = "8:_10C691A389B247D3A17FEB63EC139D88"
             "Folder" = "8:_10273277F6AC4533B0A237A71A54940F"
             "WorkingFolder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"
             "Icon" = "8:"
@@ -932,7 +1006,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_770A8E1FE0EA48A5A97D9104C2425A57"
             {
-            "SourcePath" = "8:..\\x64\\Debug\\alpha_beta_search.dll"
+            "SourcePath" = "8:..\\x64\\Release\\alpha_beta_search.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_6C1B64C4DD4841869ECDB2826DB263B3"

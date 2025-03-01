@@ -103,7 +103,8 @@ SCREEN_HEIGHT = _TK.winfo_screenheight()
 
 # 窗口缩放系数
 if config['auto_scale']:
-    S = float('%.3f' % (SCREEN_HEIGHT/tkt.S/(710+50)))
+    S = format(SCREEN_HEIGHT / tkt.S / (710 + 50), '.3f')
+    S = float(S)
     configure(scale=S)
 else:
     S = config['scale']

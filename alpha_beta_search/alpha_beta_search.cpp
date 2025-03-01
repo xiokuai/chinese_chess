@@ -68,7 +68,8 @@ public:
 
 
 // get an evaluate score of the board data
-static float evaluate(int data[10][9], float score = 0) {
+static float evaluate(int data[10][9]) {
+	float score = 0.0f;
 	for (int i = 0; i < 10; ++i)
 		for (int j = 0; j < 9; ++j)
 			score += data[i][j] < 0 ? -SCORE_TABLE.at(-data[i][j]) : SCORE_TABLE.at(data[i][j]);
@@ -88,7 +89,7 @@ static std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = 
 
 
 // change the data of board
-static void process(int data[10][9], int si, int sj, int ei, int ej) {
+static inline void process(int data[10][9], int si, int sj, int ei, int ej) {
 	data[ei][ej] = data[si][sj];
 	data[si][sj] = 0;
 	if (data[ei][ej] == -4 && ei >= 5)
@@ -98,7 +99,7 @@ static void process(int data[10][9], int si, int sj, int ei, int ej) {
 }
 
 
-static bool _find(int id) {
+static inline bool _find(int id) {
 	for (int i : {0, 2, 4, 5, 7, 9})
 		return id == i;
 	return false;
@@ -112,56 +113,63 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 	int abs_id = std::abs(id);
 	int ni, nj;
 
-	if (abs_id == 1) {
-		for (auto& delta : DELTA.at(1)) {
+	int _delta[3][2] = { {id < 0 ? 1 : -1, 0}, { 0, 1 }, {0, -1} };
+	switch (abs_id) {
+	case 1:
+		for (const auto& delta : DELTA.at(1)) {
 			ni = i + delta.first, nj = j + delta.second;
 			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
 				if (id * data[ni][nj] <= 0)
 					possible_destinations.push_back({ ni, nj });
 		}
-	}
-	else if (abs_id == 2) {
-		for (auto& delta : DELTA.at(2)) {
+		break;
+
+	case 2:
+		for (const auto& delta : DELTA.at(2)) {
 			ni = i + delta.first, nj = j + delta.second;
 			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
 				if (id * data[ni][nj] <= 0)
 					possible_destinations.push_back({ ni, nj });
 		}
-	}
-	else if (abs_id == 3) {
-		for (auto& delta : DELTA.at(3)) {
+		break;
+
+	case 3:
+		for (const auto& delta : DELTA.at(3)) {
 			ni = i + delta.first, nj = j + delta.second;
 			if ((_find(ni)) && 0 <= nj && nj <= 8)
 				if (id * data[ni][nj] <= 0)
 					if (data[(ni + i) / 2][(nj + j) / 2] == 0)
 						possible_destinations.push_back({ ni, nj });
 		}
-	}
-	else if (abs_id == 4) {
+		break;
+
+	case 4:
 		ni = i + (id < 0 ? 1 : -1), nj = j;
 		if (id * data[ni][nj] <= 0)
 			possible_destinations.push_back({ ni, nj });
-	}
-	else if (abs_id == 5) {
-		int _delta[3][2] = { {id < 0 ? 1 : -1, 0}, { 0, 1 }, {0, -1} };
-		for (auto& delta : _delta) {
+		break;
+
+	case 5:
+		for (const auto& delta : _delta) {
 			ni = i + delta[0], nj = j + delta[1];
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
 				if (id * data[ni][nj] <= 0)
 					possible_destinations.push_back({ ni, nj });
 		}
-	}
-	else if (abs_id == 6) {
-		for (auto& delta : DELTA.at(6)) {
+		break;
+
+	case 6:
+		for (const auto& delta : DELTA.at(6)) {
 			ni = i + delta.first, nj = j + delta.second;
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
 				if (id * data[ni][nj] <= 0)
 					if (data[(int)std::round(i + delta.first / 3.)][(int)std::round(j + delta.second / 3.)] == 0)
 						possible_destinations.push_back({ ni, nj });
 		}
-	}
-	else if (abs_id == 7) {
-		for (auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
+		break;
+
+	case 7:
+		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			bool stepping_stone = false;
 			for (auto& delta : deltas) {
 				ni = i + delta.first, nj = j + delta.second;
@@ -183,9 +191,10 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 				}
 			}
 		}
-	}
-	else if (abs_id == 8) {
-		for (auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
+		break;
+
+	case 8:
+		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			for (auto& delta : deltas) {
 				ni = i + delta.first, nj = j + delta.second;
 				if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8) {
@@ -199,15 +208,18 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 				}
 			}
 		}
+		break;
+
+	default:
+		throw id;
 	}
-	else throw id;
 
 	return possible_destinations;
 }
 
 
 // recover the data of board after operating
-static void recover(int data[10][9], int si, int sj, int ei, int ej, int sv, int ev) {
+static inline void recover(int data[10][9], int si, int sj, int ei, int ej, int sv, int ev) {
 	data[si][sj] = sv;
 	data[ei][ej] = ev;
 }
@@ -253,11 +265,15 @@ static bool valid_operation(int data[10][9], Operation operation) {
 // get all operations
 static std::vector<Operation> get_operations(int data[10][9], bool reverse = false) {
 	std::vector<Operation> valid_operations;
-	Operation operation;
-	for (auto& coordinate : valid_coordinate(data, reverse))
-		for (auto& destination : possible_destination(data, coordinate.first, coordinate.second))
-			if (valid_operation(data, operation = { coordinate, destination }))
-				valid_operations.push_back(operation);
+
+	for (const auto& coordinate : valid_coordinate(data, reverse)) {
+		for (const auto& destination : possible_destination(data, coordinate.first, coordinate.second)) {
+			Operation op{ coordinate, destination };
+			if (valid_operation(data, op)) {
+				valid_operations.emplace_back(op);
+			}
+		}
+	}
 
 	std::sort(valid_operations.begin(), valid_operations.end(), [&data](const Operation& a, const Operation& b) {
 		int a_score = SCORE_TABLE.at(abs(data[a.second.first][a.second.second]));
