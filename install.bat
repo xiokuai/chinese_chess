@@ -1,1 +1,1 @@
-pyinstaller -F chinese_chess/main.py -n chinese_chess
+pyinstaller -F chinese_chess/main.py -n chinese_chess --icon=logo.ico

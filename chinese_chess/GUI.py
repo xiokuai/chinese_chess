@@ -43,7 +43,7 @@ class Window:
 
     root = tkt.Tk(
         'Chinese Chess by李悟/梁晨轩', int(640*S), int(710*S),
-        (SCREEN_WIDTH - tkt.S * 640 * S)//2, 0, exit)
+        (SCREEN_WIDTH - tkt.S * 640 * S)//2, 0, exit, 'logo.ico')
     root.resizable(False, False)
     menu = Menu(root, tearoff=False)
     root.configure(menu=menu)

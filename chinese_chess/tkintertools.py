@@ -93,6 +93,7 @@ class Tk(tkinter.Tk):
         x: int | None = None,
         y: int | None = None,
         shutdown=None,  # type: function | None
+        icon_dir: str = None,
         **kw
     ) -> None:
         """
@@ -102,6 +103,7 @@ class Tk(tkinter.Tk):
         `x`: 窗口左上角横坐标（单位:像素）
         `y`: 窗口左上角纵坐标
         `shutdown`: 关闭窗口之前执行的函数（会覆盖原关闭操作）
+        `icon_dir`: 窗口图标
         `**kw`: 与 tkinter.Tk 类的参数相同
         """
         if type(self) == Tk:  # NOTE:方便后面的 Toplevel 类继承
@@ -116,7 +118,8 @@ class Tk(tkinter.Tk):
                 self.geometry('%dx%d+%d+%d' % (width, height, x, y))
             else:
                 self.geometry('%dx%d' % (width, height))
-
+        
+        self.iconbitmap(icon_dir if icon_dir else None);
         self.title(title if title else None)
         self.protocol('WM_DELETE_WINDOW', shutdown if shutdown else None)
 
