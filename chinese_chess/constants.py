@@ -99,7 +99,7 @@ _TK.withdraw()
 # 屏幕宽度
 SCREEN_WIDTH = _TK.winfo_screenwidth()
 # 屏幕高度
-SCREEN_HEIGHT = _TK.winfo_screenheight()
+SCREEN_HEIGHT = _TK.winfo_screenheight() - 40
 
 # 窗口缩放系数
 if config['auto_scale']:
