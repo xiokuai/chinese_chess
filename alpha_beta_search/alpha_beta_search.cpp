@@ -18,23 +18,23 @@ using ID = int;
 
 // score of each chess
 const std::unordered_map<ID, int> SCORE_TABLE = {
-	{0, 0},
-	{1, 100},
-	{2, 3},
-	{3, 4},
-	{4, 1},
-	{5, 2},
-	{6, 5},
-	{7, 6},
-	{8, 12},
-	{-1, -100},
-	{-2, -3},
-	{-3, -3},
-	{-4, -1},
-	{-5, -2},
-	{-6, -5},
-	{-7, -6},
-	{-8, -12}
+	{0, 0},        // ?
+	{1, 100},      // 帥
+	{2, 3},        // 仕
+	{3, 4},        // 相
+	{4, 1},        // 兵
+	{5, 2},        // ?
+	{6, 5},        // 馬
+	{7, 6},        // 砲
+	{8, 12},       // 車
+	{-1, -100},    // 将
+	{-2, -3},      // 士
+	{-3, -3},      // 象
+	{-4, -1},      // 卒
+	{-5, -2},      // ?
+	{-6, -5},      // 马
+	{-7, -6},      // 炮
+	{-8, -12}      // 车
 };
 
 
@@ -114,42 +114,51 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 	int ni, nj;
 
 	int _delta[3][2] = { {id < 0 ? 1 : -1, 0}, { 0, 1 }, {0, -1} };
+
+	// 直接处理每种棋子的不同规则
 	switch (abs_id) {
-	case 1:
+	case 1:  // 卒
 		for (const auto& delta : DELTA.at(1)) {
-			ni = i + delta.first, nj = j + delta.second;
+			ni = i + delta.first;
+			nj = j + delta.second;
 			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
 				if (id * data[ni][nj] <= 0)
 					possible_destinations.push_back({ ni, nj });
 		}
 		break;
 
-	case 2:
+	case 2:  // 车
 		for (const auto& delta : DELTA.at(2)) {
-			ni = i + delta.first, nj = j + delta.second;
-			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
+			ni = i + delta.first;
+			nj = j + delta.second;
+			while (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8) {
 				if (id * data[ni][nj] <= 0)
 					possible_destinations.push_back({ ni, nj });
+				if (data[ni][nj] != 0) break;  // 如果遇到棋子，停止扩展
+				ni += delta.first;
+				nj += delta.second;
+			}
 		}
 		break;
 
-	case 3:
+	case 3:  // 象
 		for (const auto& delta : DELTA.at(3)) {
-			ni = i + delta.first, nj = j + delta.second;
-			if ((_find(ni)) && 0 <= nj && nj <= 8)
+			ni = i + delta.first;
+			nj = j + delta.second;
+			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
 				if (id * data[ni][nj] <= 0)
-					if (data[(ni + i) / 2][(nj + j) / 2] == 0)
+					if (data[(ni + i) / 2][(nj + j) / 2] == 0)  // 检查中间位置是否空
 						possible_destinations.push_back({ ni, nj });
 		}
 		break;
 
-	case 4:
+	case 4:  // 士
 		ni = i + (id < 0 ? 1 : -1), nj = j;
 		if (id * data[ni][nj] <= 0)
 			possible_destinations.push_back({ ni, nj });
 		break;
 
-	case 5:
+	case 5:  // 将
 		for (const auto& delta : _delta) {
 			ni = i + delta[0], nj = j + delta[1];
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
@@ -158,21 +167,25 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 6:
+	case 6:  // 马
 		for (const auto& delta : DELTA.at(6)) {
-			ni = i + delta.first, nj = j + delta.second;
+			ni = i + delta.first;
+			nj = j + delta.second;
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
-				if (id * data[ni][nj] <= 0)
-					if (data[(int)std::round(i + delta.first / 3.)][(int)std::round(j + delta.second / 3.)] == 0)
+				if (id * data[ni][nj] <= 0) {
+					int mid_i = i + delta.first / 2, mid_j = j + delta.second / 2;
+					if (data[mid_i][mid_j] == 0)
 						possible_destinations.push_back({ ni, nj });
+				}
 		}
 		break;
 
-	case 7:
+	case 7:  // 车（其他）
 		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			bool stepping_stone = false;
 			for (auto& delta : deltas) {
-				ni = i + delta.first, nj = j + delta.second;
+				ni = i + delta.first;
+				nj = j + delta.second;
 				if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8) {
 					if (stepping_stone) {
 						int key = id * data[ni][nj];
@@ -193,7 +206,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 8:
+	case 8:  // 兵
 		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			for (auto& delta : deltas) {
 				ni = i + delta.first, nj = j + delta.second;
@@ -211,7 +224,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	default:
-		throw id;
+		throw id;  // 未知棋子类型
 	}
 
 	return possible_destinations;
@@ -227,25 +240,37 @@ static inline void recover(int data[10][9], int si, int sj, int ei, int ej, int 
 
 // judge whether the operation is valid
 static bool valid_operation(int data[10][9], Operation operation) {
-	int si = operation.first.first, sj = operation.first.second, ei = operation.second.first, ej = operation.second.second;
+	int si = operation.first.first, sj = operation.first.second;
+	int ei = operation.second.first, ej = operation.second.second;
 	bool reverse = data[si][sj] < 0;
 	int key_id = reverse ? -1 : 1;
 	int sv = data[si][sj], ev = data[ei][ej];
+
 	process(data, si, sj, ei, ej);
+
+	// 优化 valid_coordinates 计算
 	std::vector<Coordinate> valid_coordinates = valid_coordinate(data, !reverse);
 	std::vector<Coordinate> valid_coordinates_filtered;
+
+	// 过滤 valid_coordinates，避免重复计算
 	for (auto& coord : valid_coordinates)
 		if (std::abs(data[coord.first][coord.second]) >= 5)
 			valid_coordinates_filtered.push_back(coord);
-	valid_coordinates = valid_coordinates_filtered;
-	for (auto& coordinate : valid_coordinates)
-		for (auto& destination : possible_destination(data, coordinate.first, coordinate.second))
+
+	valid_coordinates = std::move(valid_coordinates_filtered);
+
+	// 避免冗余的 `recover` 调用，提前退出
+	for (auto& coordinate : valid_coordinates) {
+		for (auto& destination : possible_destination(data, coordinate.first, coordinate.second)) {
 			if (data[destination.first][destination.second] == key_id) {
 				recover(data, si, sj, ei, ej, sv, ev);
 				return false;
 			}
-	for (int i = 0; i < 3; ++i)
-		for (int j = 3; j <= 5; ++j)
+		}
+	}
+
+	for (int i = 0; i < 3; ++i) {
+		for (int j = 3; j <= 5; ++j) {
 			if (data[i][j] == -1) {
 				for (int ni = i + 1; ni < 10; ++ni) {
 					if (data[ni][j] == 0)
@@ -257,6 +282,9 @@ static bool valid_operation(int data[10][9], Operation operation) {
 					else break;
 				}
 			}
+		}
+	}
+
 	recover(data, si, sj, ei, ej, sv, ev);
 	return true;
 }
@@ -266,12 +294,20 @@ static bool valid_operation(int data[10][9], Operation operation) {
 static std::vector<Operation> get_operations(int data[10][9], bool reverse = false) {
 	std::vector<Operation> valid_operations;
 
-	for (const auto& coordinate : valid_coordinate(data, reverse)) {
-		for (const auto& destination : possible_destination(data, coordinate.first, coordinate.second)) {
-			Operation op{ coordinate, destination };
+	auto get_valid_destinations = [&](int x, int y) {
+		std::vector<std::pair<int, int>> destinations;
+		for (const auto& destination : possible_destination(data, x, y)) {
+			Operation op{ {x, y}, destination };
 			if (valid_operation(data, op)) {
-				valid_operations.emplace_back(op);
+				destinations.push_back(destination);
 			}
+		}
+		return destinations;
+		};
+
+	for (const auto& coordinate : valid_coordinate(data, reverse)) {
+		for (const auto& destination : get_valid_destinations(coordinate.first, coordinate.second)) {
+			valid_operations.emplace_back(Operation{ coordinate, destination });
 		}
 	}
 
@@ -279,7 +315,7 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 		int a_score = SCORE_TABLE.at(abs(data[a.second.first][a.second.second]));
 		int b_score = SCORE_TABLE.at(abs(data[b.second.first][b.second.second]));
 		return a_score > b_score;
-	});
+		});
 
 	return valid_operations;
 }
