@@ -1,19 +1,19 @@
 {
-    "Launch": 13,
-    "Play": 12,
-    "First": 12,
-    "Time": 263,
+    "Launch": 19,
+    "Play": 18,
+    "First": 18,
+    "Time": 493,
     "LAN": 0,
     "LOCAL": 0,
-    "COMPUTER": 12,
+    "COMPUTER": 18,
     "END": 0,
     "TEST": 0,
     "Win": 0,
     "Lose": 0,
     "Peace": 1,
-    "Eat": 30,
+    "Eat": 41,
     "Move": 0,
     "Revoke": 0,
     "Recovery": 0,
-    "Warn": 4
+    "Warn": 5
 }

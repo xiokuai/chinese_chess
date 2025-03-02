@@ -17,24 +17,16 @@ using ID = int;
 
 
 // score of each chess
-const std::unordered_map<ID, int> SCORE_TABLE = {
-	{0, 0},        // ?
-	{1, 100},      // 帥
-	{2, 3},        // 仕
-	{3, 4},        // 相
-	{4, 1},        // 兵
-	{5, 2},        // ?
-	{6, 5},        // 馬
-	{7, 6},        // 砲
-	{8, 12},       // 車
-	{-1, -100},    // 将
-	{-2, -3},      // 士
-	{-3, -3},      // 象
-	{-4, -1},      // 卒
-	{-5, -2},      // ?
-	{-6, -5},      // 马
-	{-7, -6},      // 炮
-	{-8, -12}      // 车
+const int SCORE_TABLE[9] = {
+	{0},        // ?
+	{100},      // 帥
+	{3},        // 仕
+	{4},        // 相
+	{1},        // 兵
+	{2},        // 兵（过河）
+	{5},        // 馬
+	{6},        // 砲
+	{12},       // 車
 };
 
 
@@ -72,7 +64,7 @@ static float evaluate(int data[10][9]) {
 	float score = 0.0f;
 	for (int i = 0; i < 10; ++i)
 		for (int j = 0; j < 9; ++j)
-			score += data[i][j] < 0 ? -SCORE_TABLE.at(-data[i][j]) : SCORE_TABLE.at(data[i][j]);
+			score += data[i][j] < 0 ? -SCORE_TABLE[-data[i][j]] : SCORE_TABLE[data[i][j]];
 	return score;
 }
 
@@ -83,19 +75,20 @@ static std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = 
 	for (int i = 0; i < 10; ++i)
 		for (int j = 0; j < 9; ++j)
 			if ((reverse && data[i][j] < 0) || (!reverse && data[i][j] > 0))
-				valid_coordinates.push_back({ i, j });
+				valid_coordinates.emplace_back( i, j );
 	return valid_coordinates;
 }
 
 
 // change the data of board
 static inline void process(int data[10][9], int si, int sj, int ei, int ej) {
-	data[ei][ej] = data[si][sj];
-	data[si][sj] = 0;
-	if (data[ei][ej] == -4 && ei >= 5)
-		data[ei][ej] = -5;
-	else if (data[ei][ej] == 4 && ei <= 4)
-		data[ei][ej] = 5;
+	int piece = data[si][sj];  // 读取源位置的值
+	data[si][sj] = 0;          // 清空源位置
+	data[ei][ej] = piece;      // 移动到目标位置
+
+	// 只在特定棋子(-4或4)且达到对应行时修改值
+	int promote = (piece == -4) * (ei >= 5) * -1 + (piece == 4) * (ei <= 4);
+	data[ei][ej] += promote;
 }
 
 
@@ -117,27 +110,23 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 
 	// 直接处理每种棋子的不同规则
 	switch (abs_id) {
-	case 1:  // 卒
+	case 1:  // 将
 		for (const auto& delta : DELTA.at(1)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
 			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
 				if (id * data[ni][nj] <= 0)
-					possible_destinations.push_back({ ni, nj });
+					possible_destinations.emplace_back(ni, nj);
 		}
 		break;
 
-	case 2:  // 车
+	case 2:  // 士
 		for (const auto& delta : DELTA.at(2)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
-			while (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8) {
+			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
 				if (id * data[ni][nj] <= 0)
-					possible_destinations.push_back({ ni, nj });
-				if (data[ni][nj] != 0) break;  // 如果遇到棋子，停止扩展
-				ni += delta.first;
-				nj += delta.second;
-			}
+					possible_destinations.emplace_back(ni, nj);
 		}
 		break;
 
@@ -148,26 +137,26 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
 				if (id * data[ni][nj] <= 0)
 					if (data[(ni + i) / 2][(nj + j) / 2] == 0)  // 检查中间位置是否空
-						possible_destinations.push_back({ ni, nj });
+						possible_destinations.emplace_back(ni, nj);
 		}
 		break;
 
-	case 4:  // 士
+	case 4:  // 卒
 		ni = i + (id < 0 ? 1 : -1), nj = j;
 		if (id * data[ni][nj] <= 0)
-			possible_destinations.push_back({ ni, nj });
+			possible_destinations.emplace_back(ni, nj);
 		break;
 
-	case 5:  // 将
+	case 5:  // 马
 		for (const auto& delta : _delta) {
 			ni = i + delta[0], nj = j + delta[1];
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
 				if (id * data[ni][nj] <= 0)
-					possible_destinations.push_back({ ni, nj });
+					possible_destinations.emplace_back(ni, nj);
 		}
 		break;
 
-	case 6:  // 马
+	case 6:  // 炮
 		for (const auto& delta : DELTA.at(6)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -175,7 +164,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 				if (id * data[ni][nj] <= 0) {
 					int mid_i = i + delta.first / 2, mid_j = j + delta.second / 2;
 					if (data[mid_i][mid_j] == 0)
-						possible_destinations.push_back({ ni, nj });
+						possible_destinations.emplace_back(ni, nj);
 				}
 		}
 		break;
@@ -191,7 +180,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 						int key = id * data[ni][nj];
 						if (key != 0) {
 							if (key < 0) {
-								possible_destinations.push_back({ ni, nj });
+								possible_destinations.emplace_back(ni, nj);
 								break;
 							}
 							else break;
@@ -199,7 +188,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 					}
 					else {
 						if (id * data[ni][nj] != 0) stepping_stone = true;
-						else possible_destinations.push_back({ ni, nj });
+						else possible_destinations.emplace_back(ni, nj);
 					}
 				}
 			}
@@ -212,9 +201,9 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 				ni = i + delta.first, nj = j + delta.second;
 				if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8) {
 					if (id * data[ni][nj] == 0)
-						possible_destinations.push_back({ ni, nj });
+						possible_destinations.emplace_back(ni, nj);
 					else if (id * data[ni][nj] < 0) {
-						possible_destinations.push_back({ ni, nj });
+						possible_destinations.emplace_back( ni, nj );
 						break;
 					}
 					else break;
@@ -312,8 +301,8 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 	}
 
 	std::sort(valid_operations.begin(), valid_operations.end(), [&data](const Operation& a, const Operation& b) {
-		int a_score = SCORE_TABLE.at(abs(data[a.second.first][a.second.second]));
-		int b_score = SCORE_TABLE.at(abs(data[b.second.first][b.second.second]));
+		int a_score = SCORE_TABLE[abs(data[a.second.first][a.second.second])];
+		int b_score = SCORE_TABLE[(abs(data[b.second.first][b.second.second]))];
 		return a_score > b_score;
 		});
 
@@ -322,7 +311,7 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 
 
 // update the data of node
-static std::pair<float, float> update(Node& node, Node& child, Operation& op, float alpha, float beta, bool reverse = false) {
+static inline std::pair<float, float> update(Node& node, Node& child, Operation& op, float alpha, float beta, bool reverse = false) {
 	float temp = node.score;
 	if (!reverse)
 		alpha = node.score = std::max(node.score, child.score);
