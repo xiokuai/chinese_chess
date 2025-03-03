@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
-
+#include <string>
 
 // the coordinate of chess
 using Coordinate = std::pair<int, int>;
@@ -19,14 +19,14 @@ using ID = int;
 // score of each chess
 const int SCORE_TABLE[9] = {
 	{0},        // ?
-	{100},      // 帥
-	{3},        // 仕
-	{4},        // 相
+	{10000},      // 帥
+	{2},        // 仕
+	{2},        // 相
 	{1},        // 兵
 	{2},        // 兵（过河）
 	{5},        // 馬
 	{6},        // 砲
-	{12},       // 車
+	{9},       // 車
 };
 
 
@@ -59,12 +59,35 @@ public:
 };
 
 
+// Cache for evaluation results
+static std::unordered_map<std::string, float> evaluation_cache;
+
+// Helper function to convert board data to a string key
+static inline std::string board_to_string(int data[10][9]) {
+	std::string key;
+	for (int i = 0; i < 10; ++i) {
+		for (int j = 0; j < 9; ++j) {
+			key += std::to_string(data[i][j]) + ",";
+		}
+	}
+	return key;
+}
+
 // get an evaluate score of the board data
-static float evaluate(int data[10][9]) {
+static inline float evaluate(int data[10][9]) {
+	std::string key = board_to_string(data);
+	if (evaluation_cache.find(key) != evaluation_cache.end()) {
+		return evaluation_cache[key];
+	}
+
 	float score = 0.0f;
 	for (int i = 0; i < 10; ++i)
-		for (int j = 0; j < 9; ++j)
-			score += data[i][j] < 0 ? -SCORE_TABLE[-data[i][j]] : SCORE_TABLE[data[i][j]];
+		for (int j = 0; j < 9; ++j) {
+			int value = data[i][j];
+			score += value < 0 ? -SCORE_TABLE[-value] : SCORE_TABLE[value];
+		}
+
+	evaluation_cache[key] = score;
 	return score;
 }
 
@@ -325,8 +348,17 @@ static inline std::pair<float, float> update(Node& node, Node& child, Operation&
 
 // alpha value and beta value search
 static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, float alpha = -INFINITY, float beta = INFINITY) {
-	if (depth == 0)
-		return Node(evaluate(data));
+	std::string key = board_to_string(data) + std::to_string(depth) + std::to_string(reverse) + std::to_string(alpha) + std::to_string(beta);
+	if (evaluation_cache.find(key) != evaluation_cache.end()) {
+		return Node(evaluation_cache[key]);
+	}
+
+	if (depth == 0) {
+		float score = evaluate(data);
+		evaluation_cache[key] = score;
+		return Node(score);
+	}
+
 	Node node = Node(reverse ? beta : alpha);
 	for (auto& op : get_operations(data, reverse)) {
 		int si = op.first.first, sj = op.first.second, ei = op.second.first, ej = op.second.second;
@@ -337,6 +369,8 @@ static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, 
 		recover(data, si, sj, ei, ej, sv, ev);
 		if (alpha >= beta) break;
 	}
+
+	evaluation_cache[key] = node.score;
 	return node;
 }
 
