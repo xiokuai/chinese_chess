@@ -73,19 +73,21 @@ static inline std::string board_to_string(int data[10][9]) {
 	return key;
 }
 
-// get an evaluate score of the board data
+// Optimized evaluate function
 static inline float evaluate(int data[10][9]) {
 	std::string key = board_to_string(data);
-	if (evaluation_cache.find(key) != evaluation_cache.end()) {
-		return evaluation_cache[key];
+	auto it = evaluation_cache.find(key);
+	if (it != evaluation_cache.end()) {
+		return it->second;
 	}
 
 	float score = 0.0f;
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 10; ++i) {
 		for (int j = 0; j < 9; ++j) {
 			int value = data[i][j];
 			score += value < 0 ? -SCORE_TABLE[-value] : SCORE_TABLE[value];
 		}
+	}
 
 	evaluation_cache[key] = score;
 	return score;
@@ -122,7 +124,7 @@ static inline bool _find(int id) {
 }
 
 
-// get all possible destination of chess
+// Optimized possible_destination function
 static std::vector<Coordinate> possible_destination(int data[10][9], int i, int j) {
 	std::vector<Coordinate> possible_destinations;
 	int id = data[i][j];
@@ -157,7 +159,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		for (const auto& delta : DELTA.at(3)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
-			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
+			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8 && (i < 5 ? ni < 5 : ni > 4))
 				if (id * data[ni][nj] <= 0)
 					if (data[(ni + i) / 2][(nj + j) / 2] == 0)  // 检查中间位置是否空
 						possible_destinations.emplace_back(ni, nj);
@@ -226,7 +228,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 					if (id * data[ni][nj] == 0)
 						possible_destinations.emplace_back(ni, nj);
 					else if (id * data[ni][nj] < 0) {
-						possible_destinations.emplace_back( ni, nj );
+						possible_destinations.emplace_back(ni, nj);
 						break;
 					}
 					else break;
@@ -250,7 +252,7 @@ static inline void recover(int data[10][9], int si, int sj, int ei, int ej, int 
 }
 
 
-// judge whether the operation is valid
+// Optimized valid_operation function
 static bool valid_operation(int data[10][9], Operation operation) {
 	int si = operation.first.first, sj = operation.first.second;
 	int ei = operation.second.first, ej = operation.second.second;
@@ -260,23 +262,14 @@ static bool valid_operation(int data[10][9], Operation operation) {
 
 	process(data, si, sj, ei, ej);
 
-	// 优化 valid_coordinates 计算
 	std::vector<Coordinate> valid_coordinates = valid_coordinate(data, !reverse);
-	std::vector<Coordinate> valid_coordinates_filtered;
-
-	// 过滤 valid_coordinates，避免重复计算
-	for (auto& coord : valid_coordinates)
-		if (std::abs(data[coord.first][coord.second]) >= 5)
-			valid_coordinates_filtered.push_back(coord);
-
-	valid_coordinates = std::move(valid_coordinates_filtered);
-
-	// 避免冗余的 `recover` 调用，提前退出
-	for (auto& coordinate : valid_coordinates) {
-		for (auto& destination : possible_destination(data, coordinate.first, coordinate.second)) {
-			if (data[destination.first][destination.second] == key_id) {
-				recover(data, si, sj, ei, ej, sv, ev);
-				return false;
+	for (const auto& coordinate : valid_coordinates) {
+		if (std::abs(data[coordinate.first][coordinate.second]) >= 5) {
+			for (const auto& destination : possible_destination(data, coordinate.first, coordinate.second)) {
+				if (data[destination.first][destination.second] == key_id) {
+					recover(data, si, sj, ei, ej, sv, ev);
+					return false;
+				}
 			}
 		}
 	}
@@ -285,13 +278,12 @@ static bool valid_operation(int data[10][9], Operation operation) {
 		for (int j = 3; j <= 5; ++j) {
 			if (data[i][j] == -1) {
 				for (int ni = i + 1; ni < 10; ++ni) {
-					if (data[ni][j] == 0)
-						continue;
-					else if (data[ni][j] == 1) {
+					if (data[ni][j] == 0) continue;
+					if (data[ni][j] == 1) {
 						recover(data, si, sj, ei, ej, sv, ev);
 						return false;
 					}
-					else break;
+					break;
 				}
 			}
 		}
@@ -334,7 +326,7 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 
 
 // update the data of node
-static inline std::pair<float, float> update(Node& node, Node& child, Operation& op, float alpha, float beta, bool reverse = false) {
+static inline std::pair<float, float> update(Node& node, Node& child, const Operation& op, float alpha, float beta, bool reverse = false) {
 	float temp = node.score;
 	if (!reverse)
 		alpha = node.score = std::max(node.score, child.score);
@@ -346,11 +338,12 @@ static inline std::pair<float, float> update(Node& node, Node& child, Operation&
 }
 
 
-// alpha value and beta value search
+// Optimized alpha_beta_search function
 static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, float alpha = -INFINITY, float beta = INFINITY) {
 	std::string key = board_to_string(data) + std::to_string(depth) + std::to_string(reverse) + std::to_string(alpha) + std::to_string(beta);
-	if (evaluation_cache.find(key) != evaluation_cache.end()) {
-		return Node(evaluation_cache[key]);
+	auto cache_it = evaluation_cache.find(key);
+	if (cache_it != evaluation_cache.end()) {
+		return Node(cache_it->second);
 	}
 
 	if (depth == 0) {
@@ -358,9 +351,10 @@ static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, 
 		evaluation_cache[key] = score;
 		return Node(score);
 	}
-
+	
 	Node node = Node(reverse ? beta : alpha);
-	for (auto& op : get_operations(data, reverse)) {
+	auto operations = get_operations(data, reverse);
+	for (const auto& op : operations) {
 		int si = op.first.first, sj = op.first.second, ei = op.second.first, ej = op.second.second;
 		int sv = data[si][sj], ev = data[ei][ej];
 		process(data, si, sj, ei, ej);
@@ -378,6 +372,11 @@ static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, 
 // API for Python
 extern "C" _declspec(dllexport) float search(int data[10][9], int depth, int result[4], bool reverse = false) {
 	Node node = alpha_beta_search(data, depth, reverse);
+	if (node.operation == OPERATION) {
+		std::vector<Operation> operations = get_operations(data, reverse);
+		if (!operations.empty())
+		node.operation = get_operations(data, reverse)[0];
+	}
 	result[0] = node.operation.first.first;
 	result[1] = node.operation.first.second;
 	result[2] = node.operation.second.first;

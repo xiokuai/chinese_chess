@@ -22,11 +22,11 @@
 """
 
 # 版本号
-__version__ = '1.0.0'
+__version__ = '1.0.2'
 # 作者
 __author__ = '李悟/梁晨轩'
 # 更新日期
-__update__ = '2025/03/02'
+__update__ = '2025/03/05'
 
 if __name__ == '__main__':
     from winsound import Beep

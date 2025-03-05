@@ -120,12 +120,17 @@ def peace() -> bool:
 
 def dead(chesses: list[list], color: str) -> str | None:
     """ 绝杀判定（接收攻击者，返回攻击者） """
+    opponent_king_found = False
     for line in chesses:
         for chess in line:
-            if chess and chess.color != color:
-                for step in rule(chesses, chess):
-                    if not virtual(chesses, chess, step, warn, color):
+            if chess:
+                if chess.color != color and chess.name in '将帥':
+                    opponent_king_found = True
+                if chess.color != color:
+                    if any(not virtual(chesses, chess, step, warn, color) for step in rule(chesses, chess)):
                         return
+    if not opponent_king_found:
+        return color
     return color
 
 
@@ -138,7 +143,8 @@ def gameover(color: str | None = None) -> None:
     who = '你'
     if not color:
         statistic(Peace=1)
-        return messagebox.showinfo('游戏结束', '本局和棋！\t')
+        GUI.Window.root.after(0, lambda: messagebox.showinfo('游戏结束', '本局和棋！\t'))
+        return
     if GUI.Global.mode in 'LOCAL TEST':
         tone, win = '', '获胜！'
         who = '红方' if color == '#FF0000' else '黑方'
@@ -146,7 +152,7 @@ def gameover(color: str | None = None) -> None:
         statistic(Win=1)
     elif win == '输了。':
         statistic(Lose=1)
-    messagebox.showinfo('游戏结束', '%s%s%s\t' % (tone, who, win))
+    GUI.Window.root.after(0, lambda: messagebox.showinfo('游戏结束', '本局和棋！\t'))
     GUI.Window.canvas.itemconfigure(GUI.Window.timer, text='00:00\n- 中国象棋 -')
 
 

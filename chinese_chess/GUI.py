@@ -492,6 +492,8 @@ class Window:
             return
         # statistic(AI=1)
         data, score = intelligence(Global.chesses, color, config['level'])
+        if(data == None):
+            rule.gameover()
         print('\033[33mSCORE\033[0m:', score)
         pos, delta = data
         Global.chesses[pos[1]][pos[0]].move(*delta)
