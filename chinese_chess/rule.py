@@ -152,7 +152,7 @@ def gameover(color: str | None = None) -> None:
         statistic(Win=1)
     elif win == '输了。':
         statistic(Lose=1)
-    GUI.Window.root.after(0, lambda: messagebox.showinfo('游戏结束', '本局和棋！\t'))
+    GUI.Window.root.after(0, lambda: messagebox.showinfo(tone, win))
     GUI.Window.canvas.itemconfigure(GUI.Window.timer, text='00:00\n- 中国象棋 -')
 
 
