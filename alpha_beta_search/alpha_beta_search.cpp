@@ -116,14 +116,6 @@ static inline void process(int data[10][9], int si, int sj, int ei, int ej) {
 	data[ei][ej] += promote;
 }
 
-
-static inline bool _find(int id) {
-	for (int i : {0, 2, 4, 5, 7, 9})
-		return id == i;
-	return false;
-}
-
-
 // Optimized possible_destination function
 static std::vector<Coordinate> possible_destination(int data[10][9], int i, int j) {
 	std::vector<Coordinate> possible_destinations;
