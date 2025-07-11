@@ -114,8 +114,8 @@
 
 ### 资源文件
 
-1. config.json:    配置信息
-2. help.md:        帮助文本
-3. statistic.json: 统计数据
+1. chinese_chess_config.json:    配置信息
+2. chinese_chess_statistic.json: 统计数据
+3. help.md:        帮助文本
 4. audio/*.wav:    音效文件
 5. data            棋局库

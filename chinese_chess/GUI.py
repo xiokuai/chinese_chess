@@ -15,7 +15,7 @@ import LAN
 import rule
 import tkintertools as tkt
 from AI import intelligence
-from configure import config, configure, statistic
+from configure import STATISTIC_PATH, config, configure, statistic
 from constants import (BACKGROUND, FEN, SCREEN_HEIGHT, SCREEN_WIDTH,
                        STATISTIC_DICT, VIRTUAL_BLACK, VIRTUAL_INSIDE,
                        VIRTUAL_OUTLINE, VIRTUAL_RED, VOICE_BUTTON,
@@ -273,7 +273,7 @@ class Window:
         canvas = MiniWin(self.root, '统计数据', 400, 300).canvas
         logo(canvas)
         key_text, value_text = '', ''
-        with open('statistic.json', 'r', encoding='utf-8') as data:
+        with open(STATISTIC_PATH, 'r', encoding='utf-8') as data:
             for key, value in load(data).items():
                 key_text += '%s:\n' % STATISTIC_DICT[key]
                 value_text += '%d\n' % value

@@ -3,48 +3,20 @@
 """
 
 import ctypes
-from random import choice
-
 import alpha_beta_search
 import min_max_search
-import rule
 from configure import config
-from constants import EXIST_DICT
-from rule import rule
-from tools import virtual
 
-# def intelligence(chesses: list[list], color: str, depth: int) -> tuple[tuple[tuple[int, int], tuple[bool, int, int]] | None, int]:
-#     """ 电脑算法 """
-#     if not depth:  # 迭代终止条件
-#         return None, 0
+_cpp_lib = ctypes.WinDLL('./alpha_beta_search.dll')
 
-#     steps = {}
-#     color_ = '#FF0000' if color == '#000000' else '#000000'
-#     depth_ = depth-1
-
-#     for line in chesses:
-#         for chess in line:
-#             if chess and chess.color == color:
-#                 for step in rule(chesses, chess, True):
-#                     key = (chess.x, chess.y), step
-#                     steps[key] = EXIST_DICT[chesses[chess.y+step[2]]
-#                                             [chess.x+step[1]].name] if step[0] else 0
-#                     step_, score = virtual(
-#                         chesses, chess, step, intelligence, color_, depth_)
-#                     if step_:
-#                         steps[key] -= score
-
-#     if steps:
-#         steps = sorted(steps.items(), key=lambda dic: dic[1], reverse=True)
-#         ind = 0
-#         for i, step in enumerate(steps):
-#             if step[1] != steps[0][1]:
-#                 break
-#             ind = i
-#         return choice(steps[:ind+1])
-
-#     return None, 0
-
+# 设置 search 函数签名
+_cpp_lib.search.argtypes = [
+    ctypes.POINTER((ctypes.c_int * 9) * 10),  # board: 10x9 数组
+    ctypes.c_int,                             # depth
+    ctypes.POINTER(ctypes.c_int * 4),         # result: 4个int的数组
+    ctypes.c_bool                             # reverse
+]
+_cpp_lib.search.restype = ctypes.c_float
 
 id: dict[str, int] = {
     '将': -1,
@@ -78,18 +50,17 @@ def choose_algo(data: list[list[int]], depth: int, reverse: bool) -> alpha_beta_
     match config["algo"]:
         case 1:
             # 极小极大搜索算法
-            node = min_max_search.min_max_search(
-                data, depth, reverse=reverse)
+            node = min_max_search.min_max_search(data, depth, reverse=reverse)
         case 2:
             # α-β 剪枝算法
-            node = alpha_beta_search.alpha_beta_search(
-                data, depth, reverse=reverse)
+            node = alpha_beta_search.alpha_beta_search(data, depth, reverse=reverse)
         case _:
             # α-β 剪枝算法（C++ 实现）
-            node = alpha_beta_search.Node(
-                ctypes.WinDLL('./alpha_beta_search.dll').search(
-                    _lst_to_array(data), depth, (result := (ctypes.c_int * 4)()), reverse),
-                ((result[0], result[1]), (result[2], result[3])))
+            result = (ctypes.c_int * 4)()
+            c_data = _lst_to_array(data)
+            score = _cpp_lib.search(c_data, depth, result, reverse)
+            operation = ((result[0], result[1]), (result[2], result[3]))
+            return alpha_beta_search.Node(score, operation)
 
     if node.operation[0][0] == -1:
         node.operation = None
@@ -99,8 +70,8 @@ def choose_algo(data: list[list[int]], depth: int, reverse: bool) -> alpha_beta_
 def intelligence(chesses: list[list], color: str, depth: int) -> tuple[tuple[tuple[int, int], tuple[bool, int, int]] | None, int]:
     """"""
     data = [[0]*9 for _ in range(10)]
-    for i, lines in enumerate(chesses):
-        for j, chess in enumerate(lines):
+    for i, line in enumerate(chesses):
+        for j, chess in enumerate(line):
             if chess is not None:
                 data[i][j] = id[chess.name]
                 if data[i][j] == -4 and i >= 5:  # 卒兵过河类型转变

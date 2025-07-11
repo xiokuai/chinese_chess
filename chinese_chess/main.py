@@ -14,19 +14,19 @@
 
 ### 资源文件
 
-1. config.json:    配置信息
-2. help.md:        帮助文本
-3. statistic.json: 统计数据
+1. chnese_chess_config.json:    配置信息
+2. chenese_chess_statistic.json: 统计数据
+3. help.md:        帮助文本
 4. audio/*.wav:    音效文件
 5. data            棋局库
 """
 
 # 版本号
-__version__ = '1.0.4'
+__version__ = '1.1.0'
 # 作者
 __author__ = '李悟/梁晨轩'
 # 更新日期
-__update__ = '2025/3/14'
+__update__ = '2025/7/11'
 
 if __name__ == '__main__':
     from winsound import Beep

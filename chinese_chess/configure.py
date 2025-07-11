@@ -1,6 +1,11 @@
 import os
 from json import dump, load
 
+# 获取用户主目录
+USER_HOME = os.path.expanduser("~")
+CONFIG_PATH = os.path.join(USER_HOME, 'chinese_chess_config.json')
+STATISTIC_PATH = os.path.join(USER_HOME, 'chinese_chess_statistic.json')
+
 # 检查文件是否存在，如果不存在则创建并初始化为空字典
 def ensure_file_exists(filename: str) -> dict:
     if not os.path.exists(filename):
@@ -8,15 +13,15 @@ def ensure_file_exists(filename: str) -> dict:
             dump({}, file, indent=4)
     try:
         with open(filename, 'r', encoding='utf-8') as file:
-            if filename == 'config.json':
+            if filename == CONFIG_PATH:
                 data = load(file)
-            elif filename == 'statistic.json':
+            elif filename == STATISTIC_PATH:
                 data = load(file);
     except (IOError, json.JSONDecodeError):
-        # 如果文件读取失败（例如，不是有效的JSON），则创建一个新的空字典
+        # 如果文件读取失败，则创建一个新的空字典
         data = {}
     # 检查并添加缺失的项
-    if filename == 'config.json':
+    if filename == CONFIG_PATH:
         defaults = {
             'auto_scale': True,
             'scale': 1,
@@ -25,7 +30,7 @@ def ensure_file_exists(filename: str) -> dict:
             'peace': 60,
             'algo': 0,
         }
-    elif filename == 'statistic.json':
+    elif filename == STATISTIC_PATH:
         defaults = {
             'Launch': 0,
             'Play': 0,
@@ -56,19 +61,17 @@ def ensure_file_exists(filename: str) -> dict:
 
 
 # 加载配置文件
-config_filename = 'config.json'
-config = ensure_file_exists(config_filename)
+config = ensure_file_exists(CONFIG_PATH)
 
 # 修改配置文件的函数
 def configure(**kw) -> None:
     global config
     config.update(**kw)
-    with open(config_filename, 'w', encoding='utf-8') as file:
+    with open(CONFIG_PATH, 'w', encoding='utf-8') as file:
         dump(config, file, indent=4)
 
 # 加载统计数据文件
-statistic_filename = 'statistic.json'
-statistic_data = ensure_file_exists(statistic_filename)
+statistic_data = ensure_file_exists(STATISTIC_PATH)
 
 # 修改统计数据的函数
 def statistic(**kw) -> None:
@@ -78,5 +81,5 @@ def statistic(**kw) -> None:
             statistic_data[key] += value
         else:
             statistic_data[key] = value
-    with open(statistic_filename, 'w', encoding='utf-8') as file:
+    with open(STATISTIC_PATH, 'w', encoding='utf-8') as file:
         dump(statistic_data, file, indent=4)
