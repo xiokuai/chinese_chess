@@ -6,6 +6,7 @@ from socket import SOCK_DGRAM, socket
 from threading import Thread
 from tkinter import messagebox, ttk
 from winsound import SND_ASYNC, PlaySound
+import json
 
 import GUI
 import tkintertools as tkt
@@ -25,43 +26,47 @@ class _Base:
     def baseUI(self, toplevel: tkt.Toplevel) -> None:
         """ 基本UI界面 """
         self.toplevel = toplevel
-        self.canvas = tkt.Canvas(
-            self.toplevel, 300*S, 150*S, bg='#FFFFFF', expand=False)
+        self.canvas = tkt.Canvas(self.toplevel, 300*S, 150*S, bg='#FFFFFF', expand=False)
         self.canvas.place(x=0, y=0)
-        self.canvas.create_rectangle(
-            -1, 115*S, 301*S, 151*S, width=0, fill='#F1F1F1')
+        self.canvas.create_rectangle(-1, 115*S, 301*S, 151*S, width=0, fill='#F1F1F1')
 
-        self.again = tkt.CanvasButton(
-            self.canvas, 42*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)))
-        self.again.command_ex['press'] = lambda: PlaySound(
-            VOICE_BUTTON, SND_ASYNC)
-        self.ok = tkt.CanvasButton(
-            self.canvas, 128*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)))
-        self.ok.command_ex['press'] = lambda: PlaySound(
-            VOICE_BUTTON, SND_ASYNC)
-        self.cancel = tkt.CanvasButton(
-            self.canvas, 214*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)), text='取消', command=self.close)
-        self.cancel.command_ex['press'] = lambda: PlaySound(
-            VOICE_BUTTON, SND_ASYNC)
+        self.again = tkt.CanvasButton(self.canvas, 42*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)))
+        self.again.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
+        self.ok = tkt.CanvasButton(self.canvas, 128*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)))
+        self.ok.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
+        self.cancel = tkt.CanvasButton(self.canvas, 214*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)), text='取消', command=self.close)
+        self.cancel.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
         self.again.set_live(False)
 
     def send(self, **kw) -> int:
         """ 发送消息 """
         try:
+            data = json.dumps(kw, ensure_ascii=False).encode('utf-8')
             if self.connection:
-                return self.connection.send(kw.__repr__().encode('utf-8'))
-            return self.socket.send(kw.__repr__().encode('utf-8'))
+                return self.connection.send(data)
+            return self.socket.send(data)
         except ConnectionResetError:
-            pass
+            messagebox.showerror("发送失败：连接已重置")
 
     def recv(self, __bufsize: int = 1024) -> dict:
         """ 接收消息 """
         try:
             if self.connection:
-                return eval(self.connection.recv(__bufsize).decode('utf-8'))
-            return eval(self.socket.recv(__bufsize).decode('utf-8'))
+                raw = self.connection.recv(__bufsize).decode('utf-8')
+            else:
+                raw = self.socket.recv(__bufsize).decode('utf-8')
+
+            return json.loads(raw)
+
+        except json.JSONDecodeError:
+            messagebox.showerror("接收到的数据不是合法的 JSON 格式")
+            return {}
         except ConnectionResetError:
-            pass
+            messagebox.showerror("接收失败：连接已重置")
+            return {}
 
     def close(self) -> None:
         """ 关闭联机功能 """
@@ -86,10 +91,8 @@ class Server(_Base):
         self.ok.configure(text='确定')
         self.ok.command = self.identify
         self.ok.set_live(False)
-        self.text = self.canvas.create_text(
-            150*S, 15*S, font=('楷体', round(12*S)))
-        self.time_ = self.canvas.create_text(
-            150*S, 65*S, font=('楷体', round(30*S)))
+        self.text = self.canvas.create_text(150*S, 15*S, font=('楷体', round(12*S)))
+        self.time_ = self.canvas.create_text(150*S, 65*S, font=('楷体', round(30*S)))
 
     def timer(self, ind: int = 60) -> None:
         """ 计时器 """
@@ -142,6 +145,7 @@ class Client(_Base):
     def __init__(self, toplevel: tkt.Toplevel) -> None:
         _Base.__init__(self, toplevel)
         self.UI()
+        self.ok.set_live(False)
         Thread(target=self.search, daemon=True).start()
 
     def UI(self) -> None:
@@ -149,21 +153,21 @@ class Client(_Base):
         self.again.configure(text='重新搜索')
         self.again.command = lambda: (Thread(
             target=self.search, daemon=True).start(), self.again.set_live(False))
+
         self.ok.configure(text='连接')
         self.ok.command = self.connect
-        self.canvas.create_text(
-            10*S, 10*S, text='搜索进度', anchor='w', font=('楷体', round(10*S)))
-        self.text = self.canvas.create_text(
-            10*S, 60*S, text='可用连接(0)', anchor='w', font=('楷体', round(10*S)))
-        self.bar = tkt.ProcessBar(
-            self.canvas, 10*S, 25*S, 280*S, 15*S, font=('楷体', round(10*S)))
+
+        self.canvas.create_text(10*S, 10*S, text='搜索进度', anchor='w', font=('楷体', round(10*S
+                                                                                       )))
+        self.text = self.canvas.create_text(10*S, 60*S, text='可用连接(0)', anchor='w', font=('楷体', round(10*S)))
+
+        self.bar = tkt.ProcessBar(self.canvas, 10*S, 25*S, 280*S, 15*S, font=('楷体', round(10*S)))
+
         self.combobox = ttk.Combobox(self.canvas)
-        self.combobox.place(
-            width=190*tkt.S*S, height=20*tkt.S*S, x=10*tkt.S*S, y=80*tkt.S*S)
-        tkt.CanvasButton(
-            self.canvas, 210*S, 80*S, 80*S, 20*S, 5*S, '更多', font=('楷体', round(10*S)),
-            command=lambda: GUI.more_set(self.toplevel)
-        ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.combobox.place(width=190*tkt.S*S, height=20*tkt.S*S, x=10*tkt.S*S, y=80*tkt.S*S)
+
+        tkt.CanvasButton(self.canvas, 210*S, 80*S, 80*S, 20*S, 5*S, '更多', font=('楷体', round(10*S)),
+            command=lambda: GUI.more_set(self.toplevel)).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
 
     def search(self) -> None:
         """ 搜索 """
@@ -176,7 +180,7 @@ class Client(_Base):
         modify()
         prefix = ADDRESS.rsplit('.', 1)[0]
         client = socket(type=SOCK_DGRAM)  # UDP
-        client.settimeout(1e-4)
+        client.settimeout(0.1)
         for i in range(1, 255):
             address = '%s.%d' % (prefix, i)
             try:
@@ -190,12 +194,14 @@ class Client(_Base):
             if self.flag:
                 return client.close()
             self.bar.load(i/254)
+        self.ok.set_live(True)
         self.again.set_live(True)
 
     def connect(self) -> None:
         """ 连接 """
         address = self.combobox.get()
         if not address:
+            # TODO：高亮combobox
             return messagebox.showwarning('中国象棋', '请选择可用的目标地址！')
         try:
             self.socket.connect((address, PORT))
@@ -203,8 +209,8 @@ class Client(_Base):
             self.again.set_live(False)
             self.ok.set_live(False)
             Thread(target=self.identify, daemon=True).start()
-        except:
-            messagebox.showerror('中国象棋', '目标地址无效！')
+        except Exception as e:
+            messagebox.showerror('中国象棋', f'连接失败：{e}')
 
     def identify(self) -> None:
         """ 身份确认 """
@@ -221,12 +227,12 @@ class Client(_Base):
 
 
 class API:
-    """ 接口 """
+    """ UI接口 """
 
     instance: Server | Client | None = None
 
     @classmethod
-    def __init__(cls, toplevel: tkt.Toplevel, type_: str) -> None:
+    def init(cls, toplevel: tkt.Toplevel, type_: str) -> None:
         if type_ == 'SERVER':
             cls.instance = Server(toplevel)
         else:
@@ -234,12 +240,16 @@ class API:
 
     @classmethod
     def send(cls, **kw) -> int:
-        """ 发送信息 """
+        """ 发送信息 """    
+        if cls.instance is None:
+            raise RuntimeError("API 未初始化。请先调用 API.init()")
         return cls.instance.send(**kw)
 
     @classmethod
     def recv(cls, __bufsize: int = 1024) -> dict:
         """ 接收消息 """
+        if cls.instance is None:
+            raise RuntimeError("API 未初始化。请先调用 API.init()")
         return cls.instance.recv(__bufsize)
 
     @classmethod

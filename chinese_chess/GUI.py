@@ -183,13 +183,13 @@ class Window:
                     150*S, 85*S, font=('楷体', round(10*S)), justify='center', text='请选择连接方式')
                 tkt.CanvasButton(
                     canvas_, 20*S, 20*S, 120*S, 30*S, 8*S, '客户端连接', font=('楷体', round(12*S)),
-                    command=lambda: (LAN.API(toplevel, 'CLIENT'),
+                    command=lambda: (LAN.API.init(toplevel, 'CLIENT'),
                                      PlaySound(VOICE_BUTTON, SND_ASYNC))
                 ).command_ex['touch'] = lambda: canvas_.itemconfigure(
                     info, text='主动的连接方式\n套接字将主动搜索局域网内可识别的服务端')
                 tkt.CanvasButton(
                     canvas_, 160*S, 20*S, 120*S, 30*S, 8*S, '服务端连接', font=('楷体', round(12*S)),
-                    command=lambda: (LAN.API(toplevel, 'SERVER'),
+                    command=lambda: (LAN.API.init(toplevel, 'SERVER'),
                                      PlaySound(VOICE_BUTTON, SND_ASYNC))
                 ).command_ex['touch'] = lambda: canvas_.itemconfigure(
                     info, text='被动的连接方式\n套接字将惰性地等待可能的客户端的连接')
@@ -260,9 +260,9 @@ class Window:
         data_list, ind = [], -1
         with open('help.md', 'r', encoding='utf-8') as file:
             for line in file.readlines():
-                if line.startswith('###'):
+                if line.startswith('##'):
                     ind += 1
-                    data_list.append([line[4:].rstrip(), ''])
+                    data_list.append([line[3:].rstrip(), ''])
                 else:
                     data_list[ind][1] += text_limit(line, 22)
 
@@ -310,49 +310,36 @@ class Window:
         m = MiniWin(self.root, '游戏设置', 400, 300)
         toplevel, canvas = m.toplevel, m.canvas
         logo(canvas)
-        canvas.create_rectangle(
-            -1, 265*S, 401*S, 301*S, width=0, fill='#F1F1F1')
-        canvas.create_text(
-            20*S, 20*S, text='窗口缩放系数（重启生效）', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(
-            20*S, 50*S, text='窗口自动缩放（重启生效）', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(
-            20*S, 80*S, text='棋子可走显示', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(
-            20*S, 110*S, text='AI最大搜索深度', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(
-            20*S, 140*S, text='AI搜索算法', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(
-            20*S, 170*S, text='和棋判定回合数', font=('楷体', round(12*S)), anchor='w')
+        canvas.create_rectangle(-1, 265*S, 401*S, 301*S, width=0, fill='#F1F1F1')
+        canvas.create_text(20*S, 20*S, text='窗口缩放系数（重启生效）', font=('楷体', round(12*S)), anchor='w')
+        canvas.create_text(20*S, 50*S, text='窗口自动缩放（重启生效）', font=('楷体', round(12*S)), anchor='w')
+        canvas.create_text(20*S, 80*S, text='棋子可走显示', font=('楷体', round(12*S)), anchor='w')
+        canvas.create_text(20*S, 110*S, text='AI最大搜索深度', font=('楷体', round(12*S)), anchor='w')
+        canvas.create_text(20*S, 140*S, text='AI搜索算法', font=('楷体', round(12*S)), anchor='w')
+        canvas.create_text(20*S, 170*S, text='和棋判定回合数', font=('楷体', round(12*S)), anchor='w')
 
-        scale = tkt.CanvasEntry(
-            canvas, 220*S, 10*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)),
-            color_fill=tkt.COLOR_NONE)
+        scale = tkt.CanvasEntry(canvas, 220*S, 10*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
         scale.set(str(config['scale']))
         scale.cursor_flash()
+
         auto_scale = tkt.CanvasButton(
             canvas, 220*S, 40*S, 80*S, 20*S, 5*S, str(config['auto_scale']), font=('楷体', round(12*S)),
-            command=lambda: auto_scale.configure(
-                text='True' if auto_scale.value == 'False' else 'False'),
-            color_fill=tkt.COLOR_NONE)
-        auto_scale.command_ex['press'] = lambda: PlaySound(
-            VOICE_BUTTON, SND_ASYNC)
+            command=lambda: auto_scale.configure(text='True' if auto_scale.value == 'False' else 'False'), color_fill=tkt.COLOR_NONE)
+        auto_scale.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
         info = tkt.CanvasButton(
             canvas, 130*S, 70*S, 80*S, 20*S, 5*S, str(config['virtual']), font=('楷体', round(12*S)),
-            command=lambda: info.configure(
-                text='True' if info.value == 'False' else 'False'),
-            color_fill=tkt.COLOR_NONE)
+            command=lambda: info.configure(text='True' if info.value == 'False' else 'False'), color_fill=tkt.COLOR_NONE)
         info.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-        level = tkt.CanvasEntry(
-            canvas, 140*S, 100*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)),
-            color_fill=tkt.COLOR_NONE)
+
+        level = tkt.CanvasEntry(canvas, 140*S, 100*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
         level.set(str(config['level']))
         level.cursor_flash()
-        peace = tkt.CanvasEntry(
-            canvas, 140*S, 160*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)),
-            color_fill=tkt.COLOR_NONE)
+
+        peace = tkt.CanvasEntry(canvas, 140*S, 160*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
         peace.set(str(config['peace']))
         peace.cursor_flash()
+
         ai = tkt.CanvasButton(canvas, 110*S, 130*S, 200*S, 20*S, 5*S,
                               "极小极大搜索" if config[
                                   'algo'] == 1 else "alpha-beta 剪枝" if config['algo'] == 2 else "alpha-beta 剪枝(C++实现)",
@@ -402,10 +389,8 @@ class Window:
 
         w = MiniWin(self.root, '棋局库', 300, 393)
         toplevel, canvas = w.toplevel, w.canvas
-        info = tkt.CanvasLabel(canvas, 5*S, 5*S, 200*S,
-                               20*S, 5*S, font=('楷体', 10), justify='left')
-        back = tkt.CanvasButton(
-            canvas, 210*S, 5*S, 80*S, 20*S, 5*S, '←后退', font=('楷体', round(12*S)),
+        info = tkt.CanvasLabel(canvas, 5*S, 5*S, 200*S, 20*S, 5*S, font=('楷体', 10), justify='left')
+        back = tkt.CanvasButton(canvas, 210*S, 5*S, 80*S, 20*S, 5*S, '←后退', font=('楷体', round(12*S)),
             command=lambda: canvas_set(path_.rsplit('/', 1)[0]))
         back.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
         content = tkt.Canvas(toplevel, int(290*S), int(357*S))
@@ -680,22 +665,17 @@ class Chess:
 
 def about() -> None:
     """ 关于页面 """
-    info = '版本: %s\n日期: %s\t\t\n作者: %s' % (
-        __version__, __update__, __author__)
+    info = '版本: %s\n日期: %s\t\t\n作者: %s' % (__version__, __update__, __author__)
     messagebox.showinfo('关于', message=info)
 
 
 def logo(canvas: tkt.Canvas) -> None:
     """ 给画布加上标志背景 """
     x, y, color = canvas.width[1]//2 + 10*S, canvas.height[1]//2, '#DDD'
-    canvas.create_text(
-        x-100*S, y-20*S, text='中', fill=color, font=('华文行楷', round(115*S)))
-    canvas.create_text(
-        x-35*S, y+35*S, text='国', fill=color, font=('华文行楷', round(100*S)))
-    canvas.create_text(
-        x+35*S, y-35*S, text='象', fill=color, font=('华文行楷', round(75*S)))
-    canvas.create_text(
-        x+80*S, y+45*S, text='棋', fill=color, font=('华文行楷', round(85*S)))
+    canvas.create_text(x-100*S, y-20*S, text='中', fill=color, font=('华文行楷', round(115*S)))
+    canvas.create_text(x-35*S, y+35*S, text='国', fill=color, font=('华文行楷', round(100*S)))
+    canvas.create_text(x+35*S, y-35*S, text='象', fill=color, font=('华文行楷', round(75*S)))
+    canvas.create_text(x+80*S, y+45*S, text='棋', fill=color, font=('华文行楷', round(85*S)))
 
 
 def more_set(toplevel: tkt.Toplevel, canvas: tkt.Canvas | None = None) -> None:

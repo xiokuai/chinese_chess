@@ -26,7 +26,7 @@ __version__ = '1.1.0'
 # 作者
 __author__ = '李悟/梁晨轩'
 # 更新日期
-__update__ = '2025/7/11'
+__update__ = '2025/7/12'
 
 if __name__ == '__main__':
     from winsound import Beep

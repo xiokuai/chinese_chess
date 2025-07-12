@@ -1,5 +1,5 @@
 import os
-from json import dump, load
+from json import dump, load, JSONDecodeError
 
 # 获取用户主目录
 USER_HOME = os.path.expanduser("~")
@@ -17,7 +17,7 @@ def ensure_file_exists(filename: str) -> dict:
                 data = load(file)
             elif filename == STATISTIC_PATH:
                 data = load(file);
-    except (IOError, json.JSONDecodeError):
+    except (IOError, JSONDecodeError):
         # 如果文件读取失败，则创建一个新的空字典
         data = {}
     # 检查并添加缺失的项
