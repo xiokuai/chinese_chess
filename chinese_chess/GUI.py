@@ -54,26 +54,29 @@ class Window:
 
     def __init__(self) -> None:
         """ 初始化 """
+        self.inZenMode = 0
         self.init_menu()
         self.init_bind()
         self.init_board()
         self.new()
+
         self.root.mainloop()
-
+    
     def activate_zen_mode(self):
-        self.root.attributes('-fullscreen', True)  # 全屏
-        self.root.configure(bg='black')  # 黑色背景
-        self.root.overrideredirect(True)  # 隐藏边框
+        if self.inZenMode == 1:      
+            self.root.attributes('-fullscreen', False)  # 退出全屏
+            self.root.overrideredirect(False)  # 恢复边框
 
-        # 使用相对坐标和锚点居中画布
-        self.canvas.place(relx=0.5, rely=0.5, anchor='center')  # 关键改动
-
-    def deactivate_zen_mode(self):
-        self.root.attributes('-fullscreen', False)  # 退出全屏
-        self.root.overrideredirect(False)  # 恢复边框
-
-        # 恢复默认布局
-        self.canvas.place(x=0, y=0)
+            # 恢复默认布局
+            self.canvas.place(x=0, y=0)
+            self.inZenMode = 0
+        else:
+            self.root.attributes('-fullscreen', True)  # 全屏
+            self.root.configure(bg='black')  # 黑色背景
+            self.root.overrideredirect(True)  # 隐藏边框      
+            # 使用相对坐标和锚点居中画布
+            self.canvas.place(relx=0.5, rely=0.5, anchor='center')
+            self.inZenMode = 1
 
     def init_menu(self) -> None:
         """ 菜单栏 """
@@ -108,8 +111,7 @@ class Window:
         self.root.bind('<Control-n>', lambda _: self.new())         # 新游戏
         self.root.bind('<Control-q>', lambda _: self.root.quit())   # 退出
         self.root.bind('<Control-t>', lambda _: self.test())        # AI测试
-        self.root.bind("<space>", lambda _: self.activate_zen_mode())  # 进入禅意模式
-        self.root.bind("<Escape>", lambda _: self.deactivate_zen_mode())  # 退出禅意模式
+        self.root.bind("<z>", lambda _: self.activate_zen_mode())  # 进/出禅意模式
 
     def init_board(self) -> None:
         """ 棋盘 """
