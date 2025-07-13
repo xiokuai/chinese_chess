@@ -7,7 +7,7 @@ import alpha_beta_search
 import min_max_search
 from configure import config
 
-_cpp_lib = ctypes.WinDLL('./alpha_beta_search.dll')
+_cpp_lib = ctypes.cdll.LoadLibrary('./alpha_beta_search.dll')
 
 # 设置 search 函数签名
 _cpp_lib.search.argtypes = [
