@@ -1,12 +1,10 @@
+/// alpha-beta search
+
 #include <algorithm>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 #include <string>
-#include <limits>
-#include <iostream>
-
-const float FLOAT_MAX = std::numeric_limits<float>::max() - 10000;
 
 // the coordinate of chess
 using Coordinate = std::pair<int, int>;
@@ -20,15 +18,15 @@ using ID = int;
 
 // score of each chess
 const int SCORE_TABLE[9] = {
-	{0},        // 未知（错误类型）
-	{10000},    // 帥
+	{0},        // ?
+	{10000},      // 帥
 	{2},        // 仕
 	{2},        // 相
 	{1},        // 兵
 	{2},        // 兵（过河）
 	{5},        // 馬
 	{6},        // 砲
-	{9},        // 車
+	{9},       // 車
 };
 
 
@@ -49,12 +47,10 @@ const Operation OPERATION = { {-1, -1}, {-1, -1} };
 
 
 // Node of the min-max searching tree
-struct Node {
+class Node {
 public:
 	float score;
 	Operation operation;
-
-	Node() : score(0.0f), operation(OPERATION) {}
 
 	Node(float score, Operation operation = OPERATION) {
 		this->score = score;
@@ -64,7 +60,7 @@ public:
 
 
 // Cache for evaluation results
-static std::unordered_map<std::string, Node> evaluation_cache;
+static std::unordered_map<std::string, float> evaluation_cache;
 
 // Helper function to convert board data to a string key
 static inline std::string board_to_string(int data[10][9]) {
@@ -79,6 +75,12 @@ static inline std::string board_to_string(int data[10][9]) {
 
 // Optimized evaluate function
 static inline float evaluate(int data[10][9]) {
+	std::string key = board_to_string(data);
+	auto it = evaluation_cache.find(key);
+	if (it != evaluation_cache.end()) {
+		return it->second;
+	}
+
 	float score = 0.0f;
 	for (int i = 0; i < 10; ++i) {
 		for (int j = 0; j < 9; ++j) {
@@ -86,12 +88,14 @@ static inline float evaluate(int data[10][9]) {
 			score += value < 0 ? -SCORE_TABLE[-value] : SCORE_TABLE[value];
 		}
 	}
+
+	evaluation_cache[key] = score;
 	return score;
 }
 
 
 // get all valid coordinates on board
-static std::vector<Coordinate> valid_coordinate(const int data[10][9], bool reverse = false) {
+static std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = false) {
 	std::vector<Coordinate> valid_coordinates;
 	for (int i = 0; i < 10; ++i)
 		for (int j = 0; j < 9; ++j)
@@ -113,7 +117,7 @@ static inline void process(int data[10][9], int si, int sj, int ei, int ej) {
 }
 
 // Optimized possible_destination function
-static std::vector<Coordinate> possible_destination(const int data[10][9], int i, int j) {
+static std::vector<Coordinate> possible_destination(int data[10][9], int i, int j) {
 	std::vector<Coordinate> possible_destinations;
 	int id = data[i][j];
 	int abs_id = std::abs(id);
@@ -286,105 +290,89 @@ static bool valid_operation(int data[10][9], Operation operation) {
 static std::vector<Operation> get_operations(int data[10][9], bool reverse = false) {
 	std::vector<Operation> valid_operations;
 
-	for (const auto& [x, y] : valid_coordinate(data, reverse)) {
+	auto get_valid_destinations = [&](int x, int y) {
+		std::vector<std::pair<int, int>> destinations;
 		for (const auto& destination : possible_destination(data, x, y)) {
 			Operation op{ {x, y}, destination };
 			if (valid_operation(data, op)) {
-				valid_operations.emplace_back(op);
+				destinations.push_back(destination);
 			}
 		}
+		return destinations;
+		};
+
+	for (const auto& coordinate : valid_coordinate(data, reverse)) {
+		for (const auto& destination : get_valid_destinations(coordinate.first, coordinate.second)) {
+			valid_operations.emplace_back(Operation{ coordinate, destination });
+		}
 	}
+
+	std::sort(valid_operations.begin(), valid_operations.end(), [&data](const Operation& a, const Operation& b) {
+		int a_score = SCORE_TABLE[abs(data[a.second.first][a.second.second])];
+		int b_score = SCORE_TABLE[(abs(data[b.second.first][b.second.second]))];
+		return a_score > b_score;
+		});
 
 	return valid_operations;
 }
 
 
 // update the data of node
-static inline void update(Node& node, const Node& child, const Operation& op, float& alpha, float& beta, const int depth, bool reverse = false) {
-	if (!reverse) {
+static inline std::pair<float, float> update(Node& node, Node& child, const Operation& op, float alpha, float beta, bool reverse = false) {
+	float temp = node.score;
+	if (!reverse)
 		alpha = node.score = std::max(node.score, child.score);
-		if (depth - 1) {
-			node.operation = op;
-		}
-	}
-	else {
+	else
 		beta = node.score = std::min(node.score, child.score);
-		if (depth - 1) {
-			node.operation = op;
-		}
-	}
+	if (node.score != temp)
+		node.operation = op;
+	return { alpha, beta };
 }
 
-#ifdef DEBUG
-static void inline print_board(int data[10][9]) {
-	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 9; ++j) {
-			std::cout << data[i][j] << "\t";
-		}
-		std::cout << std::endl;
-	}
-	std::cout << "-----------------------------" << std::endl;
-}
-#endif
 
 // Optimized alpha_beta_search function
-static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, float alpha = -FLOAT_MAX, float beta = FLOAT_MAX) {
-	std::string key = board_to_string(data);
-	if(evaluation_cache.find(key) != evaluation_cache.end()) {
-		return evaluation_cache[key];
+static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, float alpha = -INFINITY, float beta = INFINITY) {
+	std::string key = board_to_string(data) + std::to_string(depth) + std::to_string(reverse) + std::to_string(alpha) + std::to_string(beta);
+	auto cache_it = evaluation_cache.find(key);
+	if (cache_it != evaluation_cache.end()) {
+		return Node(cache_it->second);
 	}
 
 	if (depth == 0) {
 		float score = evaluate(data);
+		evaluation_cache[key] = score;
 		return Node(score);
 	}
 	
 	Node node = Node(reverse ? beta : alpha);
 	auto operations = get_operations(data, reverse);
-
-	std::sort(operations.begin(), operations.end(), [&data](const Operation& a, const Operation& b) {
-		int a_score = SCORE_TABLE[abs(data[a.second.first][a.second.second])];
-		int b_score = SCORE_TABLE[(abs(data[b.second.first][b.second.second]))];
-		return a_score > b_score;
-		});
-
-	if (operations.empty()) {
-		node.score = reverse ? -FLOAT_MAX : FLOAT_MAX;  // Checkmate
-		return node;
-	}
 	for (const auto& op : operations) {
 		int si = op.first.first, sj = op.first.second, ei = op.second.first, ej = op.second.second;
 		int sv = data[si][sj], ev = data[ei][ej];
 		process(data, si, sj, ei, ej);
 		Node child = alpha_beta_search(data, depth - 1, !reverse, alpha, beta);
-		// 更新alpha,beta,score,op
-		update(node, child, op, alpha, beta, depth, reverse);
+		std::tie(alpha, beta) = update(node, child, op, alpha, beta, reverse);
 		recover(data, si, sj, ei, ej, sv, ev);
+		if (alpha >= beta) break;
 	}
 
-	evaluation_cache[key] = node;
+	evaluation_cache[key] = node.score;
 	return node;
 }
 
 
 // API for Python
 extern "C" _declspec(dllexport) float search(int data[10][9], int depth, int result[4], bool reverse = false) {
-#ifdef DEBUG
-	std::cout << "\nIt's debug output:\n";
-#endif // DEBUG
 	Node node = alpha_beta_search(data, depth, reverse);
-	/*if (node.operation == OPERATION) {
+	if (node.operation == OPERATION) {
 		std::vector<Operation> operations = get_operations(data, reverse);
 		if (!operations.empty())
 		node.operation = get_operations(data, reverse)[0];
-	}*/
+	}
 	result[0] = node.operation.first.first;
 	result[1] = node.operation.first.second;
 	result[2] = node.operation.second.first;
 	result[3] = node.operation.second.second;
-#ifdef DEBUG
-	std::cout << result[0] << " " << result[1] << " " << result[2] << " " << result[3];
-#endif
 	return node.score;
 }
 
