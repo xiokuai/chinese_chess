@@ -3,7 +3,6 @@
 """
 
 from threading import Thread
-from tkinter import messagebox
 
 from configure import config, statistic
 from tools import virtual
@@ -135,24 +134,43 @@ def dead(chesses: list[list], color: str) -> str | None:
 
 
 def gameover(color: str | None = None) -> None:
-    """ 游戏结束 """
+    """游戏结束逻辑处理"""
     import GUI
+    from tkinter import messagebox
+
+    # 清除玩家状态
     GUI.Global.player = None
     GUI.Global.choose = None
-    tone, win = ('恭喜你！', '赢了！') if color == '#FF0000' else ('很遗憾，', '输了。')
-    who = '你'
-    if not color:
+
+    # 和棋情况
+    if color is None:
         statistic(Peace=1)
         GUI.Window.root.after(0, lambda: messagebox.showinfo('游戏结束', '本局和棋！\t'))
         return
-    if GUI.Global.mode in 'LOCAL TEST':
-        tone, win = '', '获胜！'
-        who = '红方' if color == '#FF0000' else '黑方'
+
+    # 判断胜负
+    is_red = (color == '#FF0000')
+    is_local_test = GUI.Global.mode in ('LOCAL', 'TEST')
+
+    if is_local_test:
+        tone = ''
+        win = '获胜！'
+        who = '红方' if is_red else '黑方'
+    else:
+        tone = '恭喜你！' if is_red else '很遗憾，'
+        win = '赢了！' if is_red else '输了。'
+        who = '你'
+
+    # 统计结果
     if win == '赢了！':
         statistic(Win=1)
     elif win == '输了。':
         statistic(Lose=1)
+
+    # 弹窗提示
     GUI.Window.root.after(0, lambda: messagebox.showinfo(tone, win))
+
+    # 重置界面定时器显示
     GUI.Window.canvas.itemconfigure(GUI.Window.timer, text='00:00\n- 中国象棋 -')
 
 
@@ -222,8 +240,7 @@ def modechange(mode: str, code: str | None = None) -> None:
     GUI.Window.tip('— 提示 —\n游戏模式已更新\n为“%s”模式' % mode)
     switch()
     if GUI.Global.mode in 'COMPUTER END' and not GUI.Global.first:
-        GUI.Window.root.after(
-            500, Thread(target=lambda: GUI.Window.AImove('#000000'), daemon=True).start)
+        GUI.Window.root.after(500, Thread(target=lambda: GUI.Window.AImove('#000000'), daemon=True).start)
 
 
 def revoke(flag: bool = False) -> None:

@@ -41,16 +41,13 @@ class Global:
 class Window:
     """ 主窗口 """
 
-    root = tkt.Tk(
-        'Chinese Chess by李悟/梁晨轩', int(640*S), int(710*S),
-        (SCREEN_WIDTH - tkt.S * 640 * S)//2, 0, exit, 'logo.ico')
+    root = tkt.Tk('Chinese Chess by李悟/梁晨轩', int(640*S), int(710*S), (SCREEN_WIDTH - tkt.S * 640 * S)//2, 0, exit, 'logo.ico')
     root.resizable(False, False)
     menu = Menu(root, tearoff=False)
     root.configure(menu=menu)
     canvas = tkt.Canvas(root, 640*S, 710*S, bg=BACKGROUND, expand=False)
     canvas.place(x=0, y=0)
-    timer = canvas.create_text(
-        320*S, 355*S, font=('楷体', int(20*S)), justify='center', text='00:00\n- 中国象棋 -')
+    timer = canvas.create_text(320*S, 355*S, font=('楷体', int(20*S)), justify='center', text='00:00\n- 中国象棋 -')
 
     def __init__(self) -> None:
         """ 初始化 """
@@ -161,14 +158,14 @@ class Window:
 
         def canvas_set(mode: str) -> None:
             """ 设定次级画布 """
-            canvas_ = tkt.Canvas(
-                toplevel, 300*S, 150*S, expand=False)
+            canvas_ = tkt.Canvas(toplevel, 300*S, 150*S, expand=False)
             canvas_.place(x=0, y=0)
+
             last = tkt.CanvasButton(
                 canvas_, 6*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)), text='上一步',
                 command=lambda: (toplevel.title('选择模式'), canvas_.destroy()))
-            last.command_ex['press'] = lambda: PlaySound(
-                VOICE_BUTTON, SND_ASYNC)
+            last.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
             if mode in 'COMPUTER LOCAL':
                 more_set(toplevel, canvas_)
                 last.move(122*S, 0)
