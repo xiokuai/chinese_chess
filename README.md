@@ -4,7 +4,7 @@
 
 ---
 
-Chinese Chess (Xiangqi) is a traditional two-player strategy game that originated in China. Similar to international chess, it has a long and rich history. Due to its simple tools and engaging gameplay, it is widely popular throughout China and many other regions.
+Chinese Chess (Xiangqi) is a traditional two-player strategy game that originated in China. Similar to international chess, it has a long and rich history. Due to its simple equipment and engaging gameplay, it is widely popular throughout China and many other regions.
 
 Xiangqi uses a square-grid board with 32 circular pieces in total—16 for each side (red and black). Pieces are placed and moved on the intersections (not inside the squares). Players take turns to move their pieces, and the player who checkmates the opponent's general (帥/将) wins the game.
 
