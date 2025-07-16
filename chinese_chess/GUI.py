@@ -10,6 +10,8 @@ from threading import Thread
 from time import time
 from tkinter import Event, IntVar, Menu, filedialog, messagebox, ttk
 from winsound import SND_ASYNC, PlaySound
+from chinese_chess_lib import get_legal_moves, warn, dead
+from chinese_chess_lib import Chess as CChess
 
 import LAN
 import rule
@@ -447,7 +449,10 @@ class Window:
                         chess_ = chess
         Global.choose = chess_
         if chess_:
-            chess_.move_pos = rule.rule(Global.chesses, chess_, True)
+            # chess_.move_pos = rule.rule(Global.chesses, chess_, True)
+            cchess_board = convert_to_CChesses(Global.chesses)
+            cchess_obj = convert_to_CChess(chess_)
+            chess_.move_pos = get_legal_moves(cchess_board, cchess_obj, True)
             if config['virtual']:
                 for pos in chess_.move_pos:
                     chess_.virtual(*pos)
@@ -591,13 +596,13 @@ class Chess:
                 rule.gameover()
                 if Global.mode == 'LAN':
                     LAN.API.close()
-            elif not (color := rule.warn(Global.chesses, self.color)):
+            elif not (color := warn(convert_to_CChesses(Global.chesses), self.color)):
                 file = VOICE_EAT if flag else VOICE_DROP
                 PlaySound(file, SND_ASYNC)
             else:
                 PlaySound(VOICE_WARN, SND_ASYNC)
                 statistic(Warn=1)
-                if rule.dead(Global.chesses, color[0]):  # 绝杀
+                if dead(convert_to_CChesses(Global.chesses), color[0]):  # 绝杀
                     rule.gameover(color[0])
                     if Global.mode == 'LAN':
                         LAN.API.close()
@@ -756,3 +761,33 @@ def LANmove() -> None:
             return
         Global.chesses[9-y][8-x].move(flag, -x_, -y_)
         rule.switch()
+
+
+def convert_to_CChesses(chesses):
+    """将GUI棋盘转换为CChess棋盘"""
+    cchess_board = []
+    for y, row in enumerate(chesses):
+        c_row = []
+        for x, chess in enumerate(row):
+            if chess:
+                c = CChess()
+                c.x = chess.x
+                c.y = chess.y
+                c.color = chess.color
+                c.name = chess.name
+                c_row.append(c)
+            else:
+                c_row.append(None)
+        cchess_board.append(c_row)
+    return cchess_board
+
+def convert_to_CChess(chess):
+    """将GUI棋子转换为CChess棋子"""
+    if chess is None:
+        return None
+    c = CChess()
+    c.x = chess.x
+    c.y = chess.y
+    c.color = chess.color
+    c.name = chess.name
+    return c
