@@ -3,15 +3,14 @@
 """
 
 from math import hypot
-from os import listdir
 from sys import exit
 from threading import Thread
 from time import time
-from tkinter import Event, IntVar, Menu, filedialog, messagebox, ttk
+from tkinter import Event, IntVar, Menu, messagebox, ttk
 from winsound import SND_ASYNC, PlaySound
 from chess import Chess, convert_to_CChesses, convert_to_CChess
-from game import GameState
-from mini_win import MiniWin, HelpWin, StatisticWin,logo
+from game import game
+from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, logo
 from chinese_chess_lib import get_legal_moves
 
 import LAN
@@ -19,10 +18,9 @@ import rule
 import tkintertools as tkt
 from AI import intelligence
 from configure import config, configure, statistic
-from constants import (BACKGROUND, FEN, SCREEN_WIDTH, VOICE_BUTTON, S)
+from constants import (BACKGROUND, SCREEN_WIDTH, VOICE_BUTTON, S)
 from main import __author__, __update__, __version__
-
-game = GameState()
+from tools import open_file, save_file, clear
 
 class Window:
     """ 主窗口 """
@@ -69,7 +67,7 @@ class Window:
         self.menu.add_cascade(label='帮助(H)', menu=m2)
         m1.add_command(label='导入棋局', command=open_file, accelerator='Ctrl+O')
         m1.add_command(label='导出棋局', command=save_file, accelerator='Ctrl+S')
-        m1.add_command(label='棋局库', command=self.library)
+        m1.add_command(label='棋局库', command=lambda: LibraryWin(self.root))
         m1.add_separator()
         m1.add_command(label='撤销', accelerator='Ctrl+Z', command=rule.revoke)
         m1.add_command(label='恢复', accelerator='Ctrl+Y', command=rule.recovery)
@@ -272,54 +270,6 @@ class Window:
         tkt.CanvasButton(canvas, 228*S, 271*S, 80*S, 23*S, 6*S, '恢复默认', font=('楷体', round(12*S)), command=default
                          ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
 
-    def library(self) -> None:
-        """ 棋局库 """
-        def scroll(event: Event) -> None:
-            """ 上下移动画布 """
-            if (event.delta < 0 and content.pos <= 10) or (event.delta > 0 and content.pos >= content.length):
-                return
-            key = 1 if event.delta > 0 else -1
-            content.pos += key
-            for widget in content.widget():
-                tkt.move(content, widget, 0, 35*key*S, 300, 'smooth', 30)
-
-        def canvas_set(path: str) -> None:
-            """ 画布设定 """
-            if path.endswith('.fen'):
-                toplevel.destroy()
-                return open_file(path)
-            elif path[-4:] == 'data':
-                back.set_live(False)
-            else:
-                back.set_live(True)
-            nonlocal path_
-            path_ = path
-            info.configure(text=path.replace('./data', '.'))
-            path_list = listdir(path)
-            content.pos = content.length = len(path_list)
-            for widget in content.widget():
-                widget.destroy()
-            for i, file in enumerate(path_list):
-                tkt.CanvasButton(
-                    content, 5*S, (5+i*35)*S, 280*S, 30*S, 5 *
-                    S, file.replace('.fen', ''),
-                    command=lambda path=path, file=file: canvas_set(
-                        '%s/%s' % (path, file))
-                ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-
-        w = MiniWin(self.root, '棋局库', 300, 393)
-        toplevel, canvas = w.toplevel, w.canvas
-        info = tkt.CanvasLabel(canvas, 5*S, 5*S, 200*S, 20*S, 5*S, font=('楷体', 10), justify='left')
-        back = tkt.CanvasButton(canvas, 210*S, 5*S, 80*S, 20*S, 5*S, '←后退', font=('楷体', round(12*S)),
-            command=lambda: canvas_set(path_.rsplit('/', 1)[0]))
-        back.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-        content = tkt.Canvas(toplevel, int(290*S), int(357*S))
-        content.configure(highlightthickness=1, highlightbackground='grey')
-        content.bind('<MouseWheel>', scroll)
-        content.place(x=5*S, y=30*S)
-        path_ = './data'
-        canvas_set(path_)
-
     @classmethod
     def chess(cls) -> None:
         """ 初始化棋子 """
@@ -465,54 +415,6 @@ def more_set(toplevel: tkt.Toplevel, canvas: tkt.Canvas | None = None) -> None:
             text = ('右' if i & 1 else '左') + '車车砲炮馬马'[i//2]
             ttk.Checkbutton(canvas, text=text, onvalue=1, offvalue=0, variable=toplevel.var_list[i+1]).place(
                 width=100*tkt.S*S, height=30*tkt.S*S, x=x*tkt.S*S, y=y*tkt.S*S)
-
-
-def clear() -> None:
-    """ 清空棋盘 """
-    for y, line in enumerate(game.chesses):
-        for x, chess in enumerate(line):
-            if chess:
-                chess.destroy()
-                game.chesses[y][x] = None
-
-
-def open_file(path: str | None = None) -> None:
-    """ 打开文件 """
-    if path or (path := filedialog.askopenfilename(title='导入棋局', filetypes=[('象棋文件', '*.fen')])):
-        try:
-            with open(path, 'r', encoding='utf-8') as file:
-                code, first = file.read().split()
-            fen = {value: key for key, value in FEN.items()}
-            clear()
-            for y, line in enumerate(code.split('/')):
-                x = 0
-                for i in line:
-                    if i.isalpha():
-                        color = '#FF0000' if i.isupper() else '#000000'
-                        Chess(fen[i], x, y, color)
-                    x += int(i) if i.isdigit() else 1
-            game.first = first != 'b'
-            rule.modechange('END')
-        except:
-            Window.tip('— 提示 —\n象棋文件格式不正确！\n导入棋局失败！')
-
-
-def save_file(code: str = '') -> None:
-    """ 另存为文件 """
-    if path := filedialog.asksaveasfilename(
-            title='导出棋局', filetypes=[('象棋文件', '*.fen')], initialfile='Chess.fen'):
-        for line in game.chesses:
-            code, count = code + '/', 0
-            for chess in line:
-                if chess:
-                    code += str(count)+FEN[chess.name]
-                    count = 0
-                else:
-                    count += 1
-            code += str(count)
-        first = 'r' if game.first else 'b'
-        with open(path, 'w', encoding='utf-8') as file:
-            file.write('%s %s' % (code.replace('0', '')[1:], first))
 
 def LANmove() -> None:
     """ 局域网移动 """

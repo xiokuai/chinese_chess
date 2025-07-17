@@ -1,8 +1,11 @@
 from json import load
+from os import listdir
+from tkinter import Event
 import tkintertools as tkt
 from constants import (VOICE_BUTTON, SCREEN_HEIGHT, SCREEN_WIDTH, STATISTIC_DICT , S)
 from configure import STATISTIC_PATH
 from winsound import PlaySound, SND_ASYNC
+from tools import open_file
 
 def logo(canvas: tkt.Canvas) -> None:
     """ 给画布加上标志背景 """
@@ -92,3 +95,54 @@ class StatisticWin(MiniWin):
                 value_text += '%d\n' % value
         self.canvas.create_text(20*S, 4*S, text=key_text, font=('楷体', round(12*S)), anchor='nw')
         self.canvas.create_text(380*S, 4*S, text=value_text, font=('楷体', round(12*S)), anchor='ne', justify='right')
+
+class LibraryWin(MiniWin):
+    """ 棋局库 """
+    def __init__(self, root):
+        super().__init__(root, '棋局库', 300, 393)
+
+        self.path_ = self.path = './data'
+        self.info = tkt.CanvasLabel(self.canvas, 5*S, 5*S, 200*S, 20*S, 5*S, font=('楷体', 10), justify='left')
+        self.back = tkt.CanvasButton(self.canvas, 210*S, 5*S, 80*S, 20*S, 5*S, '←后退', font=('楷体', round(12*S)),
+            command=lambda: self.canvas_set(self.path_.rsplit('/', 1)[0]))
+        self.back.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.content = tkt.Canvas(self.toplevel, int(290*S), int(357*S))
+        self.content.configure(highlightthickness=1, highlightbackground='grey')
+        self.content.bind('<MouseWheel>', self.scroll)
+        self.content.place(x=5*S, y=30*S)
+        self.canvas_set(self.path)
+            
+    def scroll(self, event: Event) -> None:
+        """ 上下移动画布 """
+        if (event.delta < 0 and self.content.pos <= 10) or (event.delta > 0 and self.content.pos >= self.content.length):
+            return
+        key = 1 if event.delta > 0 else -1
+        self.content.pos += key
+        for widget in self.content.widget():
+            tkt.move(self.content, widget, 0, 35*key*S, 300, 'smooth', 30)
+
+    def canvas_set(self, path: str) -> None:
+        """ 画布设定 """
+        if path.endswith('.fen'):
+            self.toplevel.destroy()
+            return open_file(path)
+        elif path[-4:] == 'data':
+            self.back.set_live(False)
+        else:
+            self.back.set_live(True)
+
+        self.path_ = path
+        self.info.configure(text=path.replace('./data', '.'))
+
+        path_list = listdir(path)
+        self.content.pos = self.content.length = len(path_list)
+
+        for widget in self.content.widget():
+            widget.destroy()
+
+        for i, file in enumerate(path_list):
+            tkt.CanvasButton(
+                self.content, 5*S, (5+i*35)*S, 280*S, 30*S, 5*S,
+                file.replace('.fen', ''),
+                command=lambda path=path, file=file: self.canvas_set(f'{path}/{file}')
+            ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)

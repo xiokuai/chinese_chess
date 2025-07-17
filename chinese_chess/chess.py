@@ -9,7 +9,6 @@ from constants import S
 from configure import statistic
 from tools import print_chess
 from tkinter import Event
-from game import GameState
 
 class Chess:
     """ 棋子 """
