@@ -10,6 +10,8 @@ from threading import Thread
 from time import time
 from tkinter import Event, IntVar, Menu, filedialog, messagebox, ttk
 from winsound import SND_ASYNC, PlaySound
+from chess import Chess, convert_to_CChesses, convert_to_CChess
+from game import GameState
 from chinese_chess_lib import get_legal_moves, warn, dead
 from chinese_chess_lib import Chess as CChess
 
@@ -18,27 +20,10 @@ import rule
 import tkintertools as tkt
 from AI import intelligence
 from configure import STATISTIC_PATH, config, configure, statistic
-from constants import (BACKGROUND, FEN, SCREEN_HEIGHT, SCREEN_WIDTH,
-                       STATISTIC_DICT, VIRTUAL_BLACK, VIRTUAL_INSIDE,
-                       VIRTUAL_OUTLINE, VIRTUAL_RED, VOICE_BUTTON,
-                       VOICE_CHOOSE, VOICE_DROP, VOICE_EAT, VOICE_WARN, S)
+from constants import (BACKGROUND, FEN, SCREEN_HEIGHT, SCREEN_WIDTH, STATISTIC_DICT, VOICE_BUTTON, S)
 from main import __author__, __update__, __version__
-from tools import print_chess
 
-
-class Global:
-    """ 全局变量 """
-    mode = None     # 当前游戏模式
-    timer = 0       # 计时判断时间戳
-    count = 0       # 未吃棋回合计数（和棋判定需要）
-    index = -1      # 当前缓存索引
-    first = None    # 当前先手方
-    player = None   # 当前操作方
-    choose = None   # 当前选中棋子
-    cache = []      # 走棋缓存列表
-    chesses = [     # 棋盘列表
-        [None]*9 for _ in range(10)]  # type: list[list[Chess | None]]
-
+game = GameState()
 
 class Window:
     """ 主窗口 """
@@ -418,19 +403,19 @@ class Window:
     @classmethod
     def clock(cls, flag: list[int | None] = [0, None]) -> None:
         """ 计时 """
-        if (flag[1] and flag[1] != Global.timer) or not Global.player:
+        if (flag[1] and flag[1] != game.timer) or not game.player:
             return statistic(Time=flag[0])
         if not flag[1]:
-            Global.timer = flag[1] = time()
+            game.timer = flag[1] = time()
         cls.canvas.itemconfigure(
-            cls.timer, text='%02d:%02d\n%s思考中.' % (*divmod(flag[0], 60), Global.player)+'.'*(flag[0] % 3))
+            cls.timer, text='%02d:%02d\n%s思考中.' % (*divmod(flag[0], 60), game.player)+'.'*(flag[0] % 3))
         cls.root.after(1000, cls.clock, [flag[0]+1, flag[1]])
 
     @classmethod
     def touch(cls, event: Event) -> None:
         """ 高亮选棋 """
         flag = True
-        for line in Global.chesses:
+        for line in game.chesses:
             for chess in line:
                 if chess:
                     if chess.touch(event) and flag:
@@ -442,15 +427,15 @@ class Window:
     @classmethod
     def choose(cls, event: Event, chess_=None) -> None:
         """ 选中棋子 """
-        if not (Global.choose and cls.move(Global.choose, event)):
-            for chess in [chess for line in Global.chesses for chess in line]:
-                if chess and rule.ifop(chess, Global.player):
+        if not (game.choose and cls.move(game.choose, event)):
+            for chess in [chess for line in game.chesses for chess in line]:
+                if chess and rule.ifop(chess, game.player):
                     if chess.choose(event):
                         chess_ = chess
-        Global.choose = chess_
+        game.choose = chess_
         if chess_:
-            # chess_.move_pos = rule.rule(Global.chesses, chess_, True)
-            cchess_board = convert_to_CChesses(Global.chesses)
+            # chess_.move_pos = rule.rule(game.chesses, chess_, True)
+            cchess_board = convert_to_CChesses(game.chesses)
             cchess_obj = convert_to_CChess(chess_)
             chess_.move_pos = get_legal_moves(cchess_board, cchess_obj, True)
             if config['virtual']:
@@ -464,13 +449,13 @@ class Window:
         for flag, x_, y_ in choose.move_pos:
             x, y = (40+(choose.x+x_)*70)*S, (40+(choose.y+y_)*70)*S
             if hypot(event.x/tkt.S-x, event.y/tkt.S-y) < 30*S:
-                if Global.mode == 'LAN':
+                if game.mode == 'LAN':
                     LAN.API.send(
                         msg=(choose.x, choose.y, flag, x_, y_))
                 choose.move(flag, x_, y_)
                 choose.highlight(False, inside=False)
                 choose = None
-                if Global.mode in 'COMPUTER END':
+                if game.mode in 'COMPUTER END':
                     cls.root.after(700, Thread(
                         target=lambda: Window.AImove('#000000'), daemon=True).start)
                 rule.switch()
@@ -479,17 +464,17 @@ class Window:
     @classmethod
     def AImove(cls, color: str, flag: bool = False) -> None:
         """ 电脑移动 """
-        if not Global.player:
+        if not game.player:
             return
         # statistic(AI=1)
-        data, score = intelligence(Global.chesses, color, config['level'])
+        data, score = intelligence(game.chesses, color, config['level'])
         if(data == None):
             rule.gameover(color[0])
         print('\033[33mSCORE\033[0m:', score)
         pos, delta = data
-        Global.chesses[pos[1]][pos[0]].move(*delta)
+        game.chesses[pos[1]][pos[0]].move(*delta)
         rule.switch()
-        if flag and Global.mode == 'TEST':
+        if flag and game.mode == 'TEST':
             color = '#FF0000' if color == '#000000' else '#000000'
             cls.root.after(600, Thread(target=cls.AImove,
                            args=(color, True), daemon=True).start)
@@ -533,140 +518,6 @@ class MiniWin:
         self.canvas = tkt.Canvas(self.toplevel, width*S, height*S)
         self.canvas.place(x=0, y=0)
 
-
-class Chess:
-    """ 棋子 """
-
-    def __init__(self, name: str, x: int, y: int, color: bool) -> None:
-        """ 初始化 """
-        self.name = name  # 名称，区分类别
-        self.color = color  # 颜色，区分红黑
-        self.x, self.y = x, y
-        Global.chesses[y][x] = self
-        x, y = 40+x*70, 40+y*70
-        self.items = [
-            Window.canvas.create_oval(  # 阴影
-                (x-28)*S, (y-28)*S, (x+32)*S, (y+32)*S, fill='#505050', width=0),
-            Window.canvas.create_oval(  # 外框
-                (x-30)*S, (y-30)*S, (x+30)*S, (y+30)*S, fill='#B49632'),
-            Window.canvas.create_oval(  # 内框
-                (x-27)*S, (y-27)*S, (x+27)*S, (y+27)*S, fill='#D2B450', width=0),
-            Window.canvas.create_text(  # 文字
-                x*S, y*S, text=name, font=('楷体', round(27*S), 'bold'), fill=color)
-        ]  # type: list[int]
-        self.virtual_items = []  # type: list[int]
-        self.attack_chess = []  # type: list[Chess]
-        self.move_pos: list[tuple[int, int]] = []
-
-    def lift(self) -> None:
-        """ 提升位置 """
-        Window.canvas.lift(self.items[0])
-        Window.canvas.lift(self.items[1])
-        Window.canvas.lift(self.items[2])
-        Window.canvas.lift(self.items[3])
-
-    def move(self, flag: bool, x: int, y: int, cache: bool = False) -> None:
-        """ 移动 """
-        # statistic(Move=1)
-        self.lift()
-        self.virtual_delete()
-        self.x += x
-        self.y += y
-
-        if not cache:
-            Global.chesses[self.y-y][self.x-x] = None
-            Global.index += 1
-            if Global.index == len(Global.cache):  # 新增
-                Global.cache.append(  # (目标者名称，目标位置，回退位移)
-                    (getattr(Global.chesses[self.y][self.x], 'name', None), (self.x, self.y), (-x, -y)))
-            else:  # 覆盖
-                Global.cache[Global.index] = (
-                    (getattr(Global.chesses[self.y][self.x], 'name', None), (self.x, self.y), (-x, -y)))
-
-        def update() -> None:
-            """ 更新并播放音效 """
-            if flag:
-                statistic(Eat=1)
-                Global.count = 0
-                Global.chesses[self.y][self.x].destroy()
-            else:
-                Global.count += 1
-            Global.chesses[self.y][self.x] = self
-            if rule.peace():  # 和棋
-                rule.gameover()
-                if Global.mode == 'LAN':
-                    LAN.API.close()
-            elif not (color := warn(convert_to_CChesses(Global.chesses), self.color)):
-                file = VOICE_EAT if flag else VOICE_DROP
-                PlaySound(file, SND_ASYNC)
-            else:
-                PlaySound(VOICE_WARN, SND_ASYNC)
-                statistic(Warn=1)
-                if dead(convert_to_CChesses(Global.chesses), color[0]):  # 绝杀
-                    rule.gameover(color[0])
-                    if Global.mode == 'LAN':
-                        LAN.API.close()
-
-            print_chess(Global.chesses)
-
-        for item in self.items:
-            tkt.move(Window.canvas, item, x*70*S, y*70*S, 500, 'smooth',
-                     end=update if not self.items.index(item) else None)
-
-    def destroy(self) -> None:
-        """ 摧毁棋子 """
-        Window.canvas.delete(*self.items)
-        self.virtual_delete()
-
-    def highlight(self, condition: bool, color: str | None = None, inside: bool = True) -> bool:
-        """ 棋子高亮 """
-        if condition:
-            if not inside:
-                PlaySound(VOICE_CHOOSE, SND_ASYNC)
-            Window.canvas.itemconfigure(self.items[1+inside], fill=color)
-        else:
-            color_ = '#D2B450' if inside else '#B49632'
-            Window.canvas.itemconfigure(self.items[1+inside], fill=color_)
-        return condition
-
-    def touch(self, event: Event) -> bool:
-        """ 触碰棋子 """
-        x, y = (40+self.x*70)*S, (40+self.y*70)*S
-        condition = hypot(event.x/tkt.S-x, event.y/tkt.S-y) < 30*S
-        return self.highlight(condition, '#E4D296')
-
-    def choose(self, event: Event) -> bool:
-        """ 选中棋子 """
-        x, y = (40+self.x*70)*S, (40+self.y*70)*S
-        condition = hypot(event.x/tkt.S-x, event.y/tkt.S-y) < 30*S
-        if not self.highlight(condition, '#00FF00', False):
-            self.virtual_delete()
-        return condition
-
-    def virtual(self, flag: bool, x: int, y: int) -> None:
-        """ 虚位显示 """
-        if flag:
-            chess = Global.chesses[self.y+y][self.x+x]
-            self.attack_chess.append(chess)
-            chess.highlight(True, '#FF0000', False)
-        else:
-            x, y = 40+(self.x+x)*70, 40+(self.y+y)*70
-            self.virtual_items.append(Window.canvas.create_oval(  # 外框
-                (x-30)*S, (y-30)*S, (x+30)*S, (y+30)*S, fill='', outline=VIRTUAL_OUTLINE))
-            self.virtual_items.append(Window.canvas.create_oval(  # 内框
-                (x-27)*S, (y-27)*S, (x+27)*S, (y+27)*S, fill='', outline=VIRTUAL_INSIDE))
-            self.virtual_items.append(Window.canvas.create_text(  # 文字
-                x*S, y*S, text=self.name, font=('楷体', int(27*S), 'bold'),
-                fill=VIRTUAL_RED if self.color == '#FF0000' else VIRTUAL_BLACK))
-
-    def virtual_delete(self) -> None:
-        """ 删除虚位显示 """
-        for chess in self.attack_chess:
-            chess.highlight(False, inside=False)
-        self.attack_chess.clear()
-        Window.canvas.delete(*self.virtual_items)
-
-
 def about() -> None:
     """ 关于页面 """
     info = '版本: %s\n日期: %s\t\t\n作者: %s' % (__version__, __update__, __author__)
@@ -707,11 +558,11 @@ def more_set(toplevel: tkt.Toplevel, canvas: tkt.Canvas | None = None) -> None:
 
 def clear() -> None:
     """ 清空棋盘 """
-    for y, line in enumerate(Global.chesses):
+    for y, line in enumerate(game.chesses):
         for x, chess in enumerate(line):
             if chess:
                 chess.destroy()
-                Global.chesses[y][x] = None
+                game.chesses[y][x] = None
 
 
 def open_file(path: str | None = None) -> None:
@@ -729,7 +580,7 @@ def open_file(path: str | None = None) -> None:
                         color = '#FF0000' if i.isupper() else '#000000'
                         Chess(fen[i], x, y, color)
                     x += int(i) if i.isdigit() else 1
-            Global.first = first != 'b'
+            game.first = first != 'b'
             rule.modechange('END')
         except:
             Window.tip('— 提示 —\n象棋文件格式不正确！\n导入棋局失败！')
@@ -739,7 +590,7 @@ def save_file(code: str = '') -> None:
     """ 另存为文件 """
     if path := filedialog.asksaveasfilename(
             title='导出棋局', filetypes=[('象棋文件', '*.fen')], initialfile='Chess.fen'):
-        for line in Global.chesses:
+        for line in game.chesses:
             code, count = code + '/', 0
             for chess in line:
                 if chess:
@@ -748,10 +599,9 @@ def save_file(code: str = '') -> None:
                 else:
                     count += 1
             code += str(count)
-        first = 'r' if Global.first else 'b'
+        first = 'r' if game.first else 'b'
         with open(path, 'w', encoding='utf-8') as file:
             file.write('%s %s' % (code.replace('0', '')[1:], first))
-
 
 def LANmove() -> None:
     """ 局域网移动 """
@@ -759,35 +609,5 @@ def LANmove() -> None:
         x, y, flag, x_, y_ = LAN.API.recv()['msg']
         if (x, y) == (x_, y_):
             return
-        Global.chesses[9-y][8-x].move(flag, -x_, -y_)
+        game.chesses[9-y][8-x].move(flag, -x_, -y_)
         rule.switch()
-
-
-def convert_to_CChesses(chesses):
-    """将GUI棋盘转换为CChess棋盘"""
-    cchess_board = []
-    for y, row in enumerate(chesses):
-        c_row = []
-        for x, chess in enumerate(row):
-            if chess:
-                c = CChess()
-                c.x = chess.x
-                c.y = chess.y
-                c.color = chess.color
-                c.name = chess.name
-                c_row.append(c)
-            else:
-                c_row.append(None)
-        cchess_board.append(c_row)
-    return cchess_board
-
-def convert_to_CChess(chess):
-    """将GUI棋子转换为CChess棋子"""
-    if chess is None:
-        return None
-    c = CChess()
-    c.x = chess.x
-    c.y = chess.y
-    c.color = chess.color
-    c.name = chess.name
-    return c
