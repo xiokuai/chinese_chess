@@ -12,6 +12,8 @@ import GUI
 import tkintertools as tkt
 from constants import ADDRESS, PORT, VOICE_BUTTON, S
 from rule import modechange
+import rule
+from game import game
 
 
 class _Base:
@@ -256,3 +258,12 @@ class API:
     def close(cls) -> None:
         """ 关闭套接字 """
         cls.instance.close()
+
+def LANmove() -> None:
+    """ 局域网移动 """
+    while True:
+        x, y, flag, x_, y_ = API.recv()['msg']
+        if (x, y) == (x_, y_):
+            return
+        game.chesses[9-y][8-x].move(flag, -x_, -y_)
+        rule.switch()

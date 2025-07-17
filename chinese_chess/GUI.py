@@ -415,12 +415,3 @@ def more_set(toplevel: tkt.Toplevel, canvas: tkt.Canvas | None = None) -> None:
             text = ('右' if i & 1 else '左') + '車车砲炮馬马'[i//2]
             ttk.Checkbutton(canvas, text=text, onvalue=1, offvalue=0, variable=toplevel.var_list[i+1]).place(
                 width=100*tkt.S*S, height=30*tkt.S*S, x=x*tkt.S*S, y=y*tkt.S*S)
-
-def LANmove() -> None:
-    """ 局域网移动 """
-    while True:
-        x, y, flag, x_, y_ = LAN.API.recv()['msg']
-        if (x, y) == (x_, y_):
-            return
-        game.chesses[9-y][8-x].move(flag, -x_, -y_)
-        rule.switch()

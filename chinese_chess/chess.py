@@ -45,7 +45,7 @@ class Chess:
 
     def move(self, flag: bool, x: int, y: int, cache: bool = False) -> None:
         from GUI import Window, game, convert_to_CChesses
-        # statistic(Move=1)
+        statistic(Move=1)
         self.lift()
         self.virtual_delete()
         self.x += x
