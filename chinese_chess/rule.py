@@ -5,7 +5,6 @@
 from threading import Thread
 
 from configure import config, statistic
-from tools import virtual
 
 def peace() -> bool:
     """ 和棋判定 """
