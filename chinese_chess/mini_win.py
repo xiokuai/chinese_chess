@@ -3,7 +3,7 @@ from os import listdir
 from tkinter import Event
 import tkintertools as tkt
 from constants import (VOICE_BUTTON, SCREEN_HEIGHT, SCREEN_WIDTH, STATISTIC_DICT , S)
-from configure import STATISTIC_PATH
+from configure import STATISTIC_PATH, config, configure
 from winsound import PlaySound, SND_ASYNC
 from tools import open_file
 
@@ -146,3 +146,73 @@ class LibraryWin(MiniWin):
                 file.replace('.fen', ''),
                 command=lambda path=path, file=file: self.canvas_set(f'{path}/{file}')
             ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
+class SettingWin(MiniWin):
+    """ 设置窗口"""
+    def __init__(self, root) -> None:
+        super().__init__(root, '游戏设置', 400, 300)
+        logo(self.canvas)
+        self.canvas.create_rectangle(-1, 265*S, 401*S, 301*S, width=0, fill='#F1F1F1')
+        self.canvas.create_text(20*S, 20*S, text='窗口缩放系数（重启生效）', font=('楷体', round(12*S)), anchor='w')
+        self.canvas.create_text(20*S, 50*S, text='窗口自动缩放（重启生效）', font=('楷体', round(12*S)), anchor='w')
+        self.canvas.create_text(20*S, 80*S, text='棋子可走显示', font=('楷体', round(12*S)), anchor='w')
+        self.canvas.create_text(20*S, 110*S, text='AI最大搜索深度', font=('楷体', round(12*S)), anchor='w')
+        self.canvas.create_text(20*S, 140*S, text='AI搜索算法', font=('楷体', round(12*S)), anchor='w')
+        self.canvas.create_text(20*S, 170*S, text='和棋判定回合数', font=('楷体', round(12*S)), anchor='w')
+
+        self.scale = tkt.CanvasEntry(self.canvas, 220*S, 10*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
+        self.scale.set(str(config['scale']))
+        self.scale.cursor_flash()
+
+        self.auto_scale = tkt.CanvasButton(
+            self.canvas, 220*S, 40*S, 80*S, 20*S, 5*S, str(config['auto_scale']), font=('楷体', round(12*S)),
+            command=lambda: self.auto_scale.configure(text='True' if self.auto_scale.value == 'False' else 'False'), color_fill=tkt.COLOR_NONE)
+        self.auto_scale.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
+        self.info = tkt.CanvasButton(
+            self.canvas, 130*S, 70*S, 80*S, 20*S, 5*S, str(config['virtual']), font=('楷体', round(12*S)),
+            command=lambda: self.info.configure(text='True' if self.info.value == 'False' else 'False'), color_fill=tkt.COLOR_NONE)
+        self.info.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
+        self.level = tkt.CanvasEntry(self.canvas, 140*S, 100*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
+        self.level.set(str(config['level']))
+        self.level.cursor_flash()
+
+        self.peace = tkt.CanvasEntry(self.canvas, 140*S, 160*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
+        self.peace.set(str(config['peace']))
+        self.peace.cursor_flash()
+
+        self.ai = tkt.CanvasButton(self.canvas, 110*S, 130*S, 200*S, 20*S, 5*S,
+                              "极小极大搜索" if config[
+                                  'algo'] == 1 else "alpha-beta 剪枝" if config['algo'] == 2 else "alpha-beta 剪枝(C++实现)",
+                              font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE,
+                              command=lambda: self.ai.configure(text=("极小极大搜索" if self.ai.value == "alpha-beta 剪枝(C++实现)" else "alpha-beta 剪枝" if ai.value == "极小极大搜索" else "alpha-beta 剪枝(C++实现)")))
+        self.ai.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+
+        tkt.CanvasButton(self.canvas, 314*S, 271*S, 80*S, 23*S, 6*S, '保存', font=('楷体', round(12*S)), command=self.save
+                         ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        tkt.CanvasButton(self.canvas, 228*S, 271*S, 80*S, 23*S, 6*S, '恢复默认', font=('楷体', round(12*S)), command=self.default
+                         ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+    
+    def save(self) -> None:
+        """ 保存设定 """
+        configure(
+            scale=float(self.scale.get()),
+            virtual=eval(self.info.value),
+            auto_scale=eval(self.auto_scale.value),
+            level=int(self.level.get()),
+            peace=int(self.peace.get()),
+            algo=1 if self.ai.value == "极大极小搜索" else 2 if self.ai.value == "alpha-beta 剪枝" else 0)
+        self.toplevel.destroy()
+    
+    def default(self) -> None:
+        """ 默认设定 """
+        self.scale.set('1')
+        self.scale.cursor_flash()
+        self.level.set('4')
+        self.level.cursor_flash()
+        self.peace.set('60')
+        self.peace.cursor_flash()
+        self.info.configure(text='True')
+        self.auto_scale.configure(text='True')
+        self.ai.configure(text="alpha-beta 剪枝(C++实现)")

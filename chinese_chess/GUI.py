@@ -10,14 +10,14 @@ from tkinter import Event, IntVar, Menu, messagebox, ttk
 from winsound import SND_ASYNC, PlaySound
 from chess import Chess, convert_to_CChesses, convert_to_CChess
 from game import game
-from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, logo
+from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, SettingWin
 from chinese_chess_lib import get_legal_moves
 
 import LAN
 import rule
 import tkintertools as tkt
 from AI import intelligence
-from configure import config, configure, statistic
+from configure import config, statistic
 from constants import (BACKGROUND, SCREEN_WIDTH, VOICE_BUTTON, S)
 from main import __author__, __update__, __version__
 from tools import open_file, save_file, clear
@@ -72,7 +72,7 @@ class Window:
         m1.add_command(label='撤销', accelerator='Ctrl+Z', command=rule.revoke)
         m1.add_command(label='恢复', accelerator='Ctrl+Y', command=rule.recovery)
         m1.add_separator()
-        m1.add_command(label='游戏设置', command=self.setting)
+        m1.add_command(label='游戏设置', command=lambda: SettingWin(self.root))
         m1.add_command(label='新游戏', accelerator='Ctrl+N', command=self.new)
         m1.add_command(label='退出', accelerator='Ctrl+Q', command=exit)
         m2.add_command(label='游戏说明', accelerator='Ctrl+H', command=lambda: HelpWin(self.root))
@@ -199,76 +199,6 @@ class Window:
                                 width=0, fill='#F1F1F1')
         text = canvas.create_text(
             150*S, 132*S, text='请选择游戏模式', font=('楷体', round(12*S)))
-
-    def setting(self) -> None:
-        """ 设置页面 """
-        def save() -> None:
-            """ 保存设定 """
-            configure(
-                scale=float(scale.get()),
-                virtual=eval(info.value),
-                auto_scale=eval(auto_scale.value),
-                level=int(level.get()),
-                peace=int(peace.get()),
-                algo=1 if ai.value == "极大极小搜索" else 2 if ai.value == "alpha-beta 剪枝" else 0)
-            toplevel.destroy()
-
-        def default() -> None:
-            """ 默认设定 """
-            scale.set('1')
-            scale.cursor_flash()
-            level.set('4')
-            level.cursor_flash()
-            peace.set('60')
-            peace.cursor_flash()
-            info.configure(text='True')
-            auto_scale.configure(text='True')
-            ai.configure(text="alpha-beta 剪枝(C++实现)")
-
-        m = MiniWin(self.root, '游戏设置', 400, 300)
-        toplevel, canvas = m.toplevel, m.canvas
-        logo(canvas)
-        canvas.create_rectangle(-1, 265*S, 401*S, 301*S, width=0, fill='#F1F1F1')
-        canvas.create_text(20*S, 20*S, text='窗口缩放系数（重启生效）', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(20*S, 50*S, text='窗口自动缩放（重启生效）', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(20*S, 80*S, text='棋子可走显示', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(20*S, 110*S, text='AI最大搜索深度', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(20*S, 140*S, text='AI搜索算法', font=('楷体', round(12*S)), anchor='w')
-        canvas.create_text(20*S, 170*S, text='和棋判定回合数', font=('楷体', round(12*S)), anchor='w')
-
-        scale = tkt.CanvasEntry(canvas, 220*S, 10*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
-        scale.set(str(config['scale']))
-        scale.cursor_flash()
-
-        auto_scale = tkt.CanvasButton(
-            canvas, 220*S, 40*S, 80*S, 20*S, 5*S, str(config['auto_scale']), font=('楷体', round(12*S)),
-            command=lambda: auto_scale.configure(text='True' if auto_scale.value == 'False' else 'False'), color_fill=tkt.COLOR_NONE)
-        auto_scale.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-
-        info = tkt.CanvasButton(
-            canvas, 130*S, 70*S, 80*S, 20*S, 5*S, str(config['virtual']), font=('楷体', round(12*S)),
-            command=lambda: info.configure(text='True' if info.value == 'False' else 'False'), color_fill=tkt.COLOR_NONE)
-        info.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-
-        level = tkt.CanvasEntry(canvas, 140*S, 100*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
-        level.set(str(config['level']))
-        level.cursor_flash()
-
-        peace = tkt.CanvasEntry(canvas, 140*S, 160*S, 100*S, 20*S, 5*S, justify='center', font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE)
-        peace.set(str(config['peace']))
-        peace.cursor_flash()
-
-        ai = tkt.CanvasButton(canvas, 110*S, 130*S, 200*S, 20*S, 5*S,
-                              "极小极大搜索" if config[
-                                  'algo'] == 1 else "alpha-beta 剪枝" if config['algo'] == 2 else "alpha-beta 剪枝(C++实现)",
-                              font=('楷体', round(12*S)), color_fill=tkt.COLOR_NONE,
-                              command=lambda: ai.configure(text=("极小极大搜索" if ai.value == "alpha-beta 剪枝(C++实现)" else "alpha-beta 剪枝" if ai.value == "极小极大搜索" else "alpha-beta 剪枝(C++实现)")))
-        ai.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-
-        tkt.CanvasButton(canvas, 314*S, 271*S, 80*S, 23*S, 6*S, '保存', font=('楷体', round(12*S)), command=save
-                         ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-        tkt.CanvasButton(canvas, 228*S, 271*S, 80*S, 23*S, 6*S, '恢复默认', font=('楷体', round(12*S)), command=default
-                         ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
 
     @classmethod
     def chess(cls) -> None:
