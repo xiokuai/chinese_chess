@@ -3,12 +3,12 @@ from math import hypot
 from chinese_chess_lib import dead, warn, Chess as CChess
 import LAN
 import tkintertools as tkt
-from winsound import SND_ASYNC, PlaySound
 from constants import VOICE_EAT, VOICE_DROP, VOICE_WARN, VOICE_CHOOSE, VIRTUAL_OUTLINE, VIRTUAL_INSIDE, VIRTUAL_RED, VIRTUAL_BLACK
 from constants import S
 from configure import statistic
 from tools import print_chess
 from tkinter import Event
+from sound import play_sound_async
 
 class Chess:
     """ 棋子 """
@@ -77,9 +77,9 @@ class Chess:
                     LAN.API.close()
             elif not (color := warn(convert_to_CChesses(game.chesses), self.color)):
                 file = VOICE_EAT if flag else VOICE_DROP
-                PlaySound(file, SND_ASYNC)
+                play_sound_async(file)
             else:
-                PlaySound(VOICE_WARN, SND_ASYNC)
+                play_sound_async(VOICE_WARN)
                 statistic(Warn=1)
                 if dead(convert_to_CChesses(game.chesses), color[0]):  # 绝杀
                     rule.gameover(color[0])
@@ -101,7 +101,7 @@ class Chess:
         from GUI import Window
         if condition:
             if not inside:
-                PlaySound(VOICE_CHOOSE, SND_ASYNC)
+                play_sound_async(VOICE_CHOOSE)
             Window.canvas.itemconfigure(self.items[1+inside], fill=color)
         else:
             color_ = '#D2B450' if inside else '#B49632'

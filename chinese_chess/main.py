@@ -29,14 +29,10 @@ __author__ = '李悟/梁晨轩'
 __update__ = '2025/7/12'
 
 if __name__ == '__main__':
-    from winsound import Beep
-
     from configure import statistic
     from GUI import Window
 
     # 更新统计数据
     statistic(Launch=1)
-    # 启动一下winsound模块
-    Beep(37, 0)
     # 启动主窗口
     Window()

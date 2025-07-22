@@ -7,7 +7,6 @@ from sys import exit
 from threading import Thread
 from time import time
 from tkinter import Event, IntVar, Menu, messagebox, ttk
-from winsound import SND_ASYNC, PlaySound
 from chess import Chess, convert_to_CChesses, convert_to_CChess
 from game import game
 from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, SettingWin
@@ -21,6 +20,7 @@ from configure import config, statistic
 from constants import (BACKGROUND, SCREEN_WIDTH, VOICE_BUTTON, S)
 from main import __author__, __update__, __version__
 from tools import open_file, save_file, clear
+from sound import play_sound_async
 
 class Window:
     """ 主窗口 """
@@ -148,7 +148,7 @@ class Window:
             last = tkt.CanvasButton(
                 canvas_, 6*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)), text='上一步',
                 command=lambda: (toplevel.title('选择模式'), canvas_.destroy()))
-            last.command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+            last.command_ex['press'] = lambda: play_sound_async(VOICE_BUTTON)
 
             if mode in 'COMPUTER LOCAL':
                 more_set(toplevel, canvas_)
@@ -157,7 +157,7 @@ class Window:
                     canvas_, 214*S, 121*S, 80*S, 23*S, 6*S, font=('楷体', round(12*S)), text='开始',
                     command=lambda: (rule.modechange(mode, ''.join(
                         [str(v.get()) for v in toplevel.var_list])), toplevel.destroy())
-                ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+                ).command_ex['press'] = lambda: play_sound_async(VOICE_BUTTON)
                 toplevel.title(
                     '选择模式 - ' + ('双人对弈' if mode == 'LOCAL' else '人机对战'))
             elif mode == 'LAN':
@@ -167,30 +167,29 @@ class Window:
                 tkt.CanvasButton(
                     canvas_, 20*S, 20*S, 120*S, 30*S, 8*S, '客户端连接', font=('楷体', round(12*S)),
                     command=lambda: (LAN.API.init(toplevel, 'CLIENT'),
-                                     PlaySound(VOICE_BUTTON, SND_ASYNC))
+                                     play_sound_async(VOICE_BUTTON))
                 ).command_ex['touch'] = lambda: canvas_.itemconfigure(
                     info, text='主动的连接方式\n套接字将主动搜索局域网内可识别的服务端')
                 tkt.CanvasButton(
                     canvas_, 160*S, 20*S, 120*S, 30*S, 8*S, '服务端连接', font=('楷体', round(12*S)),
                     command=lambda: (LAN.API.init(toplevel, 'SERVER'),
-                                     PlaySound(VOICE_BUTTON, SND_ASYNC))
+                                     play_sound_async(VOICE_BUTTON))
                 ).command_ex['touch'] = lambda: canvas_.itemconfigure(
                     info, text='被动的连接方式\n套接字将惰性地等待可能的客户端的连接')
 
         tkt.CanvasButton(
             canvas, 25*S, 15*S, 70*S, 70*S, 10*S, 'AI', font=('方正舒体', round(50*S), 'bold'),
             command=lambda: (canvas_set('COMPUTER'),
-                             PlaySound(VOICE_BUTTON, SND_ASYNC))
+                             play_sound_async(VOICE_BUTTON))
         ).command_ex['touch'] = lambda: canvas.itemconfigure(text, text='人脑与电脑的激烈碰撞！')
         tkt.CanvasButton(
             canvas, 115*S, 15*S, 70*S, 70*S, 10*S, '将', font=('方正舒体', round(50*S), 'bold'),
             command=lambda: (canvas_set('LOCAL'),
-                             PlaySound(VOICE_BUTTON, SND_ASYNC))
+                             play_sound_async(VOICE_BUTTON))
         ).command_ex['touch'] = lambda: canvas.itemconfigure(text, text='双方激烈对峙，到底谁能笑到最后？')
         tkt.CanvasButton(
             canvas, 205*S, 15*S, 70*S, 70*S, 10*S, '帥', font=('方正舒体', round(50*S), 'bold'),
-            command=lambda: (canvas_set('LAN'), PlaySound(
-                VOICE_BUTTON, SND_ASYNC))
+            command=lambda: (canvas_set('LAN'), play_sound_async(VOICE_BUTTON))
         ).command_ex['touch'] = lambda: canvas.itemconfigure(text, text='和局域网里的朋友一起玩耍吧！')
         canvas.create_text(60*S, 100*S, text='人机对战', font=('楷体', round(12*S)))
         canvas.create_text(150*S, 100*S, text='双人对弈', font=('楷体', round(12*S)))
@@ -331,7 +330,7 @@ def more_set(toplevel: tkt.Toplevel, canvas: tkt.Canvas | None = None) -> None:
         canvas.place(x=0, y=0)
         tkt.CanvasButton(
             canvas, 214*S, 121*S, 80*S, 23*S, 6*S, '返回', font=('楷体', round(12*S)), command=canvas.destroy
-        ).command_ex['press'] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        ).command_ex['press'] = lambda: play_sound_async(VOICE_BUTTON)
 
     ttk.Style(canvas).configure('TCheckbutton', font=('楷体', round(12*S)))
     canvas.create_text(75*S, 15*S, text='我方让子', font=('楷体', round(12*S)))
