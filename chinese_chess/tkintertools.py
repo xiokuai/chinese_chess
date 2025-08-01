@@ -38,7 +38,6 @@ if sys.version_info < (3, 10):
 
 import math  # 数学函数
 import tkinter  # 基础模块
-from ctypes import OleDLL  # DPI兼容
 from fractions import Fraction  # 图片缩放
 from typing import Generator, Iterable, Literal, Self, Type  # 类型提示
 
@@ -60,16 +59,22 @@ __all__ = [
     'color'
 ]
 
-S = OleDLL('shcore').GetScaleFactorForDevice(0)/100     # 屏幕缩放因子
-PROCESS_SYSTEM_DPI_AWARE = 1                            # DPI级别
+if sys.platform.startswith('win'):
+    from ctypes import OleDLL                                          # DPI兼容
+    shcore = OleDLL('shcore')                                          # shcore.dll
+    S = shcore.GetScaleFactorForDevice(0)/100                          # 屏幕缩放因子
+    PROCESS_SYSTEM_DPI_AWARE = 1                                       # DPI级别
+    shcore.SetProcessDpiAwareness(PROCESS_SYSTEM_DPI_AWARE)            # 设置DPI级别
+else:
+    S = 1  # 非 Windows 系统默认缩放因子为 1
 
 COLOR_BUTTON_FILL = '#E1E1E1', '#E5F1FB', '#CCE4F7', '#F0F0F0'      # 默认的按钮内部颜色
 COLOR_BUTTON_OUTLINE = '#C0C0C0', '#288CDB', '#4884B4', '#D5D5D5'   # 默认的按钮外框颜色
 COLOR_TEXT_FILL = '#FFFFFF', '#FFFFFF', '#FFFFFF', '#F0F0F0'        # 默认的文本内部颜色
 COLOR_TEXT_OUTLINE = '#C0C0C0', '#414141', '#288CDB', '#D5D5D5'     # 默认的文本外框颜色
 COLOR_TEXT = '#000000', '#000000', '#000000', '#A3A3A3'             # 默认的文本颜色
-COLOR_NONE = '', '', '', ''                                         # 透明颜色
-COLOR_BAR = '#E1E1E1', '#06b025'                                    # 默认的进度条颜色
+COLOR_NONE = '', '', '', ''                                                  # 透明颜色
+COLOR_BAR = '#E1E1E1', '#06b025'                                        # 默认的进度条颜色
 
 BORDERWIDTH = 1     # 默认控件外框宽度
 CURSOR = '│'        # 文本光标
@@ -77,9 +82,6 @@ FONT = '楷体', 15   # 默认字体
 LIMIT = -1          # 默认文本长度
 RADIUS = 0          # 默认控件圆角半径
 FRAMES = 60         # 默认帧数
-
-
-OleDLL('shcore').SetProcessDpiAwareness(PROCESS_SYSTEM_DPI_AWARE)  # 设置DPI级别
 
 
 class Tk(tkinter.Tk):
