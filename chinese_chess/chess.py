@@ -149,6 +149,16 @@ class Chess:
         self.attack_chess.clear()
         Window.canvas.delete(*self.virtual_items)
 
+chinese_to_english = {
+    "将": "j", "帥": "J",
+    "卒": "b", "兵": "B",
+    "士": "s", "仕": "S",
+    "象": "x", "相": "X",
+    "马": "m", "馬": "M",
+    "车": "c", "車": "C",
+    "炮": "p", "砲": "P"
+}
+
 def convert_to_CChesses(chesses):
     """将GUI棋盘转换为CChess棋盘"""
     cchess_board = []
@@ -160,7 +170,7 @@ def convert_to_CChesses(chesses):
                 c.x = chess.x
                 c.y = chess.y
                 c.color = chess.color
-                c.name = chess.name
+                c.name = chinese_to_english.get(chess.name, "B")  # 默认返回兵
                 c_row.append(c)
             else:
                 c_row.append(None)
@@ -174,6 +184,8 @@ def convert_to_CChess(chess):
     c = CChess()
     c.x = chess.x
     c.y = chess.y
+
+    c.name = chinese_to_english.get(chess.name, "B")  # 默认返回兵
     c.color = chess.color
-    c.name = chess.name
+
     return c
