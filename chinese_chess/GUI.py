@@ -9,7 +9,7 @@ from time import time
 from tkinter import Event, IntVar, Menu, messagebox, ttk
 from chess import Chess, convert_to_CChesses, convert_to_CChess
 from game import game
-from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, SettingWin
+from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, SettingWin, AboutWin
 from chinese_chess_lib import get_legal_moves
 
 import LAN
@@ -78,7 +78,7 @@ class Window:
         m2.add_command(label='游戏说明', accelerator='Ctrl+H', command=lambda: HelpWin(self.root))
         m2.add_command(label='统计数据', command=lambda: StatisticWin(self.root))
         m2.add_separator()
-        m2.add_command(label='关于', command=about)
+        m2.add_command(label='关于', command=lambda: AboutWin(self.root))
 
     def init_bind(self) -> None:
         """ 绑定 """
@@ -247,7 +247,6 @@ class Window:
                         chess_ = chess
         game.choose = chess_
         if chess_:
-            # chess_.move_pos = rule.rule(game.chesses, chess_, True)
             cchess_board = convert_to_CChesses(game.chesses)
             cchess_obj = convert_to_CChess(chess_)
             chess_.move_pos = get_legal_moves(cchess_board, cchess_obj, True)
@@ -316,12 +315,6 @@ class Window:
         rule.modechange('TEST')
         cls.root.after(4000, Thread(
             target=cls.AImove, args=(color, True), daemon=True).start)
-
-
-def about() -> None:
-    """ 关于页面 """
-    info = '版本: %s\n日期: %s\t\t\n作者: %s' % (__version__, __update__, __author__)
-    messagebox.showinfo('关于', message=info)
 
 def more_set(toplevel: tkt.Toplevel, canvas: tkt.Canvas | None = None) -> None:
     """ 更多设置 """

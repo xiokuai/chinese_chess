@@ -216,3 +216,13 @@ class SettingWin(MiniWin):
         self.info.configure(text='True')
         self.auto_scale.configure(text='True')
         self.ai.configure(text="alpha-beta 剪枝(C++实现)")
+
+class AboutWin(MiniWin):
+    """ 关于页面 """
+    def __init__(self, root) -> None:
+        from main import __version__, __update__, __author__
+        super().__init__(root, '关于', 300, 200)
+        logo(self.canvas)
+        info = '版本: %s\n日期: %s\t\t\n作者: %s' % (__version__, __update__, __author__)
+        
+        self.canvas.create_text(20*S, 30*S, text=info, font=('楷体', round(12*S)), anchor='w')
