@@ -16,7 +16,7 @@ def ensure_file_exists(filename: str) -> dict:
             if filename == CONFIG_PATH:
                 data = load(file)
             elif filename == STATISTIC_PATH:
-                data = load(file);
+                data = load(file)
     except (IOError, JSONDecodeError):
         # 如果文件读取失败，则创建一个新的空字典
         data = {}
