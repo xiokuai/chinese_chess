@@ -6,7 +6,7 @@ from math import hypot
 from sys import exit
 from threading import Thread
 from time import time
-from tkinter import Event, IntVar, Menu, messagebox, ttk
+from tkinter import Event, IntVar, Menu, ttk
 from chess import Chess, convert_to_CChesses, convert_to_CChess
 from game import game
 from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, SettingWin, AboutWin
