@@ -1,9 +1,8 @@
-# 版本号
 __version__ = '1.1.0'
-# 作者
 __author__ = '李悟/梁晨轩'
-# 更新日期
 __update__ = '2025/7/12'
+__license__ = 'GPL-3.0'
+__website__ = 'https://github.com/xiokuai/chinese_chess'
 
 import tkinter as tk
 from tkinter import messagebox

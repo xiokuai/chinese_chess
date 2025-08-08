@@ -220,9 +220,18 @@ class SettingWin(MiniWin):
 class AboutWin(MiniWin):
     """ 关于页面 """
     def __init__(self, root) -> None:
-        from main import __version__, __update__, __author__
+        from main import __version__, __update__, __author__, __license__, __website__
+        import webbrowser
+
         super().__init__(root, '关于', 300, 200)
         logo(self.canvas)
         info = '版本: %s\n日期: %s\t\t\n作者: %s' % (__version__, __update__, __author__)
-        
         self.canvas.create_text(20*S, 30*S, text=info, font=('楷体', round(12*S)), anchor='w')
+
+        license_text = '开源许可: %s\n' % __license__
+        self.canvas.create_text(20*S, 70*S, text=license_text, font=('楷体', round(12*S)), anchor='w')
+        
+        link_text = self.canvas.create_text(
+            20 * S, 90 * S, text="访问本项目Github仓库", font=('楷体', round(12 * S), 'underline'), fill='blue', anchor='w'
+        )
+        self.canvas.tag_bind(link_text, "<Button-1>", lambda e: webbrowser.open(__website__))
