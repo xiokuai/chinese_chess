@@ -7,32 +7,32 @@ import alpha_beta_search
 import min_max_search
 from configure import config
 
-_cpp_lib = ctypes.WinDLL('./alpha_beta_search.dll')
+_cpp_lib = ctypes.WinDLL("./alpha_beta_search.dll")
 
 # 设置 search 函数签名
 _cpp_lib.search.argtypes = [
     ctypes.POINTER((ctypes.c_int * 9) * 10),  # board: 10x9 数组
-    ctypes.c_int,                             # depth
-    ctypes.POINTER(ctypes.c_int * 4),         # result: 4个int的数组
-    ctypes.c_bool                             # reverse
+    ctypes.c_int,  # depth
+    ctypes.POINTER(ctypes.c_int * 4),  # result: 4个int的数组
+    ctypes.c_bool,  # reverse
 ]
 _cpp_lib.search.restype = ctypes.c_float
 
 id: dict[str, int] = {
-    '将': -1,
-    '士': -2,
-    '象': -3,
-    '卒': -4,
-    '马': -6,
-    '炮': -7,
-    '车': -8,
-    '帥': 1,
-    '仕': 2,
-    '相': 3,
-    '兵': 4,
-    '馬': 6,
-    '砲': 7,
-    '車': 8,
+    "将": -1,
+    "士": -2,
+    "象": -3,
+    "卒": -4,
+    "马": -6,
+    "炮": -7,
+    "车": -8,
+    "帥": 1,
+    "仕": 2,
+    "相": 3,
+    "兵": 4,
+    "馬": 6,
+    "砲": 7,
+    "車": 8,
 }
 
 
@@ -45,7 +45,9 @@ def _lst_to_array(data: list[list[int]]) -> ctypes.Array[ctypes.Array[ctypes.c_i
     return arr
 
 
-def choose_algo(data: list[list[int]], depth: int, reverse: bool) -> alpha_beta_search.Node:
+def choose_algo(
+    data: list[list[int]], depth: int, reverse: bool
+) -> alpha_beta_search.Node:
     """"""
     match config["algo"]:
         case 1:
@@ -67,9 +69,11 @@ def choose_algo(data: list[list[int]], depth: int, reverse: bool) -> alpha_beta_
     return node
 
 
-def intelligence(chesses: list[list], color: str, depth: int) -> tuple[tuple[tuple[int, int], tuple[bool, int, int]] | None, int]:
+def intelligence(
+    chesses: list[list], color: str, depth: int
+) -> tuple[tuple[tuple[int, int], tuple[bool, int, int]] | None, int]:
     """"""
-    data = [[0]*9 for _ in range(10)]
+    data = [[0] * 9 for _ in range(10)]
     for i, line in enumerate(chesses):
         for j, chess in enumerate(line):
             if chess is not None:

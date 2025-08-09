@@ -10,8 +10,7 @@ type Coordinate = tuple[int, int]
 type Operation = tuple[Coordinate, Coordinate] | None
 """a valid operation"""
 
-type ID = typing.Literal[
-    -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8]
+type ID = typing.Literal[-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8]
 """all ids of chesses"""
 
 
@@ -42,7 +41,12 @@ DELTA: dict[int, tuple] = {
     2: ((-1, -1), (-1, 1), (1, 1), (1, -1)),
     3: ((-2, -2), (-2, 2), (2, 2), (2, -2)),
     6: ((1, 2), (1, -2), (-1, 2), (-1, -2), (2, 1), (2, -1), (-2, 1), (-2, -1)),
-    7: ((range(1, 10), (0,)*9), (range(-1, -10, -1), (0,)*9), ((0,)*8, range(1, 9)), ((0,)*8, range(-1, -9, -1))),
+    7: (
+        (range(1, 10), (0,) * 9),
+        (range(-1, -10, -1), (0,) * 9),
+        ((0,) * 8, range(1, 9)),
+        ((0,) * 8, range(-1, -9, -1)),
+    ),
 }
 
 
@@ -62,21 +66,24 @@ def evaluate(data: list[list[int]], score: float = 0) -> float:
     return score
 
 
-def valid_coordinate(data: list[list[int]], reverse: bool = False, *, filter_id: int = 0) -> list[Coordinate]:
+def valid_coordinate(
+    data: list[list[int]], reverse: bool = False, *, filter_id: int = 0
+) -> list[Coordinate]:
     """get all valid coordinates on board"""
     judge_function: typing.Callable[[int], bool] = (
-        lambda x: x < -filter_id) if reverse else (lambda x: x > filter_id)
+        (lambda x: x < -filter_id) if reverse else (lambda x: x > filter_id)
+    )
     valid_coordinates: list[Coordinate] = [
-        (i, j)
-        for i in range(10)
-        for j in range(9)
-        if judge_function(data[i][j])]
+        (i, j) for i in range(10) for j in range(9) if judge_function(data[i][j])
+    ]
     # NOTE: 排序优化，更快剪枝：优先扩展攻击性强的棋子的节点
     # valid_coordinates.sort(key=lambda x: -abs(data[x[0]][x[1]]))
     return valid_coordinates
 
 
-def valid_operation(data: list[list[int]], operation: Operation, *, attack: bool = True) -> bool:
+def valid_operation(
+    data: list[list[int]], operation: Operation, *, attack: bool = True
+) -> bool:
     """judge whether the operation is valid"""
     (si, sj), (ei, ej) = operation
     reverse = data[si][sj] < 0
@@ -86,18 +93,21 @@ def valid_operation(data: list[list[int]], operation: Operation, *, attack: bool
         return False
     process(data, si, sj, ei, ej)
     valid_coordinates = valid_coordinate(data, not reverse)  # 对方走法
-    valid_coordinates = filter(lambda c: abs(
-        data[c[0]][c[1]]) >= 5, valid_coordinates)  # 只考虑攻击性棋子
+    valid_coordinates = filter(
+        lambda c: abs(data[c[0]][c[1]]) >= 5, valid_coordinates
+    )  # 只考虑攻击性棋子
     for coordinate in valid_coordinates:
         for destination in possible_destination(data, *coordinate):
-            if data[destination[0]][destination[1]] == key_id:  # 我方将帅在对方攻击范围内
+            if (
+                data[destination[0]][destination[1]] == key_id
+            ):  # 我方将帅在对方攻击范围内
                 recover(data, si, sj, ei, ej, sv, ev)
                 return False
     # NOTE: “白脸将”特殊情况处理
     for i in range(3):
-        for j in range(3, 5+1):
+        for j in range(3, 5 + 1):
             if data[i][j] == -1:  # 发现“将”，位置 (i, j)
-                for ni in range(i+1, 10):
+                for ni in range(i + 1, 10):
                     if data[ni][j] == 0:
                         continue
                     elif data[ni][j] == 1:
@@ -132,7 +142,7 @@ def possible_destination(data: list[list[int]], i: int, j: int) -> list[Coordina
                 ni, nj = i + di, j + dj
                 if ni in (0, 2, 4, 5, 7, 9) and 0 <= nj <= 8:  # 位置判定
                     if id * data[ni][nj] <= 0:  # 规则判定
-                        if data[(ni+i)//2][(nj+j)//2] == 0:  # 撇腿判定
+                        if data[(ni + i) // 2][(nj + j) // 2] == 0:  # 撇腿判定
                             possible_destinations.append((ni, nj))
         case 4:  # 卒兵
             di, dj = (1 if id < 0 else -1, 0)
@@ -151,7 +161,7 @@ def possible_destination(data: list[list[int]], i: int, j: int) -> list[Coordina
                 ni, nj = i + di, j + dj
                 if 0 <= ni <= 9 and 0 <= nj <= 8:  # 位置判定
                     if id * data[ni][nj] <= 0:  # 规则判定
-                        if data[round(i+di/3)][round(j+dj/3)] == 0:  # 撇腿判定
+                        if data[round(i + di / 3)][round(j + dj / 3)] == 0:  # 撇腿判定
                             possible_destinations.append((ni, nj))
         case 7:  # 炮砲
             for lines in DELTA[7]:
@@ -189,7 +199,9 @@ def possible_destination(data: list[list[int]], i: int, j: int) -> list[Coordina
     return possible_destinations
 
 
-def get_operations(data: list[list[int]], reverse: bool = False, *, attack: bool = False) -> list[Operation]:
+def get_operations(
+    data: list[list[int]], reverse: bool = False, *, attack: bool = False
+) -> list[Operation]:
     """get all operations"""
     valid_operations: list[Operation] = [
         (coordinate, destination)
@@ -209,12 +221,21 @@ def process(data: list[list[int]], si: int, sj: int, ei: int, ej: int) -> None:
         data[ei][ej] = 5
 
 
-def recover(data: list[list[int]], si: int, sj: int, ei: int, ej: int, sv: int, ev: int) -> None:
+def recover(
+    data: list[list[int]], si: int, sj: int, ei: int, ej: int, sv: int, ev: int
+) -> None:
     """recover the data of board after operating"""
     data[si][sj], data[ei][ej] = sv, ev
 
 
-def update(node: Node, child: Node, op: Operation, alpha: float, beta: float, reverse: bool = False) -> tuple[float, float]:
+def update(
+    node: Node,
+    child: Node,
+    op: Operation,
+    alpha: float,
+    beta: float,
+    reverse: bool = False,
+) -> tuple[float, float]:
     """update the data of node"""
     temp = node.score
     if not reverse:
@@ -226,7 +247,15 @@ def update(node: Node, child: Node, op: Operation, alpha: float, beta: float, re
     return alpha, beta
 
 
-def alpha_beta_search(data: list[list[int]], depth: int, extra: int = 0, alpha: float = -math.inf, beta: float = math.inf, *, reverse: bool = False) -> Node:
+def alpha_beta_search(
+    data: list[list[int]],
+    depth: int,
+    extra: int = 0,
+    alpha: float = -math.inf,
+    beta: float = math.inf,
+    *,
+    reverse: bool = False,
+) -> Node:
     """alpha value and beta value search"""
     if depth <= -extra:
         return Node(evaluate(data))
@@ -236,7 +265,13 @@ def alpha_beta_search(data: list[list[int]], depth: int, extra: int = 0, alpha: 
         sv, ev = data[si][sj], data[ei][ej]
         process(data, si, sj, ei, ej)
         child = alpha_beta_search(
-            data, depth-1, extra + 1 if depth == 1 and abs(sv) >= 6 and abs(ev) >= 6 else extra, alpha, beta, reverse=not reverse)
+            data,
+            depth - 1,
+            extra + 1 if depth == 1 and abs(sv) >= 6 and abs(ev) >= 6 else extra,
+            alpha,
+            beta,
+            reverse=not reverse,
+        )
         alpha, beta = update(node, child, op, alpha, beta, reverse)
         recover(data, si, sj, ei, ej, sv, ev)
         if alpha >= beta:  # 剪枝
@@ -248,6 +283,7 @@ def alpha_beta_search(data: list[list[int]], depth: int, extra: int = 0, alpha: 
 
 if __name__ == "__main__":
     import time
+
     data = [
         [-8, -6, -3, -2, -1, -2, -3, -6, -8],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -258,12 +294,12 @@ if __name__ == "__main__":
         [4, 0, 4, 0, 4, 0, 4, 0, 4],
         [0, 7, 0, 0, 0, 0, 0, 7, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [8, 6, 3, 2, 1, 2, 3, 6, 8]
+        [8, 6, 3, 2, 1, 2, 3, 6, 8],
     ]
 
     t = time.time()
     node = alpha_beta_search(data, 4, reverse=True)
-    print('Time:', time.time() - t)
+    print("Time:", time.time() - t)
 
-    print('Score:', node.score)
-    print('Operation: ', *node.operation)
+    print("Score:", node.score)
+    print("Operation: ", *node.operation)

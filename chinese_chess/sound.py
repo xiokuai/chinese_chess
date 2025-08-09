@@ -5,6 +5,7 @@ pygame.mixer.init()
 
 _sound_cache = {}
 
+
 def play_sound_async(filepath: str) -> None:
     if not os.path.isfile(filepath):
         print(f"[播放错误] 文件不存在: {filepath}")
@@ -27,5 +28,3 @@ def play_sound_async(filepath: str) -> None:
         sound.play()
     except Exception as e:
         print(f"[播放错误] 播放失败: {e}")
-
-
