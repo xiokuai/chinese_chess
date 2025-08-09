@@ -6,6 +6,7 @@ from constants import VOICE_BUTTON, SCREEN_HEIGHT, SCREEN_WIDTH, STATISTIC_DICT,
 from configure import STATISTIC_PATH, config, configure
 from winsound import PlaySound, SND_ASYNC
 from tools import open_file
+from l10n import _
 
 
 def logo(canvas: tkt.Canvas) -> None:
@@ -51,7 +52,7 @@ class HelpWin(MiniWin):
     """帮助窗口"""
 
     def __init__(self, root: tkt.Tk) -> None:
-        super().__init__(root, "帮助", 400, 300)
+        super().__init__(root, _("帮助"), 400, 300)
 
         logo(self.canvas)
         self.canvas.create_rectangle(
@@ -76,7 +77,7 @@ class HelpWin(MiniWin):
             100 * S,
             25 * S,
             6 * S,
-            "< 上一页",
+            _("< 上一页"),
             font=("楷体", round(12 * S)),
             command=lambda: self.canvas_set(-1),
         )
@@ -87,7 +88,7 @@ class HelpWin(MiniWin):
             100 * S,
             25 * S,
             6 * S,
-            "下一页 >",
+            _("下一页 >"),
             font=("楷体", round(12 * S)),
             command=lambda: self.canvas_set(1),
         )
@@ -134,7 +135,7 @@ class StatisticWin(MiniWin):
     """统计数据窗口"""
 
     def __init__(self, root: tkt.Tk) -> None:
-        super().__init__(root, "统计数据", 400, 300)
+        super().__init__(root, _("统计数据"), 400, 300)
         logo(self.canvas)
         key_text, value_text = "", ""
         with open(STATISTIC_PATH, "r", encoding="utf-8") as data:
@@ -158,7 +159,7 @@ class LibraryWin(MiniWin):
     """棋局库"""
 
     def __init__(self, root):
-        super().__init__(root, "棋局库", 300, 393)
+        super().__init__(root, _("棋局库"), 300, 393)
 
         self.path_ = self.path = "./data"
         self.info = tkt.CanvasLabel(
@@ -178,7 +179,7 @@ class LibraryWin(MiniWin):
             80 * S,
             20 * S,
             5 * S,
-            "←后退",
+            _("←后退"),
             font=("楷体", round(12 * S)),
             command=lambda: self.canvas_set(self.path_.rsplit("/", 1)[0]),
         )
@@ -236,7 +237,7 @@ class SettingWin(MiniWin):
     """设置窗口"""
 
     def __init__(self, root) -> None:
-        super().__init__(root, "游戏设置", 400, 300)
+        super().__init__(root, _("游戏设置"), 400, 300)
         logo(self.canvas)
         self.canvas.create_rectangle(
             -1, 265 * S, 401 * S, 301 * S, width=0, fill="#F1F1F1"
@@ -244,38 +245,42 @@ class SettingWin(MiniWin):
         self.canvas.create_text(
             20 * S,
             20 * S,
-            text="窗口缩放系数（重启生效）",
+            text=_("窗口缩放系数（重启生效）"),
             font=("楷体", round(12 * S)),
             anchor="w",
         )
         self.canvas.create_text(
             20 * S,
             50 * S,
-            text="窗口自动缩放（重启生效）",
+            text=_("窗口自动缩放（重启生效）"),
             font=("楷体", round(12 * S)),
             anchor="w",
         )
         self.canvas.create_text(
             20 * S,
             80 * S,
-            text="棋子可走显示",
+            text=_("棋子可走显示"),
             font=("楷体", round(12 * S)),
             anchor="w",
         )
         self.canvas.create_text(
             20 * S,
             110 * S,
-            text="AI最大搜索深度",
+            text=_("AI最大搜索深度"),
             font=("楷体", round(12 * S)),
             anchor="w",
         )
         self.canvas.create_text(
-            20 * S, 140 * S, text="AI搜索算法", font=("楷体", round(12 * S)), anchor="w"
+            20 * S,
+            140 * S,
+            text=_("AI搜索算法"),
+            font=("楷体", round(12 * S)),
+            anchor="w",
         )
         self.canvas.create_text(
             20 * S,
             170 * S,
-            text="和棋判定回合数",
+            text=_("和棋判定回合数"),
             font=("楷体", round(12 * S)),
             anchor="w",
         )
@@ -362,24 +367,24 @@ class SettingWin(MiniWin):
             20 * S,
             5 * S,
             (
-                "极小极大搜索"
+                _("极小极大搜索")
                 if config["algo"] == 1
                 else (
-                    "alpha-beta 剪枝"
+                    _("alpha-beta 剪枝")
                     if config["algo"] == 2
-                    else "alpha-beta 剪枝(C++实现)"
+                    else _("alpha-beta 剪枝(C++实现)")
                 )
             ),
             font=("楷体", round(12 * S)),
             color_fill=tkt.COLOR_NONE,
             command=lambda: self.ai.configure(
                 text=(
-                    "极小极大搜索"
-                    if self.ai.value == "alpha-beta 剪枝(C++实现)"
+                    _("极小极大搜索")
+                    if self.ai.value == _("alpha-beta 剪枝(C++实现)")
                     else (
-                        "alpha-beta 剪枝"
-                        if ai.value == "极小极大搜索"
-                        else "alpha-beta 剪枝(C++实现)"
+                        _("alpha-beta 剪枝")
+                        if self.ai.value == _("极小极大搜索")
+                        else _("alpha-beta 剪枝(C++实现)")
                     )
                 )
             ),
@@ -393,7 +398,7 @@ class SettingWin(MiniWin):
             80 * S,
             23 * S,
             6 * S,
-            "保存",
+            _("保存"),
             font=("楷体", round(12 * S)),
             command=self.save,
         ).command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
@@ -404,7 +409,7 @@ class SettingWin(MiniWin):
             80 * S,
             23 * S,
             6 * S,
-            "恢复默认",
+            _("恢复默认"),
             font=("楷体", round(12 * S)),
             command=self.default,
         ).command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
@@ -419,8 +424,8 @@ class SettingWin(MiniWin):
             peace=int(self.peace.get()),
             algo=(
                 1
-                if self.ai.value == "极大极小搜索"
-                else 2 if self.ai.value == "alpha-beta 剪枝" else 0
+                if self.ai.value == _("极大极小搜索")
+                else 2 if self.ai.value == _("alpha-beta 剪枝") else 0
             ),
         )
         self.toplevel.destroy()
@@ -435,7 +440,7 @@ class SettingWin(MiniWin):
         self.peace.cursor_flash()
         self.info.configure(text="True")
         self.auto_scale.configure(text="True")
-        self.ai.configure(text="alpha-beta 剪枝(C++实现)")
+        self.ai.configure(text=_("alpha-beta 剪枝(C++实现)"))
 
 
 class AboutWin(MiniWin):
@@ -445,9 +450,9 @@ class AboutWin(MiniWin):
         from main import __version__, __update__, __author__, __license__, __website__
         import webbrowser
 
-        super().__init__(root, "关于", 300, 200)
+        super().__init__(root, _("关于"), 300, 200)
         logo(self.canvas)
-        info = "版本: %s\n日期: %s\t\t\n作者: %s" % (
+        info = _("版本: %s\n日期: %s\t\t\n作者: %s") % (
             __version__,
             __update__,
             __author__,
@@ -456,7 +461,7 @@ class AboutWin(MiniWin):
             20 * S, 30 * S, text=info, font=("楷体", round(12 * S)), anchor="w"
         )
 
-        license_text = "开源许可: %s\n" % __license__
+        license_text = _("开源许可: %s\n") % __license__
         self.canvas.create_text(
             20 * S, 70 * S, text=license_text, font=("楷体", round(12 * S)), anchor="w"
         )
@@ -464,7 +469,7 @@ class AboutWin(MiniWin):
         link_text = self.canvas.create_text(
             20 * S,
             90 * S,
-            text="访问本项目Github仓库",
+            text=_("访问本项目Github仓库"),
             font=("楷体", round(12 * S), "underline"),
             fill="blue",
             anchor="w",

@@ -22,9 +22,11 @@ def show_error_popup(exc_type, exc_value, exc_traceback):
 if __name__ == "__main__":
     sys.excepthook = show_error_popup
 
+    from l10n import init_l10n
     from configure import statistic
     from GUI import Window
 
+    init_l10n()
     # 更新统计数据
     statistic(Launch=1)
     # 启动主窗口

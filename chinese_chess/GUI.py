@@ -11,6 +11,7 @@ from chess import Chess, convert_to_CChesses, convert_to_CChess
 from game import game
 from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, SettingWin, AboutWin
 from chinese_chess_lib import get_legal_moves
+from l10n import _
 
 import LAN
 import rule
@@ -78,24 +79,26 @@ class Window:
         """菜单栏"""
         m1 = Menu(self.menu, tearoff=False)
         m2 = Menu(self.menu, tearoff=False)
-        self.menu.add_cascade(label="选项(O)", menu=m1)
-        self.menu.add_cascade(label="帮助(H)", menu=m2)
-        m1.add_command(label="导入棋局", command=open_file, accelerator="Ctrl+O")
-        m1.add_command(label="导出棋局", command=save_file, accelerator="Ctrl+S")
-        m1.add_command(label="棋局库", command=lambda: LibraryWin(self.root))
+        self.menu.add_cascade(label=_("选项(O)"), menu=m1)
+        self.menu.add_cascade(label=_("帮助(H)"), menu=m2)
+        m1.add_command(label=_("导入棋局"), command=open_file, accelerator="Ctrl+O")
+        m1.add_command(label=_("导出棋局"), command=save_file, accelerator="Ctrl+S")
+        m1.add_command(label=_("棋局库"), command=lambda: LibraryWin(self.root))
         m1.add_separator()
-        m1.add_command(label="撤销", accelerator="Ctrl+Z", command=rule.revoke)
-        m1.add_command(label="恢复", accelerator="Ctrl+Y", command=rule.recovery)
+        m1.add_command(label=_("撤销"), accelerator="Ctrl+Z", command=rule.revoke)
+        m1.add_command(label=_("恢复"), accelerator="Ctrl+Y", command=rule.recovery)
         m1.add_separator()
-        m1.add_command(label="游戏设置", command=lambda: SettingWin(self.root))
-        m1.add_command(label="新游戏", accelerator="Ctrl+N", command=self.new)
-        m1.add_command(label="退出", accelerator="Ctrl+Q", command=exit)
+        m1.add_command(label=_("游戏设置"), command=lambda: SettingWin(self.root))
+        m1.add_command(label=_("新游戏"), accelerator="Ctrl+N", command=self.new)
+        m1.add_command(label=_("退出"), accelerator="Ctrl+Q", command=exit)
         m2.add_command(
-            label="游戏说明", accelerator="Ctrl+H", command=lambda: HelpWin(self.root)
+            label=_("游戏说明"),
+            accelerator="Ctrl+H",
+            command=lambda: HelpWin(self.root),
         )
-        m2.add_command(label="统计数据", command=lambda: StatisticWin(self.root))
+        m2.add_command(label=_("统计数据"), command=lambda: StatisticWin(self.root))
         m2.add_separator()
-        m2.add_command(label="关于", command=lambda: AboutWin(self.root))
+        m2.add_command(label=_("关于"), command=lambda: AboutWin(self.root))
 
     def init_bind(self) -> None:
         """绑定"""
@@ -157,7 +160,7 @@ class Window:
 
     def new(self) -> None:
         """新游戏页面"""
-        m = MiniWin(self.root, "选择模式", 300, 150)
+        m = MiniWin(self.root, _("选择模式"), 300, 150)
         toplevel, canvas = m.toplevel, m.canvas
         canvas.configure(bg="#FFFFFF")
         toplevel.var_list = [IntVar(toplevel, not i) for i in range(13)]
@@ -175,8 +178,8 @@ class Window:
                 23 * S,
                 6 * S,
                 font=("楷体", round(12 * S)),
-                text="上一步",
-                command=lambda: (toplevel.title("选择模式"), canvas_.destroy()),
+                text=_("上一步"),
+                command=lambda: (toplevel.title(_("选择模式")), canvas_.destroy()),
             )
             last.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
@@ -191,7 +194,7 @@ class Window:
                     23 * S,
                     6 * S,
                     font=("楷体", round(12 * S)),
-                    text="开始",
+                    text=_("开始"),
                     command=lambda: (
                         rule.modechange(
                             mode, "".join([str(v.get()) for v in toplevel.var_list])
@@ -200,16 +203,17 @@ class Window:
                     ),
                 ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
                 toplevel.title(
-                    "选择模式 - " + ("双人对弈" if mode == "LOCAL" else "人机对战")
+                    _("选择模式 - ")
+                    + (_("双人对弈") if mode == "LOCAL" else _("人机对战"))
                 )
             elif mode == "LAN":
-                toplevel.title("选择模式 - 联机对抗")
+                toplevel.title(_("选择模式 - 联机对抗"))
                 info = canvas_.create_text(
                     150 * S,
                     85 * S,
                     font=("楷体", round(10 * S)),
                     justify="center",
-                    text="请选择连接方式",
+                    text=_("请选择连接方式"),
                 )
                 tkt.CanvasButton(
                     canvas_,
@@ -218,14 +222,15 @@ class Window:
                     120 * S,
                     30 * S,
                     8 * S,
-                    "客户端连接",
+                    _("客户端连接"),
                     font=("楷体", round(12 * S)),
                     command=lambda: (
                         LAN.API.init(toplevel, "CLIENT"),
                         play_sound_async(VOICE_BUTTON),
                     ),
                 ).command_ex["touch"] = lambda: canvas_.itemconfigure(
-                    info, text="主动的连接方式\n套接字将主动搜索局域网内可识别的服务端"
+                    info,
+                    text=_("主动的连接方式\n套接字将主动搜索局域网内可识别的服务端"),
                 )
                 tkt.CanvasButton(
                     canvas_,
@@ -234,14 +239,14 @@ class Window:
                     120 * S,
                     30 * S,
                     8 * S,
-                    "服务端连接",
+                    _("服务端连接"),
                     font=("楷体", round(12 * S)),
                     command=lambda: (
                         LAN.API.init(toplevel, "SERVER"),
                         play_sound_async(VOICE_BUTTON),
                     ),
                 ).command_ex["touch"] = lambda: canvas_.itemconfigure(
-                    info, text="被动的连接方式\n套接字将惰性地等待可能的客户端的连接"
+                    info, text=_("被动的连接方式\n套接字将惰性地等待可能的客户端的连接")
                 )
 
         tkt.CanvasButton(
@@ -255,7 +260,7 @@ class Window:
             font=("方正舒体", round(50 * S), "bold"),
             command=lambda: (canvas_set("COMPUTER"), play_sound_async(VOICE_BUTTON)),
         ).command_ex["touch"] = lambda: canvas.itemconfigure(
-            text, text="人脑与电脑的激烈碰撞！"
+            text, text=_("人脑与电脑的激烈碰撞！")
         )
         tkt.CanvasButton(
             canvas,
@@ -268,7 +273,7 @@ class Window:
             font=("方正舒体", round(50 * S), "bold"),
             command=lambda: (canvas_set("LOCAL"), play_sound_async(VOICE_BUTTON)),
         ).command_ex["touch"] = lambda: canvas.itemconfigure(
-            text, text="双方激烈对峙，到底谁能笑到最后？"
+            text, text=_("双方激烈对峙，到底谁能笑到最后？")
         )
         tkt.CanvasButton(
             canvas,
@@ -281,20 +286,20 @@ class Window:
             font=("方正舒体", round(50 * S), "bold"),
             command=lambda: (canvas_set("LAN"), play_sound_async(VOICE_BUTTON)),
         ).command_ex["touch"] = lambda: canvas.itemconfigure(
-            text, text="和局域网里的朋友一起玩耍吧！"
+            text, text=_("和局域网里的朋友一起玩耍吧！")
         )
         canvas.create_text(
-            60 * S, 100 * S, text="人机对战", font=("楷体", round(12 * S))
+            60 * S, 100 * S, text=_("人机对战"), font=("楷体", round(12 * S))
         )
         canvas.create_text(
-            150 * S, 100 * S, text="双人对弈", font=("楷体", round(12 * S))
+            150 * S, 100 * S, text=_("双人对弈"), font=("楷体", round(12 * S))
         )
         canvas.create_text(
-            240 * S, 100 * S, text="联机对抗", font=("楷体", round(12 * S))
+            240 * S, 100 * S, text=_("联机对抗"), font=("楷体", round(12 * S))
         )
         canvas.create_rectangle(-1, 115 * S, 301 * S, 151 * S, width=0, fill="#F1F1F1")
         text = canvas.create_text(
-            150 * S, 132 * S, text="请选择游戏模式", font=("楷体", round(12 * S))
+            150 * S, 132 * S, text=_("请选择游戏模式"), font=("楷体", round(12 * S))
         )
 
     @classmethod
@@ -320,7 +325,7 @@ class Window:
             game.timer = flag[1] = time()
         cls.canvas.itemconfigure(
             cls.timer,
-            text="%02d:%02d\n%s思考中." % (*divmod(flag[0], 60), game.player)
+            text=_("%02d:%02d\n%s思考中.") % (*divmod(flag[0], 60), game.player)
             + "." * (flag[0] % 3),
         )
         cls.root.after(1000, cls.clock, [flag[0] + 1, flag[1]])
@@ -454,16 +459,18 @@ def more_set(toplevel: tkt.Toplevel, canvas: tkt.Canvas | None = None) -> None:
             80 * S,
             23 * S,
             6 * S,
-            "返回",
+            _("返回"),
             font=("楷体", round(12 * S)),
             command=canvas.destroy,
         ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
     ttk.Style(canvas).configure("TCheckbutton", font=("楷体", round(12 * S)))
-    canvas.create_text(75 * S, 15 * S, text="我方让子", font=("楷体", round(12 * S)))
-    canvas.create_text(225 * S, 15 * S, text="对方让子", font=("楷体", round(12 * S)))
+    canvas.create_text(75 * S, 15 * S, text=_("我方让子"), font=("楷体", round(12 * S)))
+    canvas.create_text(
+        225 * S, 15 * S, text=_("对方让子"), font=("楷体", round(12 * S))
+    )
     ttk.Checkbutton(
-        canvas, text="我方先手", variable=toplevel.var_list[0], onvalue=1, offvalue=0
+        canvas, text=_("我方先手"), variable=toplevel.var_list[0], onvalue=1, offvalue=0
     ).place(
         width=100 * tkt.S * S,
         height=30 * tkt.S * S,
