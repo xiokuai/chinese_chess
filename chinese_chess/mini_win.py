@@ -378,7 +378,7 @@ class SettingWin(MiniWin):
                     if self.ai.value == "alpha-beta 剪枝(C++实现)"
                     else (
                         "alpha-beta 剪枝"
-                        if ai.value == "极小极大搜索"
+                        if self.ai.value == "极小极大搜索"
                         else "alpha-beta 剪枝(C++实现)"
                     )
                 )
