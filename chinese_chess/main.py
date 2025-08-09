@@ -15,7 +15,7 @@ import sys
 
 def show_error_popup(exc_type, exc_value, exc_traceback):
     # 格式化完整堆栈
-    tb_str = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+    tb_str = "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
     print(tb_str)
 
     with open(LOG_FILE, "a", encoding="utf-8") as f:

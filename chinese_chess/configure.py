@@ -55,8 +55,7 @@ def ensure_file_exists(filename: str) -> dict:
         raise ValueError("Unsupported filename")
 
     for key, value in defaults.items():
-        if key not in data:
-            data[key] = value
+        data.setdefault(key, value)
 
     return data
 
@@ -81,9 +80,6 @@ statistic_data = ensure_file_exists(STATISTIC_PATH)
 def statistic(**kw) -> None:
     global statistic_data
     for key, value in kw.items():
-        if key in statistic_data:
-            statistic_data[key] += value
-        else:
-            statistic_data[key] = value
+        statistic_data[key] = statistic_data.get(key, 0) + value
     with open(STATISTIC_PATH, "w", encoding="utf-8") as file:
         dump(statistic_data, file, indent=4)
