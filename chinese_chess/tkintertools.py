@@ -122,7 +122,11 @@ class Tk(tkinter.Tk):
             else:
                 self.geometry("%dx%d" % (width, height))
 
-        self.iconbitmap(icon_dir if icon_dir else None)
+        try:
+            self.wm_iconbitmap(icon_dir if icon_dir else None)
+        except tkinter.TclError:
+            # 如果图标文件不存在则忽略错误
+            print(f"\033[33mWarning: Icon file couldn't load!\033[0m")
         self.title(title if title else None)
         self.protocol("WM_DELETE_WINDOW", shutdown if shutdown else None)
 

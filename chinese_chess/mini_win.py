@@ -324,7 +324,7 @@ class SettingWin(MiniWin):
             ),
             color_fill=tkt.COLOR_NONE,
         )
-        self.info.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON,)
+        self.info.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
         self.level = tkt.CanvasEntry(
             self.canvas,
