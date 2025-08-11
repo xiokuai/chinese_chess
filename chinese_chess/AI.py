@@ -9,7 +9,6 @@ import alpha_beta_search
 import min_max_search
 from configure import config
 
-_cpp_lib = ctypes.WinDLL("./alpha_beta_search.dll")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if sys.platform.startswith("win"):
