@@ -3,11 +3,24 @@
 """
 
 import ctypes
+import os
+import sys
 import alpha_beta_search
 import min_max_search
 from configure import config
 
 _cpp_lib = ctypes.WinDLL("./alpha_beta_search.dll")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+if sys.platform.startswith("win"):
+    lib_name = "alpha_beta_search.dll"
+    _cpp_lib = ctypes.WinDLL(os.path.join(BASE_DIR, lib_name))
+elif sys.platform == "darwin":  # macOS
+    lib_name = "libalpha_beta_search.dylib"
+    _cpp_lib = ctypes.CDLL(os.path.join(BASE_DIR, lib_name))
+else:  # Linux / Unix
+    lib_name = "libalpha_beta_search.so"
+    _cpp_lib = ctypes.CDLL(os.path.join(BASE_DIR, lib_name))
 
 # 设置 search 函数签名
 _cpp_lib.search.argtypes = [
