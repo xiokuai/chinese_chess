@@ -34,7 +34,7 @@ class Window:
         (SCREEN_WIDTH - tkt.S * 640 * S) // 2,
         0,
         exit,
-        os.path.abspath('logo.ico'),
+        os.path.abspath("logo.ico"),
     )
     root.resizable(False, False)
     menu = Menu(root, tearoff=False)
