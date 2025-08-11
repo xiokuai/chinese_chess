@@ -38,12 +38,14 @@ Now, start your own battlefield and enjoy the fight!
 
 #### Prerequisites
 
-- Visual Studio 2022
+- CMake
 
 #### Steps
 
-1. Open `chinese_chess.sln`
-2. build `alpha_beta_search`
+``` bash
+mkdir build && cd build
+cmake ..
+```
 
 ### Build Python GUI
 
@@ -99,12 +101,14 @@ Enjoy the game, and feel free to contribute or open issues!
 
 #### 需要
 
-- Visual Studio 2022
+- CMake
 
 ### 步骤
 
-1. 打开`chinese_chess.sln`
-2. 构建`alpha_beta_search`
+``` bash
+mkdir build && cd build
+cmake ..
+```
 
 ### 构建Python GUI
 
