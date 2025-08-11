@@ -22,14 +22,14 @@ using ID = int;
 // score of each chess
 const int SCORE_TABLE[9] = {
 	{0},        // ?
-	{10000},      // ��
-	{2},        // ��
-	{2},        // ��
-	{1},        // ��
-	{2},        // �������ӣ�
-	{5},        // �R
-	{6},        // �h
-	{9},       // ܇
+	{10000},      // 帥
+	{2},        // 仕
+	{2},        // 相
+	{1},        // 兵
+	{2},        // 兵(过河)
+	{5},        // 馬
+	{6},        // 砲
+	{9},       //  车
 };
 
 
@@ -110,11 +110,10 @@ static std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = 
 
 // change the data of board
 static inline void process(int data[10][9], int si, int sj, int ei, int ej) {
-	int piece = data[si][sj];  // ��ȡԴλ�õ�ֵ
-	data[si][sj] = 0;          // ���Դλ��
-	data[ei][ej] = piece;      // �ƶ���Ŀ��λ��
+	int piece = data[si][sj];
+	data[si][sj] = 0;
+	data[ei][ej] = piece;
 
-	// ֻ���ض�����(-4��4)�Ҵﵽ��Ӧ��ʱ�޸�ֵ
 	int promote = (piece == -4) * (ei >= 5) * -1 + (piece == 4) * (ei <= 4);
 	data[ei][ej] += promote;
 }
@@ -128,9 +127,8 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 
 	int _delta[3][2] = { {id < 0 ? 1 : -1, 0}, { 0, 1 }, {0, -1} };
 
-	// ֱ�Ӵ���ÿ�����ӵĲ�ͬ����
 	switch (abs_id) {
-	case 1:  // ��
+	case 1:
 		for (const auto& delta : DELTA.at(1)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -140,7 +138,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 2:  // ʿ
+	case 2:
 		for (const auto& delta : DELTA.at(2)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -150,7 +148,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 3:  // ��
+	case 3:
 		for (const auto& delta : DELTA.at(3)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -161,13 +159,13 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 4:  // ��
+	case 4:
 		ni = i + (id < 0 ? 1 : -1), nj = j;
 		if (id * data[ni][nj] <= 0)
 			possible_destinations.emplace_back(ni, nj);
 		break;
 
-	case 5:  // ��
+	case 5:
 		for (const auto& delta : _delta) {
 			ni = i + delta[0], nj = j + delta[1];
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
@@ -176,7 +174,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 6:  // ��
+	case 6:
 		for (const auto& delta : DELTA.at(6)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -189,7 +187,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 7:  // ����������
+	case 7:
 		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			bool stepping_stone = false;
 			for (auto& delta : deltas) {
@@ -215,7 +213,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 8:  // ��
+	case 8:
 		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			for (auto& delta : deltas) {
 				ni = i + delta.first, nj = j + delta.second;
@@ -233,7 +231,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	default:
-		throw id;  // δ֪��������
+		throw id;
 	}
 
 	return possible_destinations;
