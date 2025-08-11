@@ -10,7 +10,7 @@ Chinese Chess (Xiangqi) is a traditional two-player strategy game that originate
 
 Xiangqi uses a square-grid board with 32 circular pieces in total—16 for each side (red and black). Pieces are placed and moved on the intersections (not inside the squares). Players take turns to move their pieces, and the player who checkmates the opponent's general (帥/将) wins the game.
 
-This porageam uses [Chinese Chess Lib](https://github.com/aba2222/ChineseChessLib)
+This porageam uses [Chinese Chess Lib](https://github.com/aba2222/chinese_chess_lib)
 
 ## 🎮 How to Play?
 
@@ -73,7 +73,7 @@ Enjoy the game, and feel free to contribute or open issues!
 
 中国象棋使用方形格状棋盘，圆形棋子共有32个，红黑二色各有16个棋子，摆放和活动在交叉点上。双方交替行棋，先将对方的将（帥）“将死”的一方获胜。
 
-此程序使用了[Chinese Chess Lib](https://github.com/aba2222/ChineseChessLib)
+此程序使用了[Chinese Chess Lib](https://github.com/aba2222/chinese_chess_lib)
 
 ## 🎮 如何游玩？
 
