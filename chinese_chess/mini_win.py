@@ -4,7 +4,7 @@ from tkinter import Event
 import tkintertools as tkt
 from constants import VOICE_BUTTON, SCREEN_HEIGHT, SCREEN_WIDTH, STATISTIC_DICT, S
 from configure import STATISTIC_PATH, config, configure
-from winsound import PlaySound, SND_ASYNC
+from sound import play_sound_async
 from tools import open_file
 
 
@@ -92,8 +92,8 @@ class HelpWin(MiniWin):
             command=lambda: self.canvas_set(1),
         )
 
-        self.last.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
-        self.next.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.last.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
+        self.next.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
         self.data_list = []
         self.ind = -1
@@ -182,7 +182,7 @@ class LibraryWin(MiniWin):
             font=("楷体", round(12 * S)),
             command=lambda: self.canvas_set(self.path_.rsplit("/", 1)[0]),
         )
-        self.back.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.back.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
         self.content = tkt.Canvas(self.toplevel, int(290 * S), int(357 * S))
         self.content.configure(highlightthickness=1, highlightbackground="grey")
         self.content.bind("<MouseWheel>", self.scroll)
@@ -229,7 +229,7 @@ class LibraryWin(MiniWin):
                 5 * S,
                 file.replace(".fen", ""),
                 command=lambda path=path, file=file: self.canvas_set(f"{path}/{file}"),
-            ).command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+            ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
 
 class SettingWin(MiniWin):
@@ -308,7 +308,7 @@ class SettingWin(MiniWin):
             ),
             color_fill=tkt.COLOR_NONE,
         )
-        self.auto_scale.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.auto_scale.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
         self.info = tkt.CanvasButton(
             self.canvas,
@@ -324,7 +324,7 @@ class SettingWin(MiniWin):
             ),
             color_fill=tkt.COLOR_NONE,
         )
-        self.info.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.info.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON,)
 
         self.level = tkt.CanvasEntry(
             self.canvas,
@@ -384,7 +384,7 @@ class SettingWin(MiniWin):
                 )
             ),
         )
-        self.ai.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.ai.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
         tkt.CanvasButton(
             self.canvas,
@@ -396,7 +396,7 @@ class SettingWin(MiniWin):
             "保存",
             font=("楷体", round(12 * S)),
             command=self.save,
-        ).command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
         tkt.CanvasButton(
             self.canvas,
             228 * S,
@@ -407,7 +407,7 @@ class SettingWin(MiniWin):
             "恢复默认",
             font=("楷体", round(12 * S)),
             command=self.default,
-        ).command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
     def save(self) -> None:
         """保存设定"""
