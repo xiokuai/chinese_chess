@@ -5,7 +5,7 @@
 from socket import SOCK_DGRAM, socket
 from threading import Thread
 from tkinter import messagebox, ttk
-from winsound import SND_ASYNC, PlaySound
+from sound import play_sound_async
 import json
 
 import GUI
@@ -45,7 +45,7 @@ class _Base:
             6 * S,
             font=("楷体", round(12 * S)),
         )
-        self.again.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.again.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
         self.ok = tkt.CanvasButton(
             self.canvas,
@@ -56,7 +56,7 @@ class _Base:
             6 * S,
             font=("楷体", round(12 * S)),
         )
-        self.ok.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.ok.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
         self.cancel = tkt.CanvasButton(
             self.canvas,
@@ -69,7 +69,7 @@ class _Base:
             text="取消",
             command=self.close,
         )
-        self.cancel.command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        self.cancel.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
         self.again.set_live(False)
 
@@ -227,7 +227,7 @@ class Client(_Base):
             "更多",
             font=("楷体", round(10 * S)),
             command=lambda: GUI.more_set(self.toplevel),
-        ).command_ex["press"] = lambda: PlaySound(VOICE_BUTTON, SND_ASYNC)
+        ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
     def search(self) -> None:
         """搜索"""
