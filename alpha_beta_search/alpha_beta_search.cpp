@@ -5,6 +5,9 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <cmath>
+
+#include "alpha_beta_search.h"
 
 // the coordinate of chess
 using Coordinate = std::pair<int, int>;
@@ -19,14 +22,14 @@ using ID = int;
 // score of each chess
 const int SCORE_TABLE[9] = {
 	{0},        // ?
-	{10000},      // Ž›
-	{2},        // ÊË
-	{2},        // Ïà
-	{1},        // ±ø
-	{2},        // ±ø£¨¹ýºÓ£©
-	{5},        // ñR
-	{6},        // ³h
-	{9},       // Ü‡
+	{10000},      // å¸¥
+	{2},        // ä»•
+	{2},        // ç›¸
+	{1},        // å…µ
+	{2},        // å…µ(è¿‡æ²³)
+	{5},        // é¦¬
+	{6},        // ç ²
+	{9},       //  è½¦
 };
 
 
@@ -107,11 +110,10 @@ static std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = 
 
 // change the data of board
 static inline void process(int data[10][9], int si, int sj, int ei, int ej) {
-	int piece = data[si][sj];  // ¶ÁÈ¡Ô´Î»ÖÃµÄÖµ
-	data[si][sj] = 0;          // Çå¿ÕÔ´Î»ÖÃ
-	data[ei][ej] = piece;      // ÒÆ¶¯µ½Ä¿±êÎ»ÖÃ
+	int piece = data[si][sj];
+	data[si][sj] = 0;
+	data[ei][ej] = piece;
 
-	// Ö»ÔÚÌØ¶¨Æå×Ó(-4»ò4)ÇÒ´ïµ½¶ÔÓ¦ÐÐÊ±ÐÞ¸ÄÖµ
 	int promote = (piece == -4) * (ei >= 5) * -1 + (piece == 4) * (ei <= 4);
 	data[ei][ej] += promote;
 }
@@ -125,9 +127,8 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 
 	int _delta[3][2] = { {id < 0 ? 1 : -1, 0}, { 0, 1 }, {0, -1} };
 
-	// Ö±½Ó´¦ÀíÃ¿ÖÖÆå×ÓµÄ²»Í¬¹æÔò
 	switch (abs_id) {
-	case 1:  // ½«
+	case 1:
 		for (const auto& delta : DELTA.at(1)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -137,7 +138,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 2:  // Ê¿
+	case 2:
 		for (const auto& delta : DELTA.at(2)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -147,24 +148,24 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 3:  // Ïó
+	case 3:
 		for (const auto& delta : DELTA.at(3)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8 && (i < 5 ? ni < 5 : ni > 4))
 				if (id * data[ni][nj] <= 0)
-					if (data[(ni + i) / 2][(nj + j) / 2] == 0)  // ¼ì²éÖÐ¼äÎ»ÖÃÊÇ·ñ¿Õ
+					if (data[(ni + i) / 2][(nj + j) / 2] == 0)  // ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Î»ï¿½ï¿½ï¿½Ç·ï¿½ï¿½
 						possible_destinations.emplace_back(ni, nj);
 		}
 		break;
 
-	case 4:  // ×ä
+	case 4:
 		ni = i + (id < 0 ? 1 : -1), nj = j;
 		if (id * data[ni][nj] <= 0)
 			possible_destinations.emplace_back(ni, nj);
 		break;
 
-	case 5:  // Âí
+	case 5:
 		for (const auto& delta : _delta) {
 			ni = i + delta[0], nj = j + delta[1];
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
@@ -173,7 +174,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 6:  // ÅÚ
+	case 6:
 		for (const auto& delta : DELTA.at(6)) {
 			ni = i + delta.first;
 			nj = j + delta.second;
@@ -186,7 +187,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 7:  // ³µ£¨ÆäËû£©
+	case 7:
 		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			bool stepping_stone = false;
 			for (auto& delta : deltas) {
@@ -212,7 +213,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		}
 		break;
 
-	case 8:  // ±ø
+	case 8:
 		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
 			for (auto& delta : deltas) {
 				ni = i + delta.first, nj = j + delta.second;
@@ -230,7 +231,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	default:
-		throw id;  // Î´ÖªÆå×ÓÀàÐÍ
+		throw id;
 	}
 
 	return possible_destinations;
@@ -362,7 +363,7 @@ static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, 
 
 
 // API for Python
-extern "C" _declspec(dllexport) float search(int data[10][9], int depth, int result[4], bool reverse = false) {
+extern "C" DLL_EXPORT float search(int data[10][9], int depth, int result[4], bool reverse) {
 	Node node = alpha_beta_search(data, depth, reverse);
 	if (node.operation == OPERATION) {
 		std::vector<Operation> operations = get_operations(data, reverse);
@@ -378,7 +379,7 @@ extern "C" _declspec(dllexport) float search(int data[10][9], int depth, int res
 
 
 // API for Python
-extern "C" _declspec(dllexport) void all_operations(int data[10][9], int i, int j, int operation[18][2]) {
+extern "C" DLL_EXPORT void all_operations(int data[10][9], int i, int j, int operation[18][2]) {
 	for (int i = 0; i < 18; ++i)
 		operation[i][0] = -1;
 	int count = 0;

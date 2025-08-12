@@ -3,6 +3,7 @@
 """
 
 from math import hypot
+import os
 from sys import exit
 from threading import Thread
 from time import time
@@ -34,7 +35,7 @@ class Window:
         (SCREEN_WIDTH - tkt.S * 640 * S) // 2,
         0,
         exit,
-        "logo.ico",
+        os.path.abspath("logo.ico"),
     )
     root.resizable(False, False)
     menu = Menu(root, tearoff=False)
