@@ -389,7 +389,7 @@ class Canvas(tkinter.Canvas):
         font = kw.get("font")
         if not font:
             kw["font"] = FONT
-        elif type(font) == str:
+        elif isinstance(font, str):
             kw["font"] = (font, FONT[1])
         args = tuple(i * S for i in args)
         item = tkinter.Canvas.create_text(self, *args, **kw)
