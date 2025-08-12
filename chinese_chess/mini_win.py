@@ -240,7 +240,7 @@ class SettingWin(MiniWin):
         super().__init__(root, _("游戏设置"), 500, 300)
         logo(self.canvas)
         self.canvas.create_rectangle(
-            -1, 265 * S, 401 * S, 301 * S, width=0, fill="#F1F1F1"
+            -1, 265 * S, 501 * S, 301 * S, width=0, fill="#F1F1F1"
         )
         labels = [
             _("窗口缩放系数（重启生效）"),
@@ -392,7 +392,7 @@ class SettingWin(MiniWin):
 
         tkt.CanvasButton(
             self.canvas,
-            314 * S,
+            414 * S,
             271 * S,
             80 * S,
             23 * S,
@@ -403,7 +403,7 @@ class SettingWin(MiniWin):
         ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
         tkt.CanvasButton(
             self.canvas,
-            228 * S,
+            328 * S,
             271 * S,
             80 * S,
             23 * S,

@@ -6,6 +6,8 @@ from threading import Thread
 
 from configure import config, statistic
 
+from l10n import _ 
+
 
 def peace() -> bool:
     """和棋判定"""
@@ -42,21 +44,21 @@ def gameover(color: str | None = None) -> None:
 
     if is_local_test:
         tone = ""
-        win = "获胜！"
-        who = "红方" if is_red else "黑方"
+        win = _("获胜!")
+        who = _("红方") if is_red else _("黑方")
     else:
-        tone = "恭喜你！" if is_red else "很遗憾，"
-        win = "赢了！" if is_red else "输了。"
-        who = "你"
+        tone = _("恭喜你!") if is_red else _("很遗憾")
+        win = _("赢了!") if is_red else _("输了.")
+        who = _("你")
 
     # 统计结果
-    if win == "赢了！":
+    if win == _("赢了!"):
         statistic(Win=1)
-    elif win == "输了。":
+    elif win == _("输了."):
         statistic(Lose=1)
 
     # 弹窗提示
-    GUI.Window.root.after(0, lambda: messagebox.showinfo(tone, win))
+    GUI.Window.root.after(0, lambda: messagebox.showinfo(tone, who + win))
 
     # 重置界面定时器显示
     GUI.Window.canvas.itemconfigure(GUI.Window.timer, text="00:00\n- 中国象棋 -")
