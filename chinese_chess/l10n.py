@@ -23,8 +23,14 @@ def get_system_lang():
 def init_l10n():
     try:
         lang = get_system_lang()
-        trans = gettext.translation("chinese_chess", "locale", languages=[lang])
+        lang = "en"
+        print(f"Using language: {lang}")
+        trans = gettext.translation("chinese_chess", "l10n", languages=[lang])
         trans.install()
+        global _
         _ = trans.gettext
     except FileNotFoundError:
-        print("Could not find translation files, using default language.")
+        print(f"Could not find translation files for language '{lang}', using default language.")
+
+
+init_l10n()

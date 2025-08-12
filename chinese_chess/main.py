@@ -37,7 +37,6 @@ if __name__ == "__main__":
     from configure import statistic
     from GUI import Window
 
-    init_l10n()
     # 更新统计数据
     statistic(Launch=1)
     # 启动主窗口
