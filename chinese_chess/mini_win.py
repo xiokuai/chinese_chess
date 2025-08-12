@@ -454,7 +454,7 @@ class AboutWin(MiniWin):
         from main import __version__, __update__, __author__, __license__, __website__
         import webbrowser
 
-        super().__init__(root, _("关于"), 300, 200)
+        super().__init__(root, _("关于"), 350, 250)
         logo(self.canvas)
         info = _("版本: %s\n日期: %s\t\t\n作者: %s") % (
             __version__,
@@ -472,7 +472,7 @@ class AboutWin(MiniWin):
 
         link_text = self.canvas.create_text(
             20 * S,
-            90 * S,
+            110 * S,
             text=_("访问本项目Github仓库"),
             font=("楷体", round(12 * S), "underline"),
             fill="blue",

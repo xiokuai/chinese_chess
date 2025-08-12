@@ -7,6 +7,7 @@ from tkinter import Tk
 
 import tkintertools as tkt
 from configure import config, configure
+from l10n import _
 
 # 当前地址
 ADDRESS = gethostbyname(gethostname())
@@ -62,24 +63,24 @@ FEN = {
 
 # 统计数据名称对照表
 STATISTIC_DICT = {
-    "Launch": "程序启动次数",
-    "LAN": "联机模式使用次数",
-    "LOCAL": "双人模式使用次数",
-    "COMPUTER": "人机模式使用次数",
-    "END": "残局模式使用次数",
-    "TEST": "测试模式使用次数",
-    "Revoke": "悔棋次数",
-    "Recovery": "撤销悔棋次数",
-    "AI": "AI功能调用次数",
-    "Eat": "吃棋次数",
-    "Move": "移棋次数",
-    "Warn": "“将军”次数",
-    "Win": "游戏胜利次数",
-    "Lose": "游戏失败次数",
-    "Peace": "和棋次数",
-    "Play": "对局次数",
-    "Time": "总游戏时间",
-    "First": "先手次数",
+    "Launch": _("程序启动次数"),
+    "LAN": _("联机模式使用次数"),
+    "LOCAL": _("双人模式使用次数"),
+    "COMPUTER": _("人机模式使用次数"),
+    "END": _("残局模式使用次数"),
+    "TEST": _("测试模式使用次数"),
+    "Revoke": _("悔棋次数"),
+    "Recovery": _("撤销悔棋次数"),
+    "AI": _("AI功能调用次数"),
+    "Eat": _("吃棋次数"),
+    "Move": _("移棋次数"),
+    "Warn": _("“将军”次数"),
+    "Win": _("游戏胜利次数"),
+    "Lose": _("游戏失败次数"),
+    "Peace": _("和棋次数"),
+    "Play": _("对局次数"),
+    "Time": _("总游戏时间"),
+    "First": _("先手次数"),
 }
 
 # 选子音效
