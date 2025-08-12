@@ -1,0 +1,250 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+# xgettext -d messages -o locale/messages.pot app.py
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-12 13:48+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: chinese_chess/GUI.py:83
+msgid "选项(O)"
+msgstr ""
+
+#: chinese_chess/GUI.py:84
+msgid "帮助(H)"
+msgstr ""
+
+#: chinese_chess/GUI.py:85
+msgid "导入棋局"
+msgstr ""
+
+#: chinese_chess/GUI.py:86
+msgid "导出棋局"
+msgstr ""
+
+#: chinese_chess/GUI.py:87 chinese_chess/mini_win.py:162
+msgid "棋局库"
+msgstr ""
+
+#: chinese_chess/GUI.py:89
+msgid "撤销"
+msgstr ""
+
+#: chinese_chess/GUI.py:90
+msgid "恢复"
+msgstr ""
+
+#: chinese_chess/GUI.py:92 chinese_chess/mini_win.py:240
+msgid "游戏设置"
+msgstr ""
+
+#: chinese_chess/GUI.py:93
+msgid "新游戏"
+msgstr ""
+
+#: chinese_chess/GUI.py:94
+msgid "退出"
+msgstr ""
+
+#: chinese_chess/GUI.py:96
+msgid "游戏说明"
+msgstr ""
+
+#: chinese_chess/GUI.py:100 chinese_chess/mini_win.py:138
+msgid "统计数据"
+msgstr ""
+
+#: chinese_chess/GUI.py:102 chinese_chess/mini_win.py:453
+msgid "关于"
+msgstr ""
+
+#: chinese_chess/GUI.py:164 chinese_chess/GUI.py:183
+msgid "选择模式"
+msgstr ""
+
+#: chinese_chess/GUI.py:182
+msgid "上一步"
+msgstr ""
+
+#: chinese_chess/GUI.py:198
+msgid "开始"
+msgstr ""
+
+#: chinese_chess/GUI.py:207
+msgid "选择模式 - "
+msgstr ""
+
+#: chinese_chess/GUI.py:208 chinese_chess/GUI.py:296
+msgid "双人对弈"
+msgstr ""
+
+#: chinese_chess/GUI.py:208 chinese_chess/GUI.py:293
+msgid "人机对战"
+msgstr ""
+
+#: chinese_chess/GUI.py:211
+msgid "选择模式 - 联机对抗"
+msgstr ""
+
+#: chinese_chess/GUI.py:217
+msgid "请选择连接方式"
+msgstr ""
+
+#: chinese_chess/GUI.py:226
+msgid "客户端连接"
+msgstr ""
+
+#: chinese_chess/GUI.py:234
+msgid ""
+"主动的连接方式\n"
+"套接字将主动搜索局域网内可识别的服务端"
+msgstr ""
+
+#: chinese_chess/GUI.py:243
+msgid "服务端连接"
+msgstr ""
+
+#: chinese_chess/GUI.py:250
+msgid ""
+"被动的连接方式\n"
+"套接字将惰性地等待可能的客户端的连接"
+msgstr ""
+
+#: chinese_chess/GUI.py:264
+msgid "人脑与电脑的激烈碰撞！"
+msgstr ""
+
+#: chinese_chess/GUI.py:277
+msgid "双方激烈对峙，到底谁能笑到最后？"
+msgstr ""
+
+#: chinese_chess/GUI.py:290
+msgid "和局域网里的朋友一起玩耍吧！"
+msgstr ""
+
+#: chinese_chess/GUI.py:299
+msgid "联机对抗"
+msgstr ""
+
+#: chinese_chess/GUI.py:303
+msgid "请选择游戏模式"
+msgstr ""
+
+#: chinese_chess/GUI.py:329
+#, python-format
+msgid ""
+"%02d:%02d\n"
+"%s思考中."
+msgstr ""
+
+#: chinese_chess/GUI.py:463
+msgid "返回"
+msgstr ""
+
+#: chinese_chess/GUI.py:469
+msgid "我方让子"
+msgstr ""
+
+#: chinese_chess/GUI.py:471
+msgid "对方让子"
+msgstr ""
+
+#: chinese_chess/GUI.py:474
+msgid "我方先手"
+msgstr ""
+
+#: chinese_chess/mini_win.py:55
+msgid "帮助"
+msgstr ""
+
+#: chinese_chess/mini_win.py:80
+msgid "< 上一页"
+msgstr ""
+
+#: chinese_chess/mini_win.py:91
+msgid "下一页 >"
+msgstr ""
+
+#: chinese_chess/mini_win.py:182
+msgid "←后退"
+msgstr ""
+
+#: chinese_chess/mini_win.py:248
+msgid "窗口缩放系数（重启生效）"
+msgstr ""
+
+#: chinese_chess/mini_win.py:255
+msgid "窗口自动缩放（重启生效）"
+msgstr ""
+
+#: chinese_chess/mini_win.py:262
+msgid "棋子可走显示"
+msgstr ""
+
+#: chinese_chess/mini_win.py:269
+msgid "AI最大搜索深度"
+msgstr ""
+
+#: chinese_chess/mini_win.py:276
+msgid "AI搜索算法"
+msgstr ""
+
+#: chinese_chess/mini_win.py:283
+msgid "和棋判定回合数"
+msgstr ""
+
+#: chinese_chess/mini_win.py:370 chinese_chess/mini_win.py:382
+#: chinese_chess/mini_win.py:386
+msgid "极小极大搜索"
+msgstr ""
+
+#: chinese_chess/mini_win.py:373 chinese_chess/mini_win.py:385
+#: chinese_chess/mini_win.py:428
+msgid "alpha-beta 剪枝"
+msgstr ""
+
+#: chinese_chess/mini_win.py:375 chinese_chess/mini_win.py:383
+#: chinese_chess/mini_win.py:387 chinese_chess/mini_win.py:443
+msgid "alpha-beta 剪枝(C++实现)"
+msgstr ""
+
+#: chinese_chess/mini_win.py:401
+msgid "保存"
+msgstr ""
+
+#: chinese_chess/mini_win.py:412
+msgid "恢复默认"
+msgstr ""
+
+#: chinese_chess/mini_win.py:427
+msgid "极大极小搜索"
+msgstr ""
+
+#: chinese_chess/mini_win.py:455
+#, python-format
+msgid ""
+"版本: %s\n"
+"日期: %s\t\t\n"
+"作者: %s"
+msgstr ""
+
+#: chinese_chess/mini_win.py:464
+#, python-format
+msgid "开源许可: %s\n"
+msgstr ""
+
+#: chinese_chess/mini_win.py:472
+msgid "访问本项目Github仓库"
+msgstr ""

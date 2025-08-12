@@ -30,6 +30,7 @@ def ensure_file_exists(filename: str) -> dict:
             "level": 4,
             "peace": 60,
             "algo": 0,
+            "language": "zh_CN",
         }
     elif filename == STATISTIC_PATH:
         defaults = {
