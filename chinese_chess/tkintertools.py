@@ -38,6 +38,7 @@ if sys.version_info < (3, 10):
 
 import math  # 数学函数
 import tkinter  # 基础模块
+from tkinter import font as tkFont  # 字体模块
 from fractions import Fraction  # 图片缩放
 from typing import Generator, Iterable, Literal, Self, Type  # 类型提示
 
@@ -391,6 +392,7 @@ class Canvas(tkinter.Canvas):
             kw["font"] = FONT
         elif isinstance(font, str):
             kw["font"] = (font, FONT[1])
+
         args = tuple(i * S for i in args)
         item = tkinter.Canvas.create_text(self, *args, **kw)
         self._font[item] = list(kw["font"])
