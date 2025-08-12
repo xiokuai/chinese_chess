@@ -408,11 +408,7 @@ class SettingWin(MiniWin):
             (
                 "简体中文"
                 if config["language"] == "zh_CN"
-                else (
-                    "Enligh"
-                    if config["language"] == "en"
-                    else "None"
-                )
+                else ("Enligh" if config["language"] == "en" else "None")
             ),
             font=("楷体", round(12 * S)),
             color_fill=tkt.COLOR_NONE,
@@ -420,11 +416,7 @@ class SettingWin(MiniWin):
                 text=(
                     "简体中文"
                     if self.language.value == "Enligh"
-                    else (
-                        "Enligh"
-                        if self.language.value == "简体中文"
-                        else "None"
-                    )
+                    else ("Enligh" if self.language.value == "简体中文" else "None")
                 )
             ),
         )

@@ -24,7 +24,7 @@ def get_system_lang():
 
 def init_l10n():
     try:
-        if(statistic == 0):
+        if statistic == 0:
             lang = get_system_lang()
         else:
             lang = config["language"]
@@ -33,7 +33,9 @@ def init_l10n():
         global _
         _ = trans.gettext
     except FileNotFoundError:
-        print(f"Could not find translation files for language '{lang}', using default language.")
+        print(
+            f"Could not find translation files for language '{lang}', using default language."
+        )
 
 
 init_l10n()
