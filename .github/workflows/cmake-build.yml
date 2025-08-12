@@ -68,24 +68,26 @@ jobs:
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-    - name: Set dynamic path for library
-      id: dynamic_path
-      run: |
-        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-          echo "library_path=${{ steps.strings.outputs.build-output-dir }}/libalpha_beta_search.so" >> $GITHUB_ENV
-        elif [ "${{ matrix.os }}" == "windows-latest" ]; then
-          echo "library_path=${{ steps.strings.outputs.build-output-dir }}/alpha_beta_search.dll" >> $GITHUB_ENV
-        elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-          echo "library_path=${{ steps.strings.outputs.build-output-dir }}/libalpha_beta_search.dylib" >> $GITHUB_ENV
-        else
-          echo "library_path=invalid_path" >> $GITHUB_ENV
-        fi
+    - name: Upload Library as artifact
+      uses: actions/upload-artifact@v4
+      if: matrix.os == 'ubuntu-latest'
+      with:
+        name: alpha_beta_search_lib-${{ matrix.os }}-${{ matrix.version }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/libalpha_beta_search.so
+        
+    - name: Upload Library as artifact
+      uses: actions/upload-artifact@v4
+      if: matrix.os == 'windows-latest'
+      with:
+        name: alpha_beta_search_lib-${{ matrix.os }}-${{ matrix.version }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/alpha_beta_search.dll
 
     - name: Upload Library as artifact
       uses: actions/upload-artifact@v4
+      if: matrix.os == 'macos-latest'
       with:
-        name: alpha_beta_search_lib-${{ matrix.os }}
-        path: ${{ env.library_path }}
+        name: alpha_beta_search_lib-${{ matrix.os }}-${{ matrix.version }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/libalpha_beta_search.dylib
 
     #- name: Test
     #  working-directory: ${{ steps.strings.outputs.build-output-dir }}
