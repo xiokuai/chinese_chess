@@ -13,7 +13,7 @@ DEFAULT_FONT = ("楷体", round(12 * S))
 
 def logo(canvas: tkt.Canvas) -> None:
     """给画布加上标志背景"""
-    x, y, color = canvas.width[1] // 2 + 10 * S, canvas.height[1] // 2, "#DDD"
+    x, y, color = canvas.width[1] // 2 + 10 * S, canvas.height[1] // 2, "#DDDDDD"
     canvas.create_text(
         x - 100 * S,
         y - 20 * S,
@@ -237,7 +237,7 @@ class SettingWin(MiniWin):
     """设置窗口"""
 
     def __init__(self, root) -> None:
-        super().__init__(root, _("游戏设置"), 400, 300)
+        super().__init__(root, _("游戏设置"), 500, 300)
         logo(self.canvas)
         self.canvas.create_rectangle(
             -1, 265 * S, 401 * S, 301 * S, width=0, fill="#F1F1F1"
@@ -262,7 +262,7 @@ class SettingWin(MiniWin):
 
         self.scale = tkt.CanvasEntry(
             self.canvas,
-            220 * S,
+            390 * S,
             10 * S,
             100 * S,
             20 * S,
@@ -276,7 +276,7 @@ class SettingWin(MiniWin):
 
         self.auto_scale = tkt.CanvasButton(
             self.canvas,
-            220 * S,
+            410 * S,
             40 * S,
             80 * S,
             20 * S,
@@ -292,7 +292,7 @@ class SettingWin(MiniWin):
 
         self.info = tkt.CanvasButton(
             self.canvas,
-            130 * S,
+            410 * S,
             70 * S,
             80 * S,
             20 * S,
@@ -308,7 +308,7 @@ class SettingWin(MiniWin):
 
         self.level = tkt.CanvasEntry(
             self.canvas,
-            140 * S,
+            390 * S,
             100 * S,
             100 * S,
             20 * S,
@@ -322,7 +322,7 @@ class SettingWin(MiniWin):
 
         self.peace = tkt.CanvasEntry(
             self.canvas,
-            140 * S,
+            390 * S,
             160 * S,
             100 * S,
             20 * S,
@@ -336,9 +336,9 @@ class SettingWin(MiniWin):
 
         self.ai = tkt.CanvasButton(
             self.canvas,
-            110 * S,
+            190 * S,
             130 * S,
-            200 * S,
+            300 * S,
             20 * S,
             5 * S,
             (
@@ -368,7 +368,7 @@ class SettingWin(MiniWin):
 
         self.language = tkt.CanvasButton(
             self.canvas,
-            110 * S,
+            290 * S,
             190 * S,
             200 * S,
             20 * S,
@@ -376,15 +376,15 @@ class SettingWin(MiniWin):
             (
                 "简体中文"
                 if config["language"] == "zh_CN"
-                else ("Enligh" if config["language"] == "en" else "None")
+                else ("English" if config["language"] == "en" else "None")
             ),
             font=DEFAULT_FONT,
             color_fill=tkt.COLOR_NONE,
             command=lambda: self.language.configure(
                 text=(
                     "简体中文"
-                    if self.language.value == "Enligh"
-                    else ("Enligh" if self.language.value == "简体中文" else "None")
+                    if self.language.value == "English"
+                    else ("English" if self.language.value == "简体中文" else "None")
                 )
             ),
         )
@@ -429,7 +429,7 @@ class SettingWin(MiniWin):
             language=(
                 "zh_CN"
                 if self.language.value == "简体中文"
-                else "en" if self.language.value == "Enligh" else "None"
+                else "en" if self.language.value == "English" else "None"
             ),
         )
         self.toplevel.destroy()
