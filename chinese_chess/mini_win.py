@@ -284,6 +284,13 @@ class SettingWin(MiniWin):
             font=("楷体", round(12 * S)),
             anchor="w",
         )
+        self.canvas.create_text(
+            20 * S,
+            200 * S,
+            text=_("语言"),
+            font=("楷体", round(12 * S)),
+            anchor="w",
+        )
 
         self.scale = tkt.CanvasEntry(
             self.canvas,
@@ -391,6 +398,38 @@ class SettingWin(MiniWin):
         )
         self.ai.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
+        self.language = tkt.CanvasButton(
+            self.canvas,
+            110 * S,
+            190 * S,
+            200 * S,
+            20 * S,
+            5 * S,
+            (
+                "简体中文"
+                if config["language"] == "zh_CN"
+                else (
+                    "Enligh"
+                    if config["language"] == "en"
+                    else "None"
+                )
+            ),
+            font=("楷体", round(12 * S)),
+            color_fill=tkt.COLOR_NONE,
+            command=lambda: self.language.configure(
+                text=(
+                    "简体中文"
+                    if self.language.value == "Enligh"
+                    else (
+                        "Enligh"
+                        if self.language.value == "简体中文"
+                        else "None"
+                    )
+                )
+            ),
+        )
+        self.language.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
+
         tkt.CanvasButton(
             self.canvas,
             314 * S,
@@ -426,6 +465,11 @@ class SettingWin(MiniWin):
                 1
                 if self.ai.value == _("极大极小搜索")
                 else 2 if self.ai.value == _("alpha-beta 剪枝") else 0
+            ),
+            language=(
+                "zh_CN"
+                if self.language.value == "简体中文"
+                else "en" if self.language.value == "Enligh" else "None"
             ),
         )
         self.toplevel.destroy()

@@ -2,6 +2,8 @@ import gettext
 
 _ = gettext.gettext
 
+from configure import config, statistic
+
 
 def get_system_lang():
     import locale
@@ -22,9 +24,10 @@ def get_system_lang():
 
 def init_l10n():
     try:
-        lang = get_system_lang()
-        lang = "en"
-        print(f"Using language: {lang}")
+        if(statistic == 0):
+            lang = get_system_lang()
+        else:
+            lang = config["language"]
         trans = gettext.translation("chinese_chess", "l10n", languages=[lang])
         trans.install()
         global _
