@@ -8,10 +8,12 @@ from sound import play_sound_async
 from tools import open_file
 from l10n import _
 
+DEFAULT_FONT = ("楷体", round(12 * S))
+
 
 def logo(canvas: tkt.Canvas) -> None:
     """给画布加上标志背景"""
-    x, y, color = canvas.width[1] // 2 + 10 * S, canvas.height[1] // 2, "#DDD"
+    x, y, color = canvas.width[1] // 2 + 10 * S, canvas.height[1] // 2, "#DDDDDD"
     canvas.create_text(
         x - 100 * S,
         y - 20 * S,
@@ -60,14 +62,12 @@ class HelpWin(MiniWin):
         )
         self.canvas.create_line(10 * S, 40 * S, 200 * S, 40 * S, width=round(2 * S))
 
-        self.page = self.canvas.create_text(
-            200 * S, 282 * S, font=("楷体", round(12 * S))
-        )
+        self.page = self.canvas.create_text(200 * S, 282 * S, font=DEFAULT_FONT)
         self.title = self.canvas.create_text(
             10 * S, 20 * S, font=("楷体", round(20 * S)), anchor="w"
         )
         self.text = self.canvas.create_text(
-            10 * S, 50 * S, anchor="nw", font=("楷体", round(12 * S))
+            10 * S, 50 * S, anchor="nw", font=DEFAULT_FONT
         )
 
         self.last = tkt.CanvasButton(
@@ -78,7 +78,7 @@ class HelpWin(MiniWin):
             25 * S,
             6 * S,
             _("< 上一页"),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             command=lambda: self.canvas_set(-1),
         )
         self.next = tkt.CanvasButton(
@@ -89,7 +89,7 @@ class HelpWin(MiniWin):
             25 * S,
             6 * S,
             _("下一页 >"),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             command=lambda: self.canvas_set(1),
         )
 
@@ -143,13 +143,13 @@ class StatisticWin(MiniWin):
                 key_text += "%s:\n" % STATISTIC_DICT[key]
                 value_text += "%d\n" % value
         self.canvas.create_text(
-            20 * S, 4 * S, text=key_text, font=("楷体", round(12 * S)), anchor="nw"
+            20 * S, 4 * S, text=key_text, font=DEFAULT_FONT, anchor="nw"
         )
         self.canvas.create_text(
             380 * S,
             4 * S,
             text=value_text,
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             anchor="ne",
             justify="right",
         )
@@ -180,7 +180,7 @@ class LibraryWin(MiniWin):
             20 * S,
             5 * S,
             _("←后退"),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             command=lambda: self.canvas_set(self.path_.rsplit("/", 1)[0]),
         )
         self.back.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
@@ -237,70 +237,38 @@ class SettingWin(MiniWin):
     """设置窗口"""
 
     def __init__(self, root) -> None:
-        super().__init__(root, _("游戏设置"), 400, 300)
+        super().__init__(root, _("游戏设置"), 500, 300)
         logo(self.canvas)
         self.canvas.create_rectangle(
-            -1, 265 * S, 401 * S, 301 * S, width=0, fill="#F1F1F1"
+            -1, 265 * S, 501 * S, 301 * S, width=0, fill="#F1F1F1"
         )
-        self.canvas.create_text(
-            20 * S,
-            20 * S,
-            text=_("窗口缩放系数（重启生效）"),
-            font=("楷体", round(12 * S)),
-            anchor="w",
-        )
-        self.canvas.create_text(
-            20 * S,
-            50 * S,
-            text=_("窗口自动缩放（重启生效）"),
-            font=("楷体", round(12 * S)),
-            anchor="w",
-        )
-        self.canvas.create_text(
-            20 * S,
-            80 * S,
-            text=_("棋子可走显示"),
-            font=("楷体", round(12 * S)),
-            anchor="w",
-        )
-        self.canvas.create_text(
-            20 * S,
-            110 * S,
-            text=_("AI最大搜索深度"),
-            font=("楷体", round(12 * S)),
-            anchor="w",
-        )
-        self.canvas.create_text(
-            20 * S,
-            140 * S,
-            text=_("AI搜索算法"),
-            font=("楷体", round(12 * S)),
-            anchor="w",
-        )
-        self.canvas.create_text(
-            20 * S,
-            170 * S,
-            text=_("和棋判定回合数"),
-            font=("楷体", round(12 * S)),
-            anchor="w",
-        )
-        self.canvas.create_text(
-            20 * S,
-            200 * S,
-            text=_("语言"),
-            font=("楷体", round(12 * S)),
-            anchor="w",
-        )
+        labels = [
+            _("窗口缩放系数（重启生效）"),
+            _("窗口自动缩放（重启生效）"),
+            _("棋子可走显示"),
+            _("AI最大搜索深度"),
+            _("AI搜索算法"),
+            _("和棋判定回合数"),
+            _("语言"),
+        ]
+        for i, label in enumerate(labels):
+            self.canvas.create_text(
+                20 * S,
+                (20 + i * 30) * S,
+                text=label,
+                font=DEFAULT_FONT,
+                anchor="w",
+            )
 
         self.scale = tkt.CanvasEntry(
             self.canvas,
-            220 * S,
+            390 * S,
             10 * S,
             100 * S,
             20 * S,
             5 * S,
             justify="center",
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             color_fill=tkt.COLOR_NONE,
         )
         self.scale.set(str(config["scale"]))
@@ -308,13 +276,13 @@ class SettingWin(MiniWin):
 
         self.auto_scale = tkt.CanvasButton(
             self.canvas,
-            220 * S,
+            410 * S,
             40 * S,
             80 * S,
             20 * S,
             5 * S,
             str(config["auto_scale"]),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             command=lambda: self.auto_scale.configure(
                 text="True" if self.auto_scale.value == "False" else "False"
             ),
@@ -324,13 +292,13 @@ class SettingWin(MiniWin):
 
         self.info = tkt.CanvasButton(
             self.canvas,
-            130 * S,
+            410 * S,
             70 * S,
             80 * S,
             20 * S,
             5 * S,
             str(config["virtual"]),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             command=lambda: self.info.configure(
                 text="True" if self.info.value == "False" else "False"
             ),
@@ -340,13 +308,13 @@ class SettingWin(MiniWin):
 
         self.level = tkt.CanvasEntry(
             self.canvas,
-            140 * S,
+            390 * S,
             100 * S,
             100 * S,
             20 * S,
             5 * S,
             justify="center",
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             color_fill=tkt.COLOR_NONE,
         )
         self.level.set(str(config["level"]))
@@ -354,13 +322,13 @@ class SettingWin(MiniWin):
 
         self.peace = tkt.CanvasEntry(
             self.canvas,
-            140 * S,
+            390 * S,
             160 * S,
             100 * S,
             20 * S,
             5 * S,
             justify="center",
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             color_fill=tkt.COLOR_NONE,
         )
         self.peace.set(str(config["peace"]))
@@ -368,9 +336,9 @@ class SettingWin(MiniWin):
 
         self.ai = tkt.CanvasButton(
             self.canvas,
-            110 * S,
+            190 * S,
             130 * S,
-            200 * S,
+            300 * S,
             20 * S,
             5 * S,
             (
@@ -382,7 +350,7 @@ class SettingWin(MiniWin):
                     else _("alpha-beta 剪枝(C++实现)")
                 )
             ),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             color_fill=tkt.COLOR_NONE,
             command=lambda: self.ai.configure(
                 text=(
@@ -400,7 +368,7 @@ class SettingWin(MiniWin):
 
         self.language = tkt.CanvasButton(
             self.canvas,
-            110 * S,
+            290 * S,
             190 * S,
             200 * S,
             20 * S,
@@ -408,15 +376,15 @@ class SettingWin(MiniWin):
             (
                 "简体中文"
                 if config["language"] == "zh_CN"
-                else ("Enligh" if config["language"] == "en" else "None")
+                else ("English" if config["language"] == "en" else "None")
             ),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             color_fill=tkt.COLOR_NONE,
             command=lambda: self.language.configure(
                 text=(
                     "简体中文"
-                    if self.language.value == "Enligh"
-                    else ("Enligh" if self.language.value == "简体中文" else "None")
+                    if self.language.value == "English"
+                    else ("English" if self.language.value == "简体中文" else "None")
                 )
             ),
         )
@@ -424,24 +392,24 @@ class SettingWin(MiniWin):
 
         tkt.CanvasButton(
             self.canvas,
-            314 * S,
+            414 * S,
             271 * S,
             80 * S,
             23 * S,
             6 * S,
             _("保存"),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             command=self.save,
         ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
         tkt.CanvasButton(
             self.canvas,
-            228 * S,
+            328 * S,
             271 * S,
             80 * S,
             23 * S,
             6 * S,
             _("恢复默认"),
-            font=("楷体", round(12 * S)),
+            font=DEFAULT_FONT,
             command=self.default,
         ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
@@ -461,7 +429,7 @@ class SettingWin(MiniWin):
             language=(
                 "zh_CN"
                 if self.language.value == "简体中文"
-                else "en" if self.language.value == "Enligh" else "None"
+                else "en" if self.language.value == "English" else "None"
             ),
         )
         self.toplevel.destroy()
@@ -486,7 +454,7 @@ class AboutWin(MiniWin):
         from main import __version__, __update__, __author__, __license__, __website__
         import webbrowser
 
-        super().__init__(root, _("关于"), 300, 200)
+        super().__init__(root, _("关于"), 350, 250)
         logo(self.canvas)
         info = _("版本: %s\n日期: %s\t\t\n作者: %s") % (
             __version__,
@@ -494,17 +462,17 @@ class AboutWin(MiniWin):
             __author__,
         )
         self.canvas.create_text(
-            20 * S, 30 * S, text=info, font=("楷体", round(12 * S)), anchor="w"
+            20 * S, 30 * S, text=info, font=DEFAULT_FONT, anchor="w"
         )
 
         license_text = _("开源许可: %s\n") % __license__
         self.canvas.create_text(
-            20 * S, 70 * S, text=license_text, font=("楷体", round(12 * S)), anchor="w"
+            20 * S, 70 * S, text=license_text, font=DEFAULT_FONT, anchor="w"
         )
 
         link_text = self.canvas.create_text(
             20 * S,
-            90 * S,
+            110 * S,
             text=_("访问本项目Github仓库"),
             font=("楷体", round(12 * S), "underline"),
             fill="blue",
