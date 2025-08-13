@@ -6,7 +6,7 @@ from threading import Thread
 
 from configure import config, statistic
 
-from l10n import _ 
+from l10n import _
 
 
 def peace() -> bool:
