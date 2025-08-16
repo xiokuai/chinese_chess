@@ -1,4 +1,4 @@
-name: CMake on multiple platforms
+name: Build on multiple platforms
 
 on:
   push:
@@ -79,7 +79,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       with:
         name: alpha_beta_search_lib-${{ matrix.os }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/alpha_beta_search.dll
+        path: ${{ steps.strings.outputs.build-output-dir }}/Release/alpha_beta_search.dll
 
     - name: Upload Library as artifact
       uses: actions/upload-artifact@v4
