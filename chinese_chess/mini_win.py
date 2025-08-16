@@ -98,13 +98,14 @@ class HelpWin(MiniWin):
 
         self.data_list = []
         self.ind = -1
-        with open("help.md", "r", encoding="utf-8") as file:
+        help_file = "help.md" if config["language"] == "zh_CN" else "help-en.md"
+        with open(help_file, "r", encoding="utf-8") as file:
             for line in file.readlines():
                 if line.startswith("##"):
                     self.ind += 1
                     self.data_list.append([line[3:].rstrip(), ""])
                 else:
-                    self.data_list[self.ind][1] += HelpWin.text_limit(line, 22)
+                    self.data_list[self.ind][1] += HelpWin.text_limit(line, 22 if config["language"] == "zh_CN" else 44)
 
         self.ind = 0
         self.canvas_set(0)
