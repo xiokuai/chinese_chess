@@ -105,7 +105,9 @@ class HelpWin(MiniWin):
                     self.ind += 1
                     self.data_list.append([line[3:].rstrip(), ""])
                 else:
-                    self.data_list[self.ind][1] += HelpWin.text_limit(line, 22 if config["language"] == "zh_CN" else 44)
+                    self.data_list[self.ind][1] += HelpWin.text_limit(
+                        line, 22 if config["language"] == "zh_CN" else 44
+                    )
 
         self.ind = 0
         self.canvas_set(0)
