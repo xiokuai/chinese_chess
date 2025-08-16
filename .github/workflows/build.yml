@@ -123,8 +123,7 @@ jobs:
 
       - name: Build Python exe
         run: |
-          pyinstaller --onefile chinese_chess/main.py --icon=chinese_chess\logo.ico --uac-admin \
-            --add-binary "clib_build/*:."
+          pyinstaller --onefile chinese_chess/main.py --icon=chinese_chess\logo.ico --uac-admin --add-binary "clib_build/*:."
       
       - name: Upload Python artifact
         uses: actions/upload-artifact@v4
