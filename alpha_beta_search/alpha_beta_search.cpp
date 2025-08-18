@@ -86,7 +86,7 @@ static inline float evaluate(int data[10][9]) {
 
 
 // get all valid coordinates on board
-static std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = false) {
+static inline std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = false) {
 	std::vector<Coordinate> valid_coordinates;
 	for (int i = 0; i < 10; ++i)
 		for (int j = 0; j < 9; ++j)
