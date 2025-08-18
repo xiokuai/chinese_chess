@@ -15,12 +15,9 @@ using Coordinate = std::pair<int, int>;
 // a valid operation
 using Operation = std::pair<Coordinate, Coordinate>;
 
-// all ids of chesses
-using ID = int;
-
 
 // score of each chess
-const int SCORE_TABLE[9] = {
+constexpr int SCORE_TABLE[9] = {
 	{0},        // ?
 	{10000},      // 帥
 	{2},        // 仕
@@ -33,7 +30,7 @@ const int SCORE_TABLE[9] = {
 };
 
 
-const std::unordered_map<int, std::vector<Coordinate>> DELTA = {
+constexpr std::unordered_map<int, std::vector<Coordinate>> DELTA = {
 	{1, {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}},
 	{2, {{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}},
 	{3, {{-2, -2}, {-2, 2}, {2, 2}, {2, -2}}},
@@ -46,7 +43,7 @@ const std::unordered_map<int, std::vector<Coordinate>> DELTA = {
 
 
 // default Operation
-const Operation OPERATION = { {-1, -1}, {-1, -1} };
+constexpr Operation OPERATION = { {-1, -1}, {-1, -1} };
 
 
 // Node of the min-max searching tree
@@ -154,7 +151,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 			nj = j + delta.second;
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8 && (i < 5 ? ni < 5 : ni > 4))
 				if (id * data[ni][nj] <= 0)
-					if (data[(ni + i) / 2][(nj + j) / 2] == 0)  // ����м�λ���Ƿ��
+					if (data[(ni + i) / 2][(nj + j) / 2] == 0)
 						possible_destinations.emplace_back(ni, nj);
 		}
 		break;
