@@ -52,10 +52,8 @@ public:
 	float score;
 	Operation operation;
 
-	Node(float score, Operation operation = OPERATION) {
-		this->score = score;
-		this->operation = operation;
-	}
+	Node(float score, Operation operation = OPERATION) 
+		: score(score), operation(operation) {}
 };
 
 
@@ -330,15 +328,8 @@ static inline std::pair<float, float> update(Node& node, Node& child, const Oper
 
 // Optimized alpha_beta_search function
 static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, float alpha = -INFINITY, float beta = INFINITY) {
-	std::string key = board_to_string(data) + std::to_string(depth) + std::to_string(reverse) + std::to_string(alpha) + std::to_string(beta);
-	auto cache_it = evaluation_cache.find(key);
-	if (cache_it != evaluation_cache.end()) {
-		return Node(cache_it->second);
-	}
-
 	if (depth == 0) {
 		float score = evaluate(data);
-		evaluation_cache[key] = score;
 		return Node(score);
 	}
 	
@@ -354,7 +345,6 @@ static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, 
 		if (alpha >= beta) break;
 	}
 
-	evaluation_cache[key] = node.score;
 	return node;
 }
 
