@@ -8,12 +8,15 @@
 #include <cmath>
 
 #include "alpha_beta_search.h"
+#include "zobrist_hasher.h"
 
 // the coordinate of chess
 using Coordinate = std::pair<int, int>;
 
 // a valid operation
 using Operation = std::pair<Coordinate, Coordinate>;
+
+ZobristHasher zobristHasher; // Zobrist hashing for board state
 
 
 // score of each chess
@@ -58,23 +61,13 @@ public:
 
 
 // Cache for evaluation results
-static std::unordered_map<std::string, float> evaluation_cache;
-
-// Helper function to convert board data to a string key
-static inline std::string board_to_string(int data[10][9]) {
-	std::string key;
-	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 9; ++j) {
-			key += std::to_string(data[i][j]) + ",";
-		}
-	}
-	return key;
-}
+static std::unordered_map<uint64_t, float> evaluation_cache;
 
 // Optimized evaluate function
 static inline float evaluate(int data[10][9]) {
-	std::string key = board_to_string(data);
-	auto it = evaluation_cache.find(key);
+	uint64_t hash = zobristHasher.getHash(data);
+
+	auto it = evaluation_cache.find(hash);
 	if (it != evaluation_cache.end()) {
 		return it->second;
 	}
@@ -87,7 +80,7 @@ static inline float evaluate(int data[10][9]) {
 		}
 	}
 
-	evaluation_cache[key] = score;
+	evaluation_cache[hash] = score;
 	return score;
 }
 

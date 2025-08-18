@@ -3,7 +3,7 @@ project(alpha_beta_search)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(alpha_beta_search SHARED alpha_beta_search.cpp)
+add_library(alpha_beta_search SHARED alpha_beta_search.cpp zobrist_hasher.cpp)
 
 target_compile_options(alpha_beta_search PRIVATE -O2)
 
