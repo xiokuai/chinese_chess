@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_library(alpha_beta_search SHARED alpha_beta_search.cpp)
 
+target_compile_options(alpha_beta_search PRIVATE -O2)
+
 if(WIN32)
     set_target_properties(alpha_beta_search PROPERTIES SUFFIX ".dll")
 elseif(APPLE)
