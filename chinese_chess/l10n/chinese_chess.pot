@@ -243,7 +243,7 @@ msgstr ""
 
 #: mini_win.py:468
 #, python-format
-msgid "开源许可: %s\n"
+msgid "开源许可: %s"
 msgstr ""
 
 #: mini_win.py:476

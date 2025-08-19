@@ -236,8 +236,8 @@ msgstr "Version: %s\nDate: %s\t\t\nAuthor: %s"
 
 #: chinese_chess/mini_win.py:464
 #, python-format
-msgid "开源许可: %s\n"
-msgstr "Open Source License: %s\n"
+msgid "开源许可: %s"
+msgstr "Open Source License: %s"
 
 #: chinese_chess/mini_win.py:472
 msgid "访问本项目Github仓库"

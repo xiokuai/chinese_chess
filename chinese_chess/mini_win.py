@@ -468,7 +468,7 @@ class AboutWin(MiniWin):
             20 * S, 30 * S, text=info, font=DEFAULT_FONT, anchor="w"
         )
 
-        license_text = _("开源许可: %s\n") % __license__
+        license_text = _("开源许可: %s") % __license__
         self.canvas.create_text(
             20 * S, 70 * S, text=license_text, font=DEFAULT_FONT, anchor="w"
         )
