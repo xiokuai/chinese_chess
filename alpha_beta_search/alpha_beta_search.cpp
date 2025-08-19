@@ -7,6 +7,7 @@
 #include <string>
 #include <cmath>
 #include <mutex>
+#include <execution>
 
 #include "alpha_beta_search.h"
 #include "zobrist_hasher.h"
@@ -300,7 +301,7 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 		}
 	}
 
-	std::sort(valid_operations.begin(), valid_operations.end(), [&data](const Operation& a, const Operation& b) {
+	std::sort(std::execution::par, valid_operations.begin(), valid_operations.end(), [&data](const Operation& a, const Operation& b) {
 		int a_score = SCORE_TABLE[abs(data[a.second.first][a.second.second])];
 		int b_score = SCORE_TABLE[(abs(data[b.second.first][b.second.second]))];
 		return a_score > b_score;
