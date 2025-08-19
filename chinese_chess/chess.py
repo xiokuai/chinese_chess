@@ -83,26 +83,27 @@ class Chess:
         self.y += y
 
         if not cache:
+            chess_name = getattr(game.chesses[self.y][self.x], "name", None)
             game.chesses[self.y - y][self.x - x] = None
             game.index += 1
             if game.index == len(game.cache):  # 新增
                 game.cache.append(  # (目标者名称，目标位置，回退位移)
                     (
-                        getattr(game.chesses[self.y][self.x], "name", None),
+                        chess_name,
                         (self.x, self.y),
                         (-x, -y),
                     )
                 )
             else:  # 覆盖
                 game.cache[game.index] = (
-                    getattr(game.chesses[self.y][self.x], "name", None),
+                    chess_name,
                     (self.x, self.y),
                     (-x, -y),
                 )
 
         def update() -> None:
             """更新并播放音效"""
-            from GUI import game, convert_to_CChesses
+            from GUI import game
 
             if flag:
                 statistic(Eat=1)

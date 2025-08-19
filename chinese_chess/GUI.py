@@ -376,7 +376,7 @@ class Window:
                 choose.move(flag, x_, y_)
                 choose.highlight(False, inside=False)
                 choose = None
-                if game.mode in "COMPUTER END":
+                if game.mode in ("COMPUTER", "END"):
                     cls.root.after(
                         700,
                         Thread(
