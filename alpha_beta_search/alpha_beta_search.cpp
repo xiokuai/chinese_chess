@@ -8,6 +8,7 @@
 #include <cmath>
 #include <mutex>
 #include <execution>
+//#include <omp.h>
 
 #include "alpha_beta_search.h"
 #include "zobrist_hasher.h"
@@ -81,7 +82,12 @@ static inline float evaluate(int data[10][9]) {
 	for (int i = 0; i < 10; ++i) {
 		for (int j = 0; j < 9; ++j) {
 			int value = data[i][j];
-			score += value < 0 ? -SCORE_TABLE[-value] : SCORE_TABLE[value];
+			if(value < 0) {
+				score -= SCORE_TABLE[-value];
+			}
+			else {
+				score += SCORE_TABLE[value];
+			}
 		}
 	}
 
@@ -284,21 +290,20 @@ static bool valid_operation(int data[10][9], Operation operation) {
 static std::vector<Operation> get_operations(int data[10][9], bool reverse = false) {
 	std::vector<Operation> valid_operations;
 
-	auto get_valid_destinations = [&](int x, int y) {
-		std::vector<std::pair<int, int>> destinations;
+	auto get_valid_operations = [&](int x, int y) {
+		std::vector<Operation> operations;
 		for (const auto& destination : possible_destination(data, x, y)) {
 			Operation op{ {x, y}, destination };
 			if (valid_operation(data, op)) {
-				destinations.push_back(destination);
+				operations.push_back(op);
 			}
 		}
-		return destinations;
+		return operations;
 		};
 
 	for (const auto& coordinate : valid_coordinate(data, reverse)) {
-		for (const auto& destination : get_valid_destinations(coordinate.first, coordinate.second)) {
-			valid_operations.emplace_back(Operation{ coordinate, destination });
-		}
+		auto operations = get_valid_operations(coordinate.first, coordinate.second);
+		valid_operations.insert(valid_operations.end(), operations.begin(), operations.end());
 	}
 
 	std::sort(std::execution::par, valid_operations.begin(), valid_operations.end(), [&data](const Operation& a, const Operation& b) {
