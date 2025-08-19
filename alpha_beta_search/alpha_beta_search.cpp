@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <mutex>
 
 #include "alpha_beta_search.h"
 #include "zobrist_hasher.h"
@@ -62,10 +63,13 @@ public:
 
 // Cache for evaluation results
 static std::unordered_map<uint64_t, float> evaluation_cache;
+std::mutex evaluation_cache_mutex; // Mutex for thread-safe access to the cache
 
 // Optimized evaluate function
 static inline float evaluate(int data[10][9]) {
 	uint64_t hash = zobristHasher.getHash(data);
+	
+	std::lock_guard<std::mutex> lock(evaluation_cache_mutex);
 
 	auto it = evaluation_cache.find(hash);
 	if (it != evaluation_cache.end()) {
