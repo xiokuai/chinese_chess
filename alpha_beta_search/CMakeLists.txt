@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(alpha_beta_search)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(alpha_beta_search SHARED alpha_beta_search.cpp zobrist_hasher.cpp)
 
