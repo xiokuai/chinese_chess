@@ -24,15 +24,15 @@ ZobristHasher zobristHasher; // Zobrist hashing for board state
 
 // score of each chess
 constexpr int SCORE_TABLE[9] = {
-	{0},        // ?
-	{10000},      // 帥
-	{2},        // 仕
-	{2},        // 相
-	{1},        // 兵
-	{2},        // 兵(过河)
-	{5},        // 馬
-	{6},        // 砲
-	{9},       //  车
+	0,        // ?
+	10000,      // 帥
+	2,        // 仕
+	2,        // 相
+	1,        // 兵
+	2,        // 兵(过河)
+	5,        // 馬
+	6,        // 砲
+	9,       //  车
 };
 
 
