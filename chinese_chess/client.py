@@ -5,7 +5,8 @@
 import json
 from threading import Thread
 import websocket
-from LAN import LANmove
+from game import game
+import rule
 from rule import modechange
 from sound import play_sound_async
 import tkintertools as tkt
@@ -77,7 +78,7 @@ class WebSocketClient:
         # TODO: 禁用确认按钮直到用户输入内容
         # self.ok.set_live(False)
 
-    def start(self, uri : str):
+    def start(self, uri: str):
         self.toplevel.destroy()
         code = [str(v.get()) for v in self.toplevel.var_list]
         modechange("SERVER", "".join(code))
@@ -89,40 +90,51 @@ class WebSocketClient:
 
     def connect(self):
         websocket.enableTrace(True)
-        WebSocketClient.global_ws = websocket.WebSocketApp(self.uri,
-                            on_open=on_open,
-                            on_message=self.on_message,
-                            on_error=on_error,
-                            on_close=on_close)
+        WebSocketClient.global_ws = websocket.WebSocketApp(
+            self.uri,
+            on_open=on_open,
+            on_message=self.on_message,
+            on_error=on_error,
+            on_close=on_close,
+        )
 
-        WebSocketClient.global_ws.run_forever(reconnect=5)  # Set dispatcher to automatic reconnection, 5 second reconnect delay if connection closed unexpectedly
-        #rel.signal(2, rel.abort)  # Keyboard Interrupt
-        #rel.dispatch()
+        WebSocketClient.global_ws.run_forever(
+            reconnect=5
+        )  # Set dispatcher to automatic reconnection, 5 second reconnect delay if connection closed unexpectedly
+        # rel.signal(2, rel.abort)  # Keyboard Interrupt
+        # rel.dispatch()
 
     @classmethod
-    def on_message(ws, message):
+    def on_message(cls, ws, message):
         """接收消息"""
         message_data = json.loads(message)
         print(message_data)
-        if 'msg' in message_data:
-            LANmove(message_data['msg'])
-    
+        if "msg" in message_data:
+            x, y, flag, x_, y_ = message_data["msg"]
+            if (x, y) == (x_, y_):
+                return
+            game.chesses[9 - y][8 - x].move(flag, -x_, -y_)
+            rule.switch()
+
     @classmethod
-    def send_message(cls, msg):
+    def send_message(cls, **kw):
         """单独的发送消息数"""
-        cls.global_ws.send(json.dumps(msg, ensure_ascii=False).encode("utf-8"))
-        print(f"Message sent: {msg}")
+        cls.global_ws.send(json.dumps(kw, ensure_ascii=False).encode("utf-8"))
+        print(f"Message sent: {kw}")
 
     def close(self) -> None:
         """关闭联机功能"""
         self.flag = True
         self.canvas.destroy()
 
+
 def on_error(ws, error):
     print(error)
 
+
 def on_close(ws, close_status_code, close_msg):
     print("### closed ###")
+
 
 def on_open(ws):
     print("Opened connection")

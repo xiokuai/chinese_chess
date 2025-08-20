@@ -157,7 +157,11 @@ def modechange(mode: str, code: str | None = None) -> None:
             else (
                 "人机对战"
                 if mode in "COMPUTER"
-                else "残局挑战" if mode == "END" else "网络联机" if mode == "SERVER" else "AI测试"
+                else (
+                    "残局挑战"
+                    if mode == "END"
+                    else "网络联机" if mode == "SERVER" else "AI测试"
+                )
             )
         )
     )
