@@ -253,6 +253,7 @@ class SettingWin(MiniWin):
             _("AI搜索算法"),
             _("和棋判定回合数"),
             _("语言"),
+            _("服务器地址"),
         ]
         for i, label in enumerate(labels):
             self.canvas.create_text(
@@ -393,6 +394,20 @@ class SettingWin(MiniWin):
         )
         self.language.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
+        self.server_adress = tkt.CanvasEntry(
+            self.canvas,
+            190 * S,
+            220 * S,
+            300 * S,
+            20 * S,
+            5 * S,
+            justify="center",
+            font=DEFAULT_FONT,
+            color_fill=tkt.COLOR_NONE,
+        )
+        self.server_adress.set(str(config["server_adress"]))
+        self.server_adress.cursor_flash()
+
         tkt.CanvasButton(
             self.canvas,
             414 * S,
@@ -424,6 +439,7 @@ class SettingWin(MiniWin):
             auto_scale=eval(self.auto_scale.value),
             level=int(self.level.get()),
             peace=int(self.peace.get()),
+            server_adress=self.server_adress.get(),
             algo=(
                 1
                 if self.ai.value == _("极大极小搜索")

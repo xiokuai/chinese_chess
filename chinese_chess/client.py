@@ -11,7 +11,8 @@ from rule import modechange
 from sound import play_sound_async
 import tkintertools as tkt
 from constants import S, VOICE_BUTTON
-import rel
+from configure import config
+import requests
 
 
 class WebSocketClient:
@@ -28,14 +29,19 @@ class WebSocketClient:
         )
 
         # 创建输入框让用户输入服务器 URI
-        self.uri_label = self.canvas.create_text(
+        self.create_button = tkt.CanvasButton(
+            self.canvas,
             20 * S,
             40 * S,
-            text="请输入服务器 URI:",
+            80 * S,
+            23 * S,
+            6 * S,
+            text="创建新游戏",
             font=("楷体", round(12 * S)),
+            command=self.create,
         )
 
-        self.uri_entry = tkt.CanvasEntry(
+        self.id_entry = tkt.CanvasEntry(
             self.canvas,
             120 * S,
             40 * S,
@@ -57,7 +63,9 @@ class WebSocketClient:
             6 * S,
             font=("楷体", round(12 * S)),
             text="确认",
-            command=lambda: self.start(self.uri_entry.value),
+            command=lambda: self.start(
+                config["server_adress"] + "/ws/" + self.id_entry.value
+            ),
         )
         self.ok.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
 
@@ -78,14 +86,65 @@ class WebSocketClient:
         # TODO: 禁用确认按钮直到用户输入内容
         # self.ok.set_live(False)
 
+    def create(self):
+        canvas_ = tkt.Canvas(self.toplevel, 400 * S, 150 * S, expand=False)
+        canvas_.place(x=0, y=0)
+        from GUI import more_set
+
+        more_set(self.toplevel, canvas_)
+        last = tkt.CanvasButton(
+            canvas_,
+            6 * S,
+            121 * S,
+            80 * S,
+            23 * S,
+            6 * S,
+            font=("楷体", round(12 * S)),
+            text=("上一步"),
+            command=lambda: (self.toplevel.title(("选择模式")), canvas_.destroy()),
+        )
+        last.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
+        tkt.CanvasButton(
+            canvas_,
+            214 * S,
+            121 * S,
+            80 * S,
+            23 * S,
+            6 * S,
+            font=("楷体", round(12 * S)),
+            text=("开始"),
+            command=lambda: (
+                self.request_create(),
+                self.toplevel.destroy(),
+            ),
+        ).command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
+
+    # 发送 POST 请求
+    def request_create(self):
+        code = "".join([str(v.get()) for v in self.toplevel.var_list])
+        response = requests.post(
+            url="http://" + config["server_adress"] + "/create_game?game_code=" + code
+        )
+
+        if response.status_code == 200:
+            # 获取返回的 JSON 数据并解析
+            response_data = response.json()
+
+            # 获取 game_id
+            game_id = response_data.get("game_id", None)
+
+            if game_id:
+                print(f"游戏ID: {game_id}")
+                self.start(config["server_adress"] + "/ws/" + game_id)
+                self.toplevel.destroy()
+            else:
+                print("返回的 JSON 中没有 game_id")
+        else:
+            print(f"请求失败，状态码: {response.status_code}")
+
     def start(self, uri: str):
         self.toplevel.destroy()
-        code = [str(v.get()) for v in self.toplevel.var_list]
-        modechange("SERVER", "".join(code))
-        if not uri.startswith("ws://") and not uri.startswith("wss://"):
-            print("Invalid URI. Ensure it starts with 'ws://' or 'wss://'.")
-            return
-        self.uri = uri
+        self.uri = "ws://" + uri
         Thread(target=self.connect, daemon=True).start()
 
     def connect(self):
@@ -109,6 +168,11 @@ class WebSocketClient:
         """接收消息"""
         message_data = json.loads(message)
         print(message_data)
+        if "game_code" in message_data:
+            message_data["game_code"][0] = (
+                "0" if message_data["game_code"][0] == "1" else "1"
+            )
+            modechange("SERVER", "".join(message_data["game_code"]))
         if "msg" in message_data:
             x, y, flag, x_, y_ = message_data["msg"]
             if (x, y) == (x_, y_):

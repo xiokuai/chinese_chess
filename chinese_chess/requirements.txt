@@ -1,4 +1,4 @@
 pygame
 chinese_chess_lib
 websocket-client
-rel
+requests
