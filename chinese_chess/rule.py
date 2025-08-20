@@ -72,7 +72,7 @@ def ifop(chess, player: str) -> bool:
         return False
     if GUI.game.mode in "COMPUTER END":
         return player == "玩家" and chess.color == "#FF0000"
-    elif GUI.game.mode == "LAN":
+    elif GUI.game.mode == "LAN" or "SERVER":
         return player == "我方" and chess.color == "#FF0000"
     elif GUI.game.mode == "LOCAL":
         return player[0] == "红黑"[chess.color == "#000000"]
@@ -86,23 +86,23 @@ def switch() -> None:
     if GUI.game.player:
         if GUI.game.mode in "COMPUTER END":
             GUI.game.player = "玩家" if GUI.game.player == "电脑" else "电脑"
-        elif GUI.game.mode == "LAN":
+        elif GUI.game.mode == "LAN" or "SERVER":
             GUI.game.player = "我方" if GUI.game.player == "对方" else "对方"
         else:
             GUI.game.player = "红方" if GUI.game.player == "黑方" else "黑方"
     else:
         if GUI.game.first:
-            if GUI.game.mode in "LAN COMPUTER END":
+            if GUI.game.mode in "LAN SERVER COMPUTER END":
                 statistic(First=1)
             GUI.game.player = (
                 "我方"
-                if GUI.game.mode == "LAN"
+                if GUI.game.mode == "LAN" or "SERVER"
                 else "玩家" if GUI.game.mode in "COMPUTER END" else "红方"
             )
         else:
             GUI.game.player = (
                 "对方"
-                if GUI.game.mode == "LAN"
+                if GUI.game.mode == "LAN" or "SREVER"
                 else "电脑" if GUI.game.mode in "COMPUTER END" else "黑方"
             )
     GUI.Window.clock([0, None])
@@ -157,7 +157,7 @@ def modechange(mode: str, code: str | None = None) -> None:
             else (
                 "人机对战"
                 if mode in "COMPUTER"
-                else "残局挑战" if mode == "END" else "AI测试"
+                else "残局挑战" if mode == "END" else "网络联机" if mode == "SERVER" else "AI测试"
             )
         )
     )

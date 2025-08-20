@@ -2,77 +2,127 @@
 客户端功能
 """
 
-from socket import socket
+import json
+from threading import Thread
+import websocket
+from LAN import LANmove
+from rule import modechange
+from sound import play_sound_async
+import tkintertools as tkt
+from constants import S, VOICE_BUTTON
+import rel
 
-from constants import PORT, SERVER
 
+class WebSocketClient:
+    global_ws: websocket.WebSocketApp | None = None
 
-class Client:
-    """客户端"""
+    def __init__(self, toplevel):
+        self.toplevel = toplevel
+        self.canvas = tkt.Canvas(
+            self.toplevel, 400 * S, 150 * S, bg="#FFFFFF", expand=False
+        )
+        self.canvas.place(x=0, y=0)
+        self.canvas.create_rectangle(
+            -1, 115 * S, 401 * S, 151 * S, width=0, fill="#F1F1F1"
+        )
 
-    def __init__(self) -> None:
-        self.client = socket()
-        self.login = False
-        self.client.settimeout(3)
+        # 创建输入框让用户输入服务器 URI
+        self.uri_label = self.canvas.create_text(
+            20 * S,
+            40 * S,
+            text="请输入服务器 URI:",
+            font=("楷体", round(12 * S)),
+        )
 
-    def connect(self) -> bool:
-        """连接服务端"""
-        out = self.client.connect_ex((SERVER, PORT))
-        return out == 0
+        self.uri_entry = tkt.CanvasEntry(
+            self.canvas,
+            120 * S,
+            40 * S,
+            160 * S,
+            23 * S,
+            5 * S,
+            font=("楷体", round(12 * S)),
+            justify="center",
+            color_fill=tkt.COLOR_NONE,
+        )
 
-    def verify(self) -> bool | None:
-        """身份验证"""
-        try:
-            self.send(type="CLIENT")
-            back = self.recv()["type"]
-            if back == "SERVER":
-                return True
-            else:
-                self.close()
-        except:
-            return False
+        # 确认按钮
+        self.ok = tkt.CanvasButton(
+            self.canvas,
+            128 * S,
+            121 * S,
+            80 * S,
+            23 * S,
+            6 * S,
+            font=("楷体", round(12 * S)),
+            text="确认",
+            command=lambda: self.start(self.uri_entry.value),
+        )
+        self.ok.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
+
+        # 取消按钮
+        self.cancel = tkt.CanvasButton(
+            self.canvas,
+            214 * S,
+            121 * S,
+            80 * S,
+            23 * S,
+            6 * S,
+            font=("楷体", round(12 * S)),
+            text="取消",
+            command=self.close,
+        )
+        self.cancel.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
+
+        # TODO: 禁用确认按钮直到用户输入内容
+        # self.ok.set_live(False)
+
+    def start(self, uri : str):
+        self.toplevel.destroy()
+        code = [str(v.get()) for v in self.toplevel.var_list]
+        modechange("SERVER", "".join(code))
+        if not uri.startswith("ws://") and not uri.startswith("wss://"):
+            print("Invalid URI. Ensure it starts with 'ws://' or 'wss://'.")
+            return
+        self.uri = uri
+        Thread(target=self.connect, daemon=True).start()
+
+    def connect(self):
+        websocket.enableTrace(True)
+        WebSocketClient.global_ws = websocket.WebSocketApp(self.uri,
+                            on_open=on_open,
+                            on_message=self.on_message,
+                            on_error=on_error,
+                            on_close=on_close)
+
+        WebSocketClient.global_ws.run_forever(reconnect=5)  # Set dispatcher to automatic reconnection, 5 second reconnect delay if connection closed unexpectedly
+        #rel.signal(2, rel.abort)  # Keyboard Interrupt
+        #rel.dispatch()
+
+    @classmethod
+    def on_message(ws, message):
+        """接收消息"""
+        message_data = json.loads(message)
+        print(message_data)
+        if 'msg' in message_data:
+            LANmove(message_data['msg'])
+    
+    @classmethod
+    def send_message(cls, msg):
+        """单独的发送消息数"""
+        cls.global_ws.send(json.dumps(msg, ensure_ascii=False).encode("utf-8"))
+        print(f"Message sent: {msg}")
 
     def close(self) -> None:
-        """断开连接"""
-        self.send(op="Quit")
-        self.client.close()
-        print(123)
+        """关闭联机功能"""
+        self.flag = True
+        self.canvas.destroy()
 
-    def send(self, **kw) -> bool:
-        """发送信息"""
-        try:
-            self.client.send(kw.__repr__().encode("utf-8"))
-            return True
-        except:
-            return False
+def on_error(ws, error):
+    print(error)
 
-    def recv(self) -> dict:
-        """接收信息"""
-        try:
-            data = self.client.recv(4096)
-            return eval(data)
-        except:
-            return {}
+def on_close(ws, close_status_code, close_msg):
+    print("### closed ###")
 
-    def run(self) -> None:
-        """开始运行"""
-        if self.connect():
-            print("CONNECT SUCCESS")
-        else:
-            print("ERROR IN CONNECT")
-        if self.verify():
-            print("VERIFY SUCCESS")
-        else:
-            print("ERROR IN VERIFY")
-        self.send(op="Mail", mail="392126563@qq.com")
-        self.send(code=input("code:"), psd="2023", nick="Admin")
-        rtn = self.recv()
-        if rtn.get("act", None):
-            print(rtn["act"])
-        else:
-            print(rtn["info"])
-        self.close()
-
-
-client = Client()
-client.run()
+def on_open(ws):
+    print("Opened connection")
