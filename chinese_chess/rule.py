@@ -72,7 +72,7 @@ def ifop(chess, player: str) -> bool:
         return False
     if GUI.game.mode in "COMPUTER END":
         return player == "玩家" and chess.color == "#FF0000"
-    elif GUI.game.mode == "LAN" or "SERVER":
+    elif GUI.game.mode in ["LAN", "SERVER"]:
         return player == "我方" and chess.color == "#FF0000"
     elif GUI.game.mode == "LOCAL":
         return player[0] == "红黑"[chess.color == "#000000"]
@@ -86,7 +86,7 @@ def switch() -> None:
     if GUI.game.player:
         if GUI.game.mode in "COMPUTER END":
             GUI.game.player = "玩家" if GUI.game.player == "电脑" else "电脑"
-        elif GUI.game.mode == "LAN" or "SERVER":
+        elif GUI.game.mode in ["LAN", "SERVER"]:
             GUI.game.player = "我方" if GUI.game.player == "对方" else "对方"
         else:
             GUI.game.player = "红方" if GUI.game.player == "黑方" else "黑方"
@@ -96,13 +96,13 @@ def switch() -> None:
                 statistic(First=1)
             GUI.game.player = (
                 "我方"
-                if GUI.game.mode == "LAN" or "SERVER"
+                if GUI.game.mode in ["LAN", "SERVER"]
                 else "玩家" if GUI.game.mode in "COMPUTER END" else "红方"
             )
         else:
             GUI.game.player = (
                 "对方"
-                if GUI.game.mode == "LAN" or "SREVER"
+                if GUI.game.mode in ["LAN", "SERVER"]
                 else "电脑" if GUI.game.mode in "COMPUTER END" else "黑方"
             )
     GUI.Window.clock([0, None])
