@@ -2,6 +2,7 @@
 图形界面
 """
 
+import asyncio
 from math import hypot
 import os
 from sys import exit
@@ -9,6 +10,7 @@ from threading import Thread
 from time import time
 from tkinter import Event, IntVar, Menu, ttk
 from chess import Chess, convert_to_CChesses, convert_to_CChess
+from client import WebSocketClient
 from game import game
 from mini_win import MiniWin, HelpWin, StatisticWin, LibraryWin, SettingWin, AboutWin
 from chinese_chess_lib import get_legal_moves
@@ -161,14 +163,14 @@ class Window:
 
     def new(self) -> None:
         """新游戏页面"""
-        m = MiniWin(self.root, _("选择模式"), 300, 150)
+        m = MiniWin(self.root, _("选择模式"), 400, 150)
         toplevel, canvas = m.toplevel, m.canvas
         canvas.configure(bg="#FFFFFF")
         toplevel.var_list = [IntVar(toplevel, not i) for i in range(13)]
 
         def canvas_set(mode: str) -> None:
             """设定次级画布"""
-            canvas_ = tkt.Canvas(toplevel, 300 * S, 150 * S, expand=False)
+            canvas_ = tkt.Canvas(toplevel, 400 * S, 150 * S, expand=False)
             canvas_.place(x=0, y=0)
 
             last = tkt.CanvasButton(
@@ -249,6 +251,9 @@ class Window:
                 ).command_ex["touch"] = lambda: canvas_.itemconfigure(
                     info, text=_("被动的连接方式\n套接字将惰性地等待可能的客户端的连接")
                 )
+            elif mode == "SERVER":
+                toplevel.title(_("选择模式 - 网络联机"))
+                WebSocketClient(toplevel)
 
         tkt.CanvasButton(
             canvas,
@@ -289,6 +294,19 @@ class Window:
         ).command_ex["touch"] = lambda: canvas.itemconfigure(
             text, text=_("和局域网里的朋友一起玩耍吧！")
         )
+        tkt.CanvasButton(
+            canvas,
+            295 * S,
+            15 * S,
+            70 * S,
+            70 * S,
+            10 * S,
+            "帥",
+            font=("方正舒体", round(50 * S), "bold"),
+            command=lambda: (canvas_set("SERVER"), play_sound_async(VOICE_BUTTON)),
+        ).command_ex["touch"] = lambda: canvas.itemconfigure(
+            text, text=_("在网络上游玩！")
+        )
         canvas.create_text(
             60 * S, 100 * S, text=_("人机对战"), font=("楷体", round(12 * S))
         )
@@ -298,9 +316,12 @@ class Window:
         canvas.create_text(
             240 * S, 100 * S, text=_("联机对抗"), font=("楷体", round(12 * S))
         )
-        canvas.create_rectangle(-1, 115 * S, 301 * S, 151 * S, width=0, fill="#F1F1F1")
+        canvas.create_text(
+            330 * S, 100 * S, text=_("线上联机"), font=("楷体", round(12 * S))
+        )
+        canvas.create_rectangle(-1, 115 * S, 401 * S, 151 * S, width=0, fill="#F1F1F1")
         text = canvas.create_text(
-            150 * S, 132 * S, text=_("请选择游戏模式"), font=("楷体", round(12 * S))
+            200 * S, 132 * S, text=_("请选择游戏模式"), font=("楷体", round(12 * S))
         )
 
     @classmethod
@@ -373,6 +394,9 @@ class Window:
             if hypot(event.x / tkt.S - x, event.y / tkt.S - y) < 30 * S:
                 if game.mode == "LAN":
                     LAN.API.send(msg=(choose.x, choose.y, flag, x_, y_))
+                elif game.mode == "SERVER":
+                    WebSocketClient.send_message(msg=(choose.x, choose.y, flag, x_, y_))
+
                 choose.move(flag, x_, y_)
                 choose.highlight(False, inside=False)
                 choose = None

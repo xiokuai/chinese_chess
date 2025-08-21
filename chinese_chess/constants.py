@@ -13,6 +13,8 @@ from l10n import _
 ADDRESS = gethostbyname(gethostname())
 # 默认端口
 PORT = 10086
+# 服务器地址
+SERVER_ADDRESS = ""
 
 # 红方虚拟棋子文本颜色
 VIRTUAL_RED = "#D05C2D"
