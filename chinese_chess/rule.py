@@ -131,7 +131,8 @@ def gameset(code: str | None = None) -> None:
         for i, v in enumerate(code):
             if int(v) and i:
                 x, y = lis[i - 1]
-                GUI.game.chesses[y][x].destroy()
+                if GUI.game.chesses[y][x]:  # 确保该位置已有棋子
+                    GUI.game.chesses[y][x].destroy()
                 GUI.game.chesses[y][x] = None
 
 
