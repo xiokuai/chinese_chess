@@ -169,10 +169,10 @@ class WebSocketClient:
         message_data = json.loads(message)
         print(message_data)
         if "game_code" in message_data:
-            message_data["game_code"][0] = (
-                "0" if message_data["game_code"][0] == "1" else "1"
-            )
-            modechange("SERVER", "".join(message_data["game_code"]))
+            game_code_list = list(message_data["game_code"])
+            game_code_list[0] = "0" if game_code_list[0] == "1" else "1"
+            message_data["game_code"] = "".join(game_code_list)
+            modechange("SERVER", message_data["game_code"])
         if "msg" in message_data:
             x, y, flag, x_, y_ = message_data["msg"]
             if (x, y) == (x_, y_):
