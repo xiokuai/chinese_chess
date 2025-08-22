@@ -14,6 +14,10 @@ from constants import S, VOICE_BUTTON
 from configure import config
 import requests
 
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+}
 
 class WebSocketClient:
     global_ws: websocket.WebSocketApp | None = None
@@ -123,7 +127,7 @@ class WebSocketClient:
     def request_create(self):
         code = "".join([str(v.get()) for v in self.toplevel.var_list])
         response = requests.post(
-            url="http://" + config["server_adress"] + "/create_game?game_code=" + code
+            url="https://" + config["server_adress"] + "/create_game?game_code=" + code, headers=headers
         )
 
         if response.status_code == 200:
@@ -144,7 +148,7 @@ class WebSocketClient:
 
     def start(self, uri: str):
         self.toplevel.destroy()
-        self.uri = "ws://" + uri
+        self.uri = "wss://" + uri
         Thread(target=self.connect, daemon=True).start()
 
     def connect(self):
@@ -155,6 +159,7 @@ class WebSocketClient:
             on_message=self.on_message,
             on_error=on_error,
             on_close=on_close,
+            header=headers,
         )
 
         WebSocketClient.global_ws.run_forever(
