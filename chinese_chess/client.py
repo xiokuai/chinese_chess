@@ -21,6 +21,7 @@ headers = {
 
 class WebSocketClient:
     global_ws: websocket.WebSocketApp | None = None
+    i_am_sender: bool = False
 
     def __init__(self, toplevel):
         self.toplevel = toplevel
@@ -139,6 +140,7 @@ class WebSocketClient:
 
             if game_id:
                 print(f"游戏ID: {game_id}")
+                WebSocketClient.i_am_sender = True
                 self.start(config["server_adress"] + "/ws/" + game_id)
                 self.toplevel.destroy()
             else:
@@ -175,7 +177,11 @@ class WebSocketClient:
         print(message_data)
         if "game_code" in message_data:
             game_code_list = list(message_data["game_code"])
-            game_code_list[0] = "0" if game_code_list[0] == "1" else "1"
+            if not cls.i_am_sender:
+                for i in 1, 5, 9:
+                    game_code_list[i], game_code_list[i + 3] = game_code_list[i + 3], game_code_list[i]
+                    game_code_list[i + 1], game_code_list[i + 2] = game_code_list[i + 2], game_code_list[i + 1]
+                game_code_list[0] = "0" if game_code_list[0] == "1" else "1"
             message_data["game_code"] = "".join(game_code_list)
             modechange("SERVER", message_data["game_code"])
         if "msg" in message_data:
