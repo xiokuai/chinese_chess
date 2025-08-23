@@ -17,8 +17,9 @@ from l10n import _
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+    "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
 }
+
 
 class WebSocketClient:
     global_ws: websocket.WebSocketApp | None = None
@@ -129,7 +130,8 @@ class WebSocketClient:
     def request_create(self):
         code = "".join([str(v.get()) for v in self.toplevel.var_list])
         response = requests.post(
-            url="https://" + config["server_adress"] + "/create_game?game_code=" + code, headers=headers
+            url="https://" + config["server_adress"] + "/create_game?game_code=" + code,
+            headers=headers,
         )
 
         if response.status_code == 200:
@@ -180,8 +182,14 @@ class WebSocketClient:
             game_code_list = list(message_data["game_code"])
             if not cls.i_am_sender:
                 for i in 1, 5, 9:
-                    game_code_list[i], game_code_list[i + 3] = game_code_list[i + 3], game_code_list[i]
-                    game_code_list[i + 1], game_code_list[i + 2] = game_code_list[i + 2], game_code_list[i + 1]
+                    game_code_list[i], game_code_list[i + 3] = (
+                        game_code_list[i + 3],
+                        game_code_list[i],
+                    )
+                    game_code_list[i + 1], game_code_list[i + 2] = (
+                        game_code_list[i + 2],
+                        game_code_list[i + 1],
+                    )
                 game_code_list[0] = "0" if game_code_list[0] == "1" else "1"
             message_data["game_code"] = "".join(game_code_list)
             modechange("SERVER", message_data["game_code"])
