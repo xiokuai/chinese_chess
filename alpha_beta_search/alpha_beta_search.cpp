@@ -36,15 +36,18 @@ constexpr int SCORE_TABLE[9] = {
 };
 
 
-const std::unordered_map<int, std::vector<Coordinate>> DELTA = {
-	{1, {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}},
-	{2, {{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}},
-	{3, {{-2, -2}, {-2, 2}, {2, 2}, {2, -2}}},
-	{6, {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}}},
-	{71, {{1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}}},
-	{72, {{-1, 0}, {-2, 0}, {-3, 0}, {-4, 0}, {-5, 0}, {-6, 0}, {-7, 0}, {-8, 0}, {-9, 0}}},
-	{73, {{0, 1}, {0, 2}, {0, 3}, {0, 4}, {0, 5}, {0, 6}, {0, 7}, {0, 8}}},
-	{74, {{0, -1}, {0, -2}, {0, -3}, {0, -4}, {0, -5}, {0, -6}, {0, -7}, {0, -8}}},
+const std::vector<Coordinate> DELTA[] = {
+	{},
+	{{0, 1}, {0, -1}, {1, 0}, {-1, 0}},
+	{{-1, -1}, {-1, 1}, {1, 1}, {1, -1}},
+	{{-2, -2}, {-2, 2}, {2, 2}, {2, -2}},
+	{},
+	{},
+	{{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}},
+	{{1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}},
+	{{-1, 0}, {-2, 0}, {-3, 0}, {-4, 0}, {-5, 0}, {-6, 0}, {-7, 0}, {-8, 0}, {-9, 0}},
+	{{0, 1}, {0, 2}, {0, 3}, {0, 4}, {0, 5}, {0, 6}, {0, 7}, {0, 8}},
+	{{0, -1}, {0, -2}, {0, -3}, {0, -4}, {0, -5}, {0, -6}, {0, -7}, {0, -8}},
 };
 
 
@@ -99,9 +102,10 @@ static inline float evaluate(int data[10][9]) {
 // get all valid coordinates on board
 static inline std::vector<Coordinate> valid_coordinate(int data[10][9], bool reverse = false) {
 	std::vector<Coordinate> valid_coordinates;
+	valid_coordinates.reserve(90);
 	for (int i = 0; i < 10; ++i)
 		for (int j = 0; j < 9; ++j)
-			if ((reverse && data[i][j] < 0) || (!reverse && data[i][j] > 0))
+			if (reverse ? (data[i][j] < 0) : (data[i][j] > 0))
 				valid_coordinates.emplace_back( i, j );
 	return valid_coordinates;
 }
@@ -128,7 +132,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 
 	switch (abs_id) {
 	case 1:
-		for (const auto& delta : DELTA.at(1)) {
+		for (const auto& delta : DELTA[1]) {
 			ni = i + delta.first;
 			nj = j + delta.second;
 			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
@@ -138,7 +142,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	case 2:
-		for (const auto& delta : DELTA.at(2)) {
+		for (const auto& delta : DELTA[2]) {
 			ni = i + delta.first;
 			nj = j + delta.second;
 			if (((0 <= ni && ni <= 2) || (7 <= ni && ni <= 9)) && 3 <= nj && nj <= 5)
@@ -148,7 +152,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	case 3:
-		for (const auto& delta : DELTA.at(3)) {
+		for (const auto& delta : DELTA[3]) {
 			ni = i + delta.first;
 			nj = j + delta.second;
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8 && (i < 5 ? ni < 5 : ni > 4))
@@ -174,7 +178,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	case 6:
-		for (const auto& delta : DELTA.at(6)) {
+		for (const auto& delta : DELTA[6]) {
 			ni = i + delta.first;
 			nj = j + delta.second;
 			if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8)
@@ -187,7 +191,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	case 7:
-		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
+		for (const auto& deltas : { DELTA[7], DELTA[8], DELTA[9], DELTA[10] }) {
 			bool stepping_stone = false;
 			for (auto& delta : deltas) {
 				ni = i + delta.first;
@@ -213,7 +217,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 		break;
 
 	case 8:
-		for (const auto& deltas : { DELTA.at(71), DELTA.at(72), DELTA.at(73), DELTA.at(74) }) {
+		for (const auto& deltas : { DELTA[7], DELTA[8], DELTA[9], DELTA[10] }) {
 			for (auto& delta : deltas) {
 				ni = i + delta.first, nj = j + delta.second;
 				if (0 <= ni && ni <= 9 && 0 <= nj && nj <= 8) {
