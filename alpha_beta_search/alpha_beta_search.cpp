@@ -117,8 +117,11 @@ static inline void process(int data[10][9], int si, int sj, int ei, int ej) {
 	data[si][sj] = 0;
 	data[ei][ej] = piece;
 
-	int promote = (piece == -4) * (ei >= 5) * -1 + (piece == 4) * (ei <= 4);
-	data[ei][ej] += promote;
+	if((piece == -4) && (ei >= 5)) {
+		data[ei][ej] = -5;
+	} else if((piece == 4) && (ei <= 4)) {
+		data[ei][ej] = 5;
+	}
 }
 
 // Optimized possible_destination function
@@ -273,13 +276,13 @@ static bool valid_operation(int data[10][9], Operation operation) {
 	for (int i = 0; i < 3; ++i) {
 		for (int j = 3; j <= 5; ++j) {
 			if (data[i][j] == -1) {
-				for (int ni = i + 1; ni < 10; ++ni) {
-					if (data[ni][j] == 0) continue;
-					if (data[ni][j] == 1) {
-						recover(data, si, sj, ei, ej, sv, ev);
-						return false;
-					}
-					break;
+				bool found = false;
+				for(int ni = 9; ni > 6; --ni) {
+					if(data[ni][j] == 1) found = true;
+				}
+				if(!found) break;
+				for(int ni = 6; ni > i; --ni) {
+					if(data[ni][j] != 0) continue;
 				}
 			}
 		}
