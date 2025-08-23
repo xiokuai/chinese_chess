@@ -69,6 +69,8 @@ public:
 // Cache for evaluation results
 static std::unordered_map<uint64_t, float> evaluation_cache;
 std::mutex evaluation_cache_mutex; // Mutex for thread-safe access to the cache
+static std::unordered_map<uint64_t, std::vector<Operation>> operation_cache1;
+static std::unordered_map<uint64_t, std::vector<Operation>> operation_cache2;
 
 // Optimized evaluate function
 static inline float evaluate(int data[10][9]) {
@@ -295,6 +297,19 @@ static bool valid_operation(int data[10][9], Operation operation) {
 
 // get all operations
 static std::vector<Operation> get_operations(int data[10][9], bool reverse = false) {
+	uint64_t hash = zobristHasher.getHash(data);
+	if(reverse) {
+		auto it = operation_cache1.find(hash);
+		if (it != operation_cache1.end()) {
+			return it->second;
+		}
+	} else {
+		auto it = operation_cache2.find(hash);
+		if (it != operation_cache2.end()) {
+			return it->second;
+		}
+	}
+
 	std::vector<Operation> valid_operations;
 
 	auto get_valid_operations = [&](int x, int y) {
@@ -318,6 +333,11 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 		int b_score = SCORE_TABLE[(abs(data[b.second.first][b.second.second]))];
 		return a_score > b_score;
 		});
+	
+	if(reverse)
+		operation_cache1[hash] = valid_operations;
+	else
+		operation_cache2[hash] = valid_operations;
 
 	return valid_operations;
 }
