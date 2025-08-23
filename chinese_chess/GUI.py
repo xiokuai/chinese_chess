@@ -252,6 +252,7 @@ class Window:
                     info, text=_("被动的连接方式\n套接字将惰性地等待可能的客户端的连接")
                 )
             elif mode == "SERVER":
+                canvas_.destroy()
                 toplevel.title(_("选择模式 - 网络联机"))
                 WebSocketClient(toplevel)
 

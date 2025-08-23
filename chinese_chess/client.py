@@ -13,6 +13,7 @@ import tkintertools as tkt
 from constants import S, VOICE_BUTTON
 from configure import config
 import requests
+from l10n import _
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -37,20 +38,20 @@ class WebSocketClient:
         self.create_button = tkt.CanvasButton(
             self.canvas,
             20 * S,
-            40 * S,
+            10 * S,
             80 * S,
             23 * S,
             6 * S,
-            text="创建新游戏",
+            text=_("创建新游戏"),
             font=("楷体", round(12 * S)),
             command=self.create,
         )
 
         self.id_entry = tkt.CanvasEntry(
             self.canvas,
-            120 * S,
-            40 * S,
-            160 * S,
+            20 * S,
+            60 * S,
+            300 * S,
             23 * S,
             5 * S,
             font=("楷体", round(12 * S)),
@@ -61,13 +62,13 @@ class WebSocketClient:
         # 确认按钮
         self.ok = tkt.CanvasButton(
             self.canvas,
-            128 * S,
-            121 * S,
-            80 * S,
+            20 * S,
+            90 * S,
+            130 * S,
             23 * S,
             6 * S,
             font=("楷体", round(12 * S)),
-            text="确认",
+            text=_("通过游戏ID加入"),
             command=lambda: self.start(
                 config["server_adress"] + "/ws/" + self.id_entry.value
             ),
@@ -77,13 +78,13 @@ class WebSocketClient:
         # 取消按钮
         self.cancel = tkt.CanvasButton(
             self.canvas,
-            214 * S,
+            6 * S,
             121 * S,
             80 * S,
             23 * S,
             6 * S,
             font=("楷体", round(12 * S)),
-            text="取消",
+            text=_("上一步"),
             command=self.close,
         )
         self.cancel.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
@@ -105,8 +106,8 @@ class WebSocketClient:
             23 * S,
             6 * S,
             font=("楷体", round(12 * S)),
-            text=("上一步"),
-            command=lambda: (self.toplevel.title(("选择模式")), canvas_.destroy()),
+            text=_("上一步"),
+            command=lambda: (self.toplevel.title(_("选择模式")), canvas_.destroy()),
         )
         last.command_ex["press"] = lambda: play_sound_async(VOICE_BUTTON)
         tkt.CanvasButton(
@@ -117,7 +118,7 @@ class WebSocketClient:
             23 * S,
             6 * S,
             font=("楷体", round(12 * S)),
-            text=("开始"),
+            text=_("开始"),
             command=lambda: (
                 self.request_create(),
                 self.toplevel.destroy(),
