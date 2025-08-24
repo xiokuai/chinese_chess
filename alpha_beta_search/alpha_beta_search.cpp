@@ -364,7 +364,7 @@ static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, 
 	Node node = Node(reverse ? beta : alpha);
 	auto operations = get_operations(data, reverse);
 	if(operations.empty())
-		return Node(-16384 * reverse);
+		return Node(reverse ? 16384 : -16384);
 	for (const auto& op : operations) {
 		int si = op.first.first, sj = op.first.second, ei = op.second.first, ej = op.second.second;
 		int sv = data[si][sj], ev = data[ei][ej];
