@@ -14,7 +14,7 @@
 #include "zobrist_hasher.h"
 
 // the coordinate of chess
-using Coordinate = std::pair<int, int>;
+using Coordinate = std::pair<int8_t, int8_t>;
 
 // a valid operation
 using Operation = std::pair<Coordinate, Coordinate>;
