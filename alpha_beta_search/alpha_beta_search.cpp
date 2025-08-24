@@ -25,13 +25,13 @@ ZobristHasher zobristHasher; // Zobrist hashing for board state
 // score of each chess
 constexpr int SCORE_TABLE[9] = {
 	0,        // ?
-	10000,      // 帥
-	2,        // 仕
-	2,        // 相
+	200,      // 帥
+	1,        // 仕
+	3,        // 相
 	1,        // 兵
 	2,        // 兵(过河)
-	5,        // 馬
-	6,        // 砲
+	3,        // 馬
+	5,        // 砲
 	9,       //  车
 };
 
@@ -298,16 +298,11 @@ static bool valid_operation(int data[10][9], Operation operation) {
 // get all operations
 static std::vector<Operation> get_operations(int data[10][9], bool reverse = false) {
 	uint64_t hash = zobristHasher.getHash(data);
-	if(reverse) {
-		auto it = operation_cache1.find(hash);
-		if (it != operation_cache1.end()) {
-			return it->second;
-		}
-	} else {
-		auto it = operation_cache2.find(hash);
-		if (it != operation_cache2.end()) {
-			return it->second;
-		}
+	auto& cache = reverse ? operation_cache1 : operation_cache2;
+
+	auto it = cache.find(hash);
+	if (it != cache.end()) {
+		return it->second;
 	}
 
 	std::vector<Operation> valid_operations;
@@ -334,10 +329,7 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 		return a_score > b_score;
 		});
 	
-	if(reverse)
-		operation_cache1[hash] = valid_operations;
-	else
-		operation_cache2[hash] = valid_operations;
+	cache[hash] = valid_operations;
 
 	return valid_operations;
 }
