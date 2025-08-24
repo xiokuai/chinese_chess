@@ -133,7 +133,7 @@ static std::vector<Coordinate> possible_destination(int data[10][9], int i, int 
 	int abs_id = std::abs(id);
 	int ni, nj;
 
-	int _delta[3][2] = { {id < 0 ? 1 : -1, 0}, { 0, 1 }, {0, -1} };
+	const int _delta[3][2] = { {id < 0 ? 1 : -1, 0}, { 0, 1 }, {0, -1} };
 
 	switch (abs_id) {
 	case 1:
@@ -344,15 +344,21 @@ static std::vector<Operation> get_operations(int data[10][9], bool reverse = fal
 
 
 // update the data of node
-static inline std::pair<float, float> update(Node& node, Node& child, const Operation& op, float alpha, float beta, bool reverse = false) {
-	float temp = node.score;
-	if (!reverse)
-		alpha = node.score = std::max(node.score, child.score);
-	else
-		beta = node.score = std::min(node.score, child.score);
-	if (node.score != temp)
-		node.operation = op;
-	return { alpha, beta };
+static inline void update(Node& node, Node& child, const Operation& op, float& alpha, float& beta, bool reverse = false) {
+	if (!reverse) {
+		if(child.score > node.score) {
+			node.score = child.score;
+			node.operation = op;
+		}
+		alpha = std::max(alpha, node.score);
+	}
+	else {
+		if(child.score < node.score) {
+			node.score = child.score;
+			node.operation = op;
+		}
+		beta = std::min(beta, node.score);
+	}
 }
 
 
@@ -370,7 +376,8 @@ static Node alpha_beta_search(int data[10][9], int depth, bool reverse = false, 
 		int sv = data[si][sj], ev = data[ei][ej];
 		process(data, si, sj, ei, ej);
 		Node child = alpha_beta_search(data, depth - 1, !reverse, alpha, beta);
-		std::tie(alpha, beta) = update(node, child, op, alpha, beta, reverse);
+		//Update alpha and beta
+		update(node, child, op, alpha, beta, reverse);
 		recover(data, si, sj, ei, ej, sv, ev);
 		if (alpha >= beta) break;
 	}
