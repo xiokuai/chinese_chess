@@ -4,12 +4,12 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
-xgettext -d messages -o l10n/chinese_chess.pot main.py GUI.py mini_win.py LAN.py constants.py rule.py
+# xgettext -d messages -o l10n/chinese_chess.pot main.py GUI.py mini_win.py LAN.py constants.py rule.py
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-12 20:59+0800\n"
+"POT-Creation-Date: 2025-09-20 13:53+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,150 +18,162 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: GUI.py:83
+#: GUI.py:85
 msgid "选项(O)"
 msgstr ""
 
-#: GUI.py:84
+#: GUI.py:86
 msgid "帮助(H)"
 msgstr ""
 
-#: GUI.py:85
+#: GUI.py:87
 msgid "导入棋局"
 msgstr ""
 
-#: GUI.py:86
+#: GUI.py:88
 msgid "导出棋局"
 msgstr ""
 
-#: GUI.py:87 mini_win.py:162
+#: GUI.py:89 mini_win.py:165
 msgid "棋局库"
 msgstr ""
 
-#: GUI.py:89
+#: GUI.py:91
 msgid "撤销"
 msgstr ""
 
-#: GUI.py:90
+#: GUI.py:92
 msgid "恢复"
 msgstr ""
 
-#: GUI.py:92 mini_win.py:240
+#: GUI.py:94 mini_win.py:243
 msgid "游戏设置"
 msgstr ""
 
-#: GUI.py:93
+#: GUI.py:95
 msgid "新游戏"
 msgstr ""
 
-#: GUI.py:94
+#: GUI.py:96
 msgid "退出"
 msgstr ""
 
-#: GUI.py:96
+#: GUI.py:98
 msgid "游戏说明"
 msgstr ""
 
-#: GUI.py:100 mini_win.py:138
+#: GUI.py:102 mini_win.py:141
 msgid "统计数据"
 msgstr ""
 
-#: GUI.py:102 mini_win.py:457
+#: GUI.py:104 mini_win.py:476
 msgid "关于"
 msgstr ""
 
-#: GUI.py:164 GUI.py:183
+#: GUI.py:166 GUI.py:185
 msgid "选择模式"
 msgstr ""
 
-#: GUI.py:182
+#: GUI.py:184
 msgid "上一步"
 msgstr ""
 
-#: GUI.py:198
+#: GUI.py:200
 msgid "开始"
 msgstr ""
 
-#: GUI.py:207
+#: GUI.py:209
 msgid "选择模式 - "
 msgstr ""
 
-#: GUI.py:208 GUI.py:296
+#: GUI.py:210 GUI.py:315
 msgid "双人对弈"
 msgstr ""
 
-#: GUI.py:208 GUI.py:293
+#: GUI.py:210 GUI.py:312
 msgid "人机对战"
 msgstr ""
 
-#: GUI.py:211
+#: GUI.py:213
 msgid "选择模式 - 联机对抗"
 msgstr ""
 
-#: GUI.py:217
+#: GUI.py:219
 msgid "请选择连接方式"
 msgstr ""
 
-#: GUI.py:226
+#: GUI.py:228
 msgid "客户端连接"
 msgstr ""
 
-#: GUI.py:234
+#: GUI.py:236
 msgid ""
 "主动的连接方式\n"
 "套接字将主动搜索局域网内可识别的服务端"
 msgstr ""
 
-#: GUI.py:243
+#: GUI.py:245
 msgid "服务端连接"
 msgstr ""
 
-#: GUI.py:250
+#: GUI.py:252
 msgid ""
 "被动的连接方式\n"
 "套接字将惰性地等待可能的客户端的连接"
 msgstr ""
 
-#: GUI.py:264
+#: GUI.py:256
+msgid "选择模式 - 网络联机"
+msgstr ""
+
+#: GUI.py:270
 msgid "人脑与电脑的激烈碰撞！"
 msgstr ""
 
-#: GUI.py:277
+#: GUI.py:283
 msgid "双方激烈对峙，到底谁能笑到最后？"
 msgstr ""
 
-#: GUI.py:290
+#: GUI.py:296
 msgid "和局域网里的朋友一起玩耍吧！"
 msgstr ""
 
-#: GUI.py:299
+#: GUI.py:309
+msgid "在网络上游玩！"
+msgstr ""
+
+#: GUI.py:318
 msgid "联机对抗"
 msgstr ""
 
-#: GUI.py:303
+#: GUI.py:321
+msgid "线上联机"
+msgstr ""
+
+#: GUI.py:325
 msgid "请选择游戏模式"
 msgstr ""
 
-#: GUI.py:329
+#: GUI.py:351
 #, python-format
 msgid ""
 "%02d:%02d\n"
 "%s思考中."
 msgstr ""
 
-#: GUI.py:463
+#: GUI.py:488
 msgid "返回"
 msgstr ""
 
-#: GUI.py:469
+#: GUI.py:494
 msgid "我方让子"
 msgstr ""
 
-#: GUI.py:471
+#: GUI.py:496
 msgid "对方让子"
 msgstr ""
 
-#: GUI.py:474
+#: GUI.py:499
 msgid "我方先手"
 msgstr ""
 
@@ -177,63 +189,67 @@ msgstr ""
 msgid "下一页 >"
 msgstr ""
 
-#: mini_win.py:182
+#: mini_win.py:185
 msgid "←后退"
 msgstr ""
 
-#: mini_win.py:246
+#: mini_win.py:249
 msgid "窗口缩放系数（重启生效）"
 msgstr ""
 
-#: mini_win.py:247
+#: mini_win.py:250
 msgid "窗口自动缩放（重启生效）"
 msgstr ""
 
-#: mini_win.py:248
+#: mini_win.py:251
 msgid "棋子可走显示"
 msgstr ""
 
-#: mini_win.py:249
+#: mini_win.py:252
 msgid "AI最大搜索深度"
 msgstr ""
 
-#: mini_win.py:250
+#: mini_win.py:253
 msgid "AI搜索算法"
 msgstr ""
 
-#: mini_win.py:251
+#: mini_win.py:254
 msgid "和棋判定回合数"
 msgstr ""
 
-#: mini_win.py:252
+#: mini_win.py:255
 msgid "语言"
 msgstr ""
 
-#: mini_win.py:345 mini_win.py:357 mini_win.py:361
+#: mini_win.py:256
+msgid "服务器地址"
+msgstr ""
+
+#: mini_win.py:349 mini_win.py:361 mini_win.py:365
 msgid "极小极大搜索"
 msgstr ""
 
-#: mini_win.py:348 mini_win.py:360 mini_win.py:427
+#: mini_win.py:352 mini_win.py:364 mini_win.py:446
 msgid "alpha-beta 剪枝"
 msgstr ""
 
-#: mini_win.py:350 mini_win.py:358 mini_win.py:362 mini_win.py:447
+#: mini_win.py:354 mini_win.py:362 mini_win.py:366 mini_win.py:466
 msgid "alpha-beta 剪枝(C++实现)"
 msgstr ""
 
-#: mini_win.py:400
+#: mini_win.py:418
 msgid "保存"
 msgstr ""
 
-#: mini_win.py:411
+#: mini_win.py:429
 msgid "恢复默认"
 msgstr ""
 
-#: mini_win.py:426
+#: mini_win.py:445
 msgid "极大极小搜索"
 msgstr ""
 
-#: mini_win.py:459
+#: mini_win.py:478
 #, python-format
 msgid ""
 "版本: %s\n"
@@ -241,84 +257,84 @@ msgid ""
 "作者: %s"
 msgstr ""
 
-#: mini_win.py:468
+#: mini_win.py:487
 #, python-format
 msgid "开源许可: %s"
 msgstr ""
 
-#: mini_win.py:476
+#: mini_win.py:495
 msgid "访问本项目Github仓库"
 msgstr ""
 
-#: constants.py:66
+#: constants.py:68
 msgid "程序启动次数"
 msgstr ""
 
-#: constants.py:67
+#: constants.py:69
 msgid "联机模式使用次数"
 msgstr ""
 
-#: constants.py:68
+#: constants.py:70
 msgid "双人模式使用次数"
 msgstr ""
 
-#: constants.py:69
+#: constants.py:71
 msgid "人机模式使用次数"
 msgstr ""
 
-#: constants.py:70
+#: constants.py:72
 msgid "残局模式使用次数"
 msgstr ""
 
-#: constants.py:71
+#: constants.py:73
 msgid "测试模式使用次数"
 msgstr ""
 
-#: constants.py:72
+#: constants.py:74
 msgid "悔棋次数"
 msgstr ""
 
-#: constants.py:73
+#: constants.py:75
 msgid "撤销悔棋次数"
 msgstr ""
 
-#: constants.py:74
+#: constants.py:76
 msgid "AI功能调用次数"
 msgstr ""
 
-#: constants.py:75
+#: constants.py:77
 msgid "吃棋次数"
 msgstr ""
 
-#: constants.py:76
+#: constants.py:78
 msgid "移棋次数"
 msgstr ""
 
-#: constants.py:77
+#: constants.py:79
 msgid "“将军”次数"
 msgstr ""
 
-#: constants.py:78
+#: constants.py:80
 msgid "游戏胜利次数"
 msgstr ""
 
-#: constants.py:79
+#: constants.py:81
 msgid "游戏失败次数"
 msgstr ""
 
-#: constants.py:80
+#: constants.py:82
 msgid "和棋次数"
 msgstr ""
 
-#: constants.py:81
+#: constants.py:83
 msgid "对局次数"
 msgstr ""
 
-#: constants.py:82
+#: constants.py:84
 msgid "总游戏时间"
 msgstr ""
 
-#: constants.py:83
+#: constants.py:85
 msgid "先手次数"
 msgstr ""
 
