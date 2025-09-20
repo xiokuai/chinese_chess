@@ -1,6 +1,6 @@
-__version__ = "1.1.0"
+__version__ = "1.2.1"
 __author__ = "李悟/梁晨轩"
-__update__ = "2025/7/12"
+__update__ = "2025/9/20"
 __license__ = "GPL-3.0"
 __website__ = "https://github.com/xiokuai/chinese_chess"
 LOG_FILE = "error.log"
