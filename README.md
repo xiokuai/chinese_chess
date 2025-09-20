@@ -51,13 +51,20 @@ cmake ..
 
 #### Prerequisites
 
-- Python 3.7+
+- Python 3.10+
 - `tkinter`
 - `pyinstaller`
 
 #### Steps
 
-Run `install.bat`
+Run
+
+``` bash
+pip3 install -r chinese_chess/requirements.txt
+pyinstaller -F chinese_chess/main.py -n chinese_chess --icon=chinese_chess/logo.ico --uac-admin
+cp chinese_chess/audio dist/audio -r
+cp logo.ico dist
+```
 
 ---
 
@@ -114,13 +121,20 @@ cmake ..
 
 #### 需要
 
-- Python3.7+
+- Python 3.10+
 - `tkinter`
 - `pyinstaller`
 
 ### 步骤
 
-运行`install.bat`
+运行
+
+``` bash
+pip3 install -r chinese_chess/requirements.txt
+pyinstaller -F chinese_chess/main.py -n chinese_chess --icon=chinese_chess/logo.ico --uac-admin
+cp chinese_chess/audio dist/audio -r
+cp logo.ico dist
+```
 
 ---
 祝您玩得愉快，欢迎参与贡献或提交问题反馈!
