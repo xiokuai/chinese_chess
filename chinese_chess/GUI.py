@@ -31,7 +31,7 @@ class Window:
     """主窗口"""
 
     root = tkt.Tk(
-        "Chinese Chess by李悟/梁晨轩",
+        "Chinese Chess",
         int(640 * S),
         int(710 * S),
         (SCREEN_WIDTH - tkt.S * 640 * S) // 2,
